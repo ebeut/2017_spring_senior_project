@@ -1,1 +1,1 @@
-# 2017_spring_senior_project
+# Senior Project
