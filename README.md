@@ -1,4 +1,4 @@
-# **Senior Project** | University of the Pacific #
+# **The Watch List** | University of the Pacific #
 
 ### Team Members: ###
 - Navjot Singh
