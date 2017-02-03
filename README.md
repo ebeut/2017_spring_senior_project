@@ -16,6 +16,12 @@ A todo list of shows to watch, better known as, **The Watch List**!
 - Hamilton Lam
 - Leo Jon Imutan
 
+## APIs
+- [TVmaze](http://www.tvmaze.com/api)
+- [Google](https://developers.google.com/identity/sign-in/web/) Sign-In
+- [Twitter](https://dev.twitter.com/web/tweet-button) Tweet button
+- [Facebook](https://developers.facebook.com/docs/sharing/reference/share-dialog) share dialog
+
 ## Compile and Run
 1. [Install Node.js](https://nodejs.org/en/)
 2. To check that npm is installed enter `npm -v` from the terminal
