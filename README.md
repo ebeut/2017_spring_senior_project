@@ -29,3 +29,6 @@ A todo list of shows to watch, better known as, **The Watch List**!
     - `npm install`
     - `npm run dev`
 4. From a web browser navigate to "localhost:3000"
+
+## Framework
+Bases of framework pulled from https://github.com/davezuko/react-redux-starter-kit
