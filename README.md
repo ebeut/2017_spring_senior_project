@@ -22,7 +22,7 @@ A todo list of shows to watch, better known as, **The Watch List**!
 - [Twitter](https://dev.twitter.com/web/tweet-button) Tweet button
 - [Facebook](https://developers.facebook.com/docs/sharing/reference/share-dialog) share dialog
 
-## Compile and Run
+## Compile and Test
 1. [Install Node.js](https://nodejs.org/en/)
 2. To check that npm is installed enter `npm -v` from the terminal
 3. From the working directory in the terminal enter:
@@ -31,4 +31,4 @@ A todo list of shows to watch, better known as, **The Watch List**!
 4. From a web browser navigate to "localhost:3000"
 
 ## Framework
-Bases of framework pulled from https://github.com/davezuko/react-redux-starter-kit
+Bases of framework pulled from [React Redux Starter Kit](https://github.com/davezuko/react-redux-starter-kit)
