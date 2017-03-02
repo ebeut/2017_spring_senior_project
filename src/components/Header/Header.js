@@ -4,7 +4,9 @@ import { browserHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import LeftNav from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import { blueA700 } from 'material-ui/styles/colors'
+import IconButton from 'material-ui/IconButton';
+import { blueA700 } from 'material-ui/styles/colors';
+import Search from 'material-ui/svg-icons/action/search';
 
 export class Header extends Component {
     constructor(props) {
@@ -70,6 +72,7 @@ export class Header extends Component {
                 </LeftNav>
                 <AppBar
                     title="The Watch List"
+                    iconElementRight={<IconButton>< Search /></IconButton>}
                     iconClassNameRight="muidocs-icon-navigation-expand-more"
                     onLeftIconButtonTouchTap={() => this.openNav()}
                     style={{
