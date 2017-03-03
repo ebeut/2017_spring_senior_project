@@ -5,8 +5,13 @@ import AppBar from 'material-ui/AppBar';
 import LeftNav from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
+import Avatar from 'material-ui/Avatar';
 import { blueA700 } from 'material-ui/styles/colors';
 import Search from 'material-ui/svg-icons/action/search';
+import AccountCircle from 'material-ui/svg-icons/action/account-circle';
+import Favorite from 'material-ui/svg-icons/action/favorite';
+import Event from 'material-ui/svg-icons/action/event';
+import ExitToApp from 'material-ui/svg-icons/action/exit-to-app'
 
 export class Header extends Component {
     constructor(props) {
@@ -50,7 +55,17 @@ export class Header extends Component {
                 >
                     {
                         <div>
+                            <div
+                                style={{
+                                    textAlign: 'center',
+                                    padding: '20px',
+                                    backgroundColor: blueA700
+                                }}
+                            >
+                                <Avatar size={100} icon={< AccountCircle />} />
+                            </div>
                             <MenuItem
+                                leftIcon={< Favorite />}
                                 onClick={() => this.dispatchNewRoute('/')}
                                 style={{
                                     textAlign: 'left',
@@ -60,12 +75,33 @@ export class Header extends Component {
                             </MenuItem>
 
                             <MenuItem
+                                leftIcon={< Search />}
                                 onClick={() => this.dispatchNewRoute('/counter')}
                                 style={{
                                     textAlign: 'left',
                                 }}
                             >
-                                Counter
+                                Search
+                            </MenuItem>
+
+                            <MenuItem
+                                leftIcon={< Event />}
+                                //onClick={() => this.dispatchNewRoute('/counter')}
+                                style={{
+                                    textAlign: 'left',
+                                }}
+                            >
+                                Calendar
+                            </MenuItem>
+
+                            <MenuItem
+                                leftIcon={< ExitToApp />}
+                                //onClick={() => this.dispatchNewRoute('/counter')}
+                                style={{
+                                    textAlign: 'left',
+                                }}
+                            >
+                                Sign Out
                             </MenuItem>
                         </div>
                     }
