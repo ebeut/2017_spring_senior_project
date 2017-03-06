@@ -6,18 +6,36 @@ import LeftNav from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
+import FlatButton from 'material-ui/FlatButton';
+import Toggle from 'material-ui/Toggle';
 import { blueA700 } from 'material-ui/styles/colors';
 import Search from 'material-ui/svg-icons/action/search';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
-import Favorite from 'material-ui/svg-icons/action/favorite';
+import Home from 'material-ui/svg-icons/action/Home';
 import Event from 'material-ui/svg-icons/action/event';
 import ExitToApp from 'material-ui/svg-icons/action/exit-to-app'
+import Settings from 'material-ui/svg-icons/action/settings'
+import PowerSettingsNew from 'material-ui/svg-icons/action/power-settings-new'
+
+// just for toggle for testing
+const styles = {
+  thumbSwitched: {
+    backgroundColor: '#ec407a',
+  },
+  trackSwitched: {
+    backgroundColor: '#f8bbd0',
+  },
+  labelStyle: {
+    color: 'white',
+  },
+};
 
 export class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
             open: false,
+            logged: false,
         };
 
     }
@@ -45,7 +63,58 @@ export class Header extends Component {
         });
     }
 
+    handleChange = (event, logged) => {
+        // Used for logged toggle
+        this.setState({logged: logged});
+    };
+
     render () {
+        let settingsMenuItem = null;
+        let loginButton = null;
+
+        // check if logged in
+        if(this.state.logged) {
+            settingsMenuItem = ((
+                <MenuItem
+                    leftIcon={< Settings />}
+                    //onClick={() => this.dispatchNewRoute('/counter')}
+                    style={{
+                        textAlign: 'left',
+                    }}
+                >
+                    Settings
+                </MenuItem>
+            ));
+
+            loginButton = ((
+                <FlatButton {...this.props}
+                    label="Sign Out"
+                    icon={< PowerSettingsNew />}
+                />
+            ));
+        }
+        else {
+            settingsMenuItem = ((
+                <MenuItem
+                    leftIcon={< Settings />}
+                    //onClick={() => this.dispatchNewRoute('/counter')}
+                    style={{
+                        textAlign: 'left',
+                    }}
+                    disabled={true}
+                >
+                    Settings
+                </MenuItem>
+            ));
+
+            loginButton = ((
+                <FlatButton {...this.props}
+                    label="Login"
+                    icon={< ExitToApp />}
+                />
+            ));
+        }
+
         return (
             <div>
                 <LeftNav
@@ -63,9 +132,21 @@ export class Header extends Component {
                                 }}
                             >
                                 <Avatar size={100} icon={< AccountCircle />} />
+                                <Toggle // toggle for testing
+                                    label="Logged"
+                                    defaultToggled={false}
+                                    onToggle={this.handleChange}
+                                    labelPosition="right"
+                                    thumbSwitchedStyle={styles.thumbSwitched}
+                                    trackSwitchedStyle={styles.trackSwitched}
+                                    labelStyle={styles.labelStyle}
+                                    style={{
+                                        margin: 20
+                                    }}
+                                />
                             </div>
                             <MenuItem
-                                leftIcon={< Favorite />}
+                                leftIcon={< Home />}
                                 onClick={() => this.dispatchNewRoute('/')}
                                 style={{
                                     textAlign: 'left',
@@ -94,21 +175,13 @@ export class Header extends Component {
                                 Calendar
                             </MenuItem>
 
-                            <MenuItem
-                                leftIcon={< ExitToApp />}
-                                //onClick={() => this.dispatchNewRoute('/counter')}
-                                style={{
-                                    textAlign: 'left',
-                                }}
-                            >
-                                Sign Out
-                            </MenuItem>
+                            {settingsMenuItem}
                         </div>
                     }
                 </LeftNav>
                 <AppBar
                     title="The Watch List"
-                    iconElementRight={<IconButton>< Search /></IconButton>}
+                    iconElementRight={loginButton}
                     iconClassNameRight="muidocs-icon-navigation-expand-more"
                     onLeftIconButtonTouchTap={() => this.openNav()}
                     style={{
