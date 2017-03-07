@@ -69,11 +69,24 @@ export class Header extends Component {
     };
 
     render () {
+        let calendarMenuItem = null;
         let settingsMenuItem = null;
         let loginButton = null;
 
         // check if logged in
         if(this.state.logged) {
+            calendarMenuItem = ((
+                <MenuItem
+                    leftIcon={< Event />}
+                    //onClick={() => this.dispatchNewRoute('/counter')}
+                    style={{
+                        textAlign: 'left',
+                    }}
+                >
+                    Calendar
+                </MenuItem>
+            ));
+            
             settingsMenuItem = ((
                 <MenuItem
                     leftIcon={< Settings />}
@@ -94,19 +107,6 @@ export class Header extends Component {
             ));
         }
         else {
-            settingsMenuItem = ((
-                <MenuItem
-                    leftIcon={< Settings />}
-                    //onClick={() => this.dispatchNewRoute('/counter')}
-                    style={{
-                        textAlign: 'left',
-                    }}
-                    disabled={true}
-                >
-                    Settings
-                </MenuItem>
-            ));
-
             loginButton = ((
                 <FlatButton {...this.props}
                     label="Login"
@@ -165,15 +165,7 @@ export class Header extends Component {
                                 Search
                             </MenuItem>
 
-                            <MenuItem
-                                leftIcon={< Event />}
-                                //onClick={() => this.dispatchNewRoute('/counter')}
-                                style={{
-                                    textAlign: 'left',
-                                }}
-                            >
-                                Calendar
-                            </MenuItem>
+                            {calendarMenuItem}
 
                             {settingsMenuItem}
                         </div>
