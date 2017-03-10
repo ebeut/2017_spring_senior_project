@@ -59,6 +59,9 @@ class TVmazeArgs:
         if(args.details and args.showID is None):
             print("Error: when details is selected an ID must be provided")
             sys.exit()
+        if(args.seasonNum and args.showID is None):
+            print("Error: when episodes is selected an ID must be provided")
+            sys.exit()
 
         self.__showID = args.showID
         self.__showTitle = args.showTitle
