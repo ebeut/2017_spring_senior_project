@@ -14,9 +14,9 @@ class TVmazeShowDetails:
 
         Returns: creates TVmazeShowDetails class object
         """
-        self.__showID = showID     # private
-        self.__debug = debug       # private
-        self.__detailsJSON = None  # private
+        self.__showID = showID
+        self.__debug = debug
+        self.__detailsJSON = None
 
     def getShowDetails(self):
         """Makes initial request to API and calls parseShowDetails with raw

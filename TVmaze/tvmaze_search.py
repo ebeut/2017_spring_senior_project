@@ -13,9 +13,9 @@ class TVmazeSearch:
 
         Returns: creates TVmazeSearch class object
         """
-        self.__title = title      # private
-        self.__debug = debug      # private
-        self.__resultJSON = None  # private
+        self.__title = title
+        self.__debug = debug
+        self.__resultJSON = None
 
     def search(self):
         """Makes initial request to API and calls parseSearchResults with raw
