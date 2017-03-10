@@ -52,7 +52,7 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 ```
 
 ### Show Details
-- `./tvmaze.py --id ID number --details` returns JSON containing details about the show connected to the provided ID. Details included: ID, show title, year premiered, IMDb rating, network it is televised on, a link to its poster, a summary of the plot, and cast members
+- `./tvmaze.py --id ID number --details` returns JSON containing details about the show connected to the provided ID. Details included: ID, show title, year premiered, IMDb rating, network it is televised on, a link to its poster, a summary of the plot, and cast members.
 ```
 {"id": ID number, "title": "show title",
 "year": "year premiered, N/A if unavailable",
@@ -62,4 +62,12 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 "summary": "plot of show", "cast": [{"name": "actor name",
 "character": "character actor plays",
 "image": "link to image of actor, N/A if unavailable"}]}
+```
+
+### Episodes
+- `./tvmaze.py --id ID number --episodes season number` returns JSON containing all the episodes for the provided season based on the ID. The episodes include: the name of the episode, the season number, the episode number, the date aired, and a summary of the episode.
+```
+[{"name": "name of episode", "season": season number,
+"number": episode number, "date": "date aired",
+"summary": "summary of episode"}]
 ```
