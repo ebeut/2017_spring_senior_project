@@ -17,6 +17,7 @@ class TVmazeArgs:
 
         # mutual exclusion
         group = parser.add_mutually_exclusive_group()
+        group1 = parser.add_mutually_exclusive_group()
 
         # -v, --version
         parser.add_argument("-v", "--version", action="version",
@@ -35,9 +36,19 @@ class TVmazeArgs:
                             action="store_true", default=False)
 
         # --details
-        parser.add_argument("--details", help="Get details about the show, "
+        group1.add_argument("--details", help="Get details about the show, "
                             "including description and cast", dest="details",
                             action="store_true", default=False)
+
+        # --episodes
+        group1.add_argument("--episodes", help="Get episode information based "
+                            "on season provided", dest="seasonNum",
+                            type=int)
+
+        # --seasons
+        parser.add_argument("--seasons", help="Get number of seasons",
+                            dest="numSeasons", action="store_true",
+                            default=False)
 
         # --debug
         parser.add_argument("--debug", help="Prints JSON that is returned to "
@@ -58,6 +69,8 @@ class TVmazeArgs:
         self.__showTitle = args.showTitle
         self.__search = args.search
         self.__details = args.details
+        self.__episodeSeason = args.seasonNum
+        self.__numSeasons = args.numSeasons
         self.__debug = args.debug
 
     def getShowID(self):
@@ -101,6 +114,27 @@ class TVmazeArgs:
                         True if provided, False if not
         """
         return self.__details
+
+    def getEpisodeSeason(self):
+        """Getter for episodeSeason
+
+        Arguments: N/A
+
+        Returns:
+            episodeSeason:    season number used to get episodes from
+        """
+        return self.__episodeSeason
+
+    def getNumSeasons(self):
+        """Getter for numSeasons
+
+        Arguments: N/A
+
+        Returns:
+            numSeasons:    boolean value based on if numSeasons provided in CLI
+                           True if provided, False if not
+        """
+        return self.__numSeasons
 
     def getDebug(self):
         """Getter for debug
