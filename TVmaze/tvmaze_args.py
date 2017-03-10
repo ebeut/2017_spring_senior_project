@@ -15,8 +15,9 @@ class TVmazeArgs:
         parser = argparse.ArgumentParser(description="TVmaze API Script",
                                          prog="tvmaze.py")
 
-        # mutual exclusion
+        # mutual exclusion between --id and --title
         group = parser.add_mutually_exclusive_group()
+        # mutual exclusion between --details and --episodes
         group1 = parser.add_mutually_exclusive_group()
 
         # -v, --version
