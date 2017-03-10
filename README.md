@@ -55,7 +55,8 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 - `./tvmaze.py --id ID number --details` returns JSON containing details about the show connected to the provided ID. Details included: ID, show title, year premiered, IMDb rating, network it is televised on, a link to its poster, a summary of the plot, and cast members
 ```
 {"id": ID number, "title": "show title",
-"year": "year premiered, N/A if unavailable", "imdbRating": rating,
+"year": "year premiered, N/A if unavailable",
+"numSeasons": number of seasons, "imdbRating": rating,
 "network": "name of network",
 "poster": "link to poster, N/A if unavailable",
 "summary": "plot of show", "cast": [{"name": "actor name",
