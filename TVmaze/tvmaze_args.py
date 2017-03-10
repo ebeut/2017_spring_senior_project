@@ -54,23 +54,61 @@ class TVmazeArgs:
             print("Error: when details is selected an ID must be provided")
             sys.exit()
 
-        self.showID = args.showID
-        self.showTitle = args.showTitle
-        self.search = args.search
-        self.details = args.details
-        self.debug = args.debug
+        self.__showID = args.showID
+        self.__showTitle = args.showTitle
+        self.__search = args.search
+        self.__details = args.details
+        self.__debug = args.debug
 
-    def getArgs(self):
-        """Gets CLI arguments
+    def getShowID(self):
+        """Getter for show ID
 
         Arguments: N/A
 
         Returns:
-            showID:       ID provided from search function
-            showTitle:    Title of show
-            search:       True to search, False not to
-            details:      True to get details, False not to
-            debug:        True to print JSON, False not to
+            showID:    ID number provided in CLI
         """
-        return self.showID, self.showTitle, self.search, self.details, \
-            self.debug
+        return self.__showID
+
+    def getShowTitle(self):
+        """Getter for show title
+
+        Arguments: N/A
+
+        Returns:
+            showTitle:    title of show provided in CLI
+        """
+        return self.__showTitle
+
+    def getSearch(self):
+        """Getter for search
+
+        Arguments: N/A
+
+        Returns:
+            search:    boolean value based on if search provided in CLI
+                       True if provided, False if not
+        """
+        return self.__search
+
+    def getDetails(self):
+        """Getter for details
+
+        Arguments: N/A
+
+        Returns:
+            details:    boolean value based on if details provided in CLI
+                        True if provided, False if not
+        """
+        return self.__details
+
+    def getDebug(self):
+        """Getter for debug
+
+        Arguments: N/A
+
+        Returns:
+            debug:    boolean value based on if debug provided in CLI
+                      True if provided, False if not
+        """
+        return self.__debug

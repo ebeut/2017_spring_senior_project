@@ -14,9 +14,9 @@ class TVmazeShowDetails:
 
         Returns: creates TVmazeShowDetails class object
         """
-        self.showID = showID
-        self.debug = debug
-        self.detailsJSON = None
+        self.__showID = showID     # private
+        self.__debug = debug       # private
+        self.__detailsJSON = None  # private
 
     def getShowDetails(self):
         """Makes initial request to API and calls parseShowDetails with raw
@@ -24,21 +24,18 @@ class TVmazeShowDetails:
 
         Arguments: N/A
 
-        Returns:
-            detailsJSON:    new JSON returned from parseShowDetails
+        Returns: sets detailsJSON member
         """
-        searchURL = "http://api.tvmaze.com/shows/" + str(self.showID) \
+        searchURL = "http://api.tvmaze.com/shows/" + str(self.__showID) \
             + "?embed=cast"
 
         response = requests.get(searchURL)
         data = response.json()
 
         # converts dictionary to JSON
-        self.detailsJSON = json.dumps(self.parseShowDetails(data))
-        if(self.debug):
-            print(self.detailsJSON)
-
-        return self.detailsJSON
+        self.__detailsJSON = json.dumps(self.parseShowDetails(data))
+        if(self.__debug):
+            print(self.__detailsJSON)
 
     def parseShowDetails(self, data):
         """Parses the resulting JSON
@@ -97,7 +94,7 @@ class TVmazeShowDetails:
             count += 1
 
         details = {
-            "id": self.showID,
+            "id": self.__showID,
             "title": title,
             "year": year,
             "imdbRating": imdbRating,
@@ -108,3 +105,13 @@ class TVmazeShowDetails:
         }
 
         return details
+
+    def getDetailsJSON(self):
+        """Getter function for detailsJSON
+
+        Arguments: N/A
+
+        Returns:
+            detailsJSON:    JSON containing show details
+        """
+        return self.__detailsJSON

@@ -10,21 +10,22 @@ def main():
     Arguments: N/A
 
     Returns:
-        search():            if search option provided, JSON containing search
+        getResultJSON():     if search option provided, JSON containing search
                              results based on title provided
-        getShowDetails():    if details option provided, JSON containing
+        getDetailsJSON():    if details option provided, JSON containing
                              details related to the ID provided
     """
     args = TVmazeArgs()
-    showID, showTitle, search, details, debug = args.getArgs()
 
-    if(search):
-        searchShows = TVmazeSearch(showTitle, debug)
-        return searchShows.search()
+    if(args.getSearch()):
+        searchShows = TVmazeSearch(args.getShowTitle(), args.getDebug())
+        searchShows.search()
+        return searchShows.getResultJSON()
 
-    if(details):
-        showDetails = TVmazeShowDetails(showID, debug)
-        return showDetails.getShowDetails()
+    if(args.getDetails()):
+        showDetails = TVmazeShowDetails(args.getShowID(), args.getDebug())
+        showDetails.getShowDetails()
+        return showDetails.getDetailsJSON()
 
 
 if __name__ == '__main__':
