@@ -44,10 +44,10 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 - `--debug` option prints JSON that is returned to the terminal
 
 ### Search
-- `./tvmaze.py --title "Title of Show" --search` returns JSON with all shows from the search including: ID, show title, year premiered, and a link to its poster
+- `./tvmaze.py --title "Title of Show" --search` returns JSON with all shows from the search including: ID, show title, year premiered, IMDb rating, and a link to its poster
 ```
 [{"id": "id number", "title": "show title",
-"year": "year premiered, N/A if unavailable",
+"year": "year premiered, N/A if unavailable", "imdbRating": rating,
 "poster": "link to poster, N/A if unavailable"}]
 ```
 
