@@ -38,7 +38,7 @@ class TVmazeShowDetails:
             print(self.__detailsJSON)
 
     def parseShowDetails(self, data):
-        """Parses the resulting JSON
+        """Parses the resulting JSON from getShowDetails
 
         Arguments:
             data:    JSON response from API query in getShowDetails

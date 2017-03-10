@@ -37,7 +37,7 @@ class TVmazeSearch:
             print(self.__resultJSON)
 
     def parseSearchResults(self, results):
-        """Parses the resulting JSON
+        """Parses the resulting JSON from search
 
         Arguments:
             results:    JSON response from API query in search
