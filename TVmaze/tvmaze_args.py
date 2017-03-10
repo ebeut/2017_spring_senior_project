@@ -41,14 +41,9 @@ class TVmazeArgs:
                             action="store_true", default=False)
 
         # --episodes
-        group1.add_argument("--episodes", help="Get episode information based "
+        group1.add_argument("--episodes", help="Get episodes based "
                             "on season provided", dest="seasonNum",
                             type=int)
-
-        # --seasons
-        parser.add_argument("--seasons", help="Get number of seasons",
-                            dest="numSeasons", action="store_true",
-                            default=False)
 
         # --debug
         parser.add_argument("--debug", help="Prints JSON that is returned to "
@@ -70,7 +65,6 @@ class TVmazeArgs:
         self.__search = args.search
         self.__details = args.details
         self.__episodeSeason = args.seasonNum
-        self.__numSeasons = args.numSeasons
         self.__debug = args.debug
 
     def getShowID(self):
@@ -124,17 +118,6 @@ class TVmazeArgs:
             episodeSeason:    season number used to get episodes from
         """
         return self.__episodeSeason
-
-    def getNumSeasons(self):
-        """Getter for numSeasons
-
-        Arguments: N/A
-
-        Returns:
-            numSeasons:    boolean value based on if numSeasons provided in CLI
-                           True if provided, False if not
-        """
-        return self.__numSeasons
 
     def getDebug(self):
         """Getter for debug
