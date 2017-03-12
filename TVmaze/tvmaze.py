@@ -2,7 +2,7 @@
 from tvmaze_args import TVmazeArgs
 from tvmaze_search import TVmazeSearch
 from tvmaze_show_details import TVmazeShowDetails
-from tvmaze_episodes import TVMazeEpisodes
+from tvmaze_episodes import TVmazeEpisodes
 
 
 def main():
@@ -34,7 +34,7 @@ def main():
 
     # episode functionality
     if(args.getEpisodeSeason()):
-        episodes = TVMazeEpisodes(args.getShowID(), args.getEpisodeSeason(),
+        episodes = TVmazeEpisodes(args.getShowID(), args.getEpisodeSeason(),
                                   args.getDebug())
         episodes.getEpisodes()
         return episodes.getEpisodeJSON()

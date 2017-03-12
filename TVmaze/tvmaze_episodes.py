@@ -5,16 +5,16 @@ import datetime
 import re
 
 
-class TVMazeEpisodes:
+class TVmazeEpisodes:
     def __init__(self, showID, epSeason, debug):
-        """Constructor for TVMazeEpisodes class
+        """Constructor for TVmazeEpisodes class
 
         Arguments:
             showID:      ID for show from CLI
             epSeason:    season number, from CLI, used to get episodes from
             debug:       True to print JSON, False not to
 
-        Returns: creates TVMazeEpisodes class object
+        Returns: creates TVmazeEpisodes class object
         """
         self.__showID = showID
         self.__epSeason = epSeason
