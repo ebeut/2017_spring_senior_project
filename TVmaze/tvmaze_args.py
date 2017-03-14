@@ -15,8 +15,10 @@ class TVmazeArgs:
         parser = argparse.ArgumentParser(description="TVmaze API Script",
                                          prog="tvmaze.py")
 
-        # mutual exclusion
+        # mutual exclusion between --id and --title
         group = parser.add_mutually_exclusive_group()
+        # mutual exclusion between --details and --episodes
+        group1 = parser.add_mutually_exclusive_group()
 
         # -v, --version
         parser.add_argument("-v", "--version", action="version",
@@ -35,9 +37,14 @@ class TVmazeArgs:
                             action="store_true", default=False)
 
         # --details
-        parser.add_argument("--details", help="Get details about the show, "
+        group1.add_argument("--details", help="Get details about the show, "
                             "including description and cast", dest="details",
                             action="store_true", default=False)
+
+        # --episodes
+        group1.add_argument("--episodes", help="Get episodes based "
+                            "on season provided", dest="seasonNum",
+                            type=int)
 
         # --debug
         parser.add_argument("--debug", help="Prints JSON that is returned to "
@@ -53,24 +60,76 @@ class TVmazeArgs:
         if(args.details and args.showID is None):
             print("Error: when details is selected an ID must be provided")
             sys.exit()
+        if(args.seasonNum and args.showID is None):
+            print("Error: when episodes is selected an ID must be provided")
+            sys.exit()
 
-        self.showID = args.showID
-        self.showTitle = args.showTitle
-        self.search = args.search
-        self.details = args.details
-        self.debug = args.debug
+        self.__showID = args.showID
+        self.__showTitle = args.showTitle
+        self.__search = args.search
+        self.__details = args.details
+        self.__episodeSeason = args.seasonNum
+        self.__debug = args.debug
 
-    def getArgs(self):
-        """Gets CLI arguments
+    def getShowID(self):
+        """Getter for show ID
 
         Arguments: N/A
 
         Returns:
-            showID:       ID provided from search function
-            showTitle:    Title of show
-            search:       True to search, False not to
-            details:      True to get details, False not to
-            debug:        True to print JSON, False not to
+            showID:    ID number provided in CLI
         """
-        return self.showID, self.showTitle, self.search, self.details, \
-            self.debug
+        return self.__showID
+
+    def getShowTitle(self):
+        """Getter for show title
+
+        Arguments: N/A
+
+        Returns:
+            showTitle:    title of show provided in CLI
+        """
+        return self.__showTitle
+
+    def getSearch(self):
+        """Getter for search
+
+        Arguments: N/A
+
+        Returns:
+            search:    boolean value based on if search provided in CLI
+                       True if provided, False if not
+        """
+        return self.__search
+
+    def getDetails(self):
+        """Getter for details
+
+        Arguments: N/A
+
+        Returns:
+            details:    boolean value based on if details provided in CLI
+                        True if provided, False if not
+        """
+        return self.__details
+
+    def getEpisodeSeason(self):
+        """Getter for episodeSeason
+
+        Arguments: N/A
+
+        Returns:
+            episodeSeason:    season number used to get episodes from
+        """
+        return self.__episodeSeason
+
+    def getDebug(self):
+        """Getter for debug
+
+        Arguments: N/A
+
+        Returns:
+            debug:    boolean value based on if debug provided in CLI
+                      True if provided, False if not
+        """
+        return self.__debug

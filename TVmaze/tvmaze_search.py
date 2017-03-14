@@ -13,9 +13,9 @@ class TVmazeSearch:
 
         Returns: creates TVmazeSearch class object
         """
-        self.title = title
-        self.debug = debug
-        self.resultJSON = None
+        self.__title = title
+        self.__debug = debug
+        self.__resultJSON = None
 
     def search(self):
         """Makes initial request to API and calls parseSearchResults with raw
@@ -23,24 +23,21 @@ class TVmazeSearch:
 
         Arguments: N/A
 
-        Returns:
-            resultJSON:    new JSON returned from parseSearchResults
+        Returns: sets resultJSON member
         """
         searchURL = "http://api.tvmaze.com/search/shows?q="
-        searchTitle = self.title.replace(" ", "+")
+        searchTitle = self.__title.replace(" ", "+")
 
         response = requests.get(searchURL + searchTitle)
         data = response.json()
 
         # convert list of dictionaries to JSON
-        self.resultJSON = json.dumps(self.parseSearchResults(data))
-        if(self.debug):
-            print(self.resultJSON)
-
-        return self.resultJSON
+        self.__resultJSON = json.dumps(self.parseSearchResults(data))
+        if(self.__debug):
+            print(self.__resultJSON)
 
     def parseSearchResults(self, results):
-        """Parses the resulting JSON
+        """Parses the resulting JSON from search
 
         Arguments:
             results:    JSON response from API query in search
@@ -51,7 +48,7 @@ class TVmazeSearch:
 
         Example:
             [{"id": "id number", "title": "show title",
-            "year": "year premiered, N/A if unavailable",
+            "year": "year premiered, N/A if unavailable", "imdbRating": rating,
             "poster": "link to poster, N/A if unavailable"}]
         """
         searchResults = []
@@ -62,6 +59,7 @@ class TVmazeSearch:
             # again
             showID = show["show"]["id"]
             title = show["show"]["name"]
+            imdbRating = show["show"]["rating"]["average"]
 
             try:
                 poster = show["show"]["image"]["medium"]
@@ -79,8 +77,19 @@ class TVmazeSearch:
                 "id": showID,
                 "title": title,
                 "year": year,
+                "imdbRating": imdbRating,
                 "poster": poster,
             }
             searchResults.append(temp)
 
         return searchResults
+
+    def getResultJSON(self):
+        """Getter function for resultJSON
+
+        Arguments: N/A
+
+        Returns:
+            resultJSON:    JSON containing search results
+        """
+        return self.__resultJSON

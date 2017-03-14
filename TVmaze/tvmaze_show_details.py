@@ -14,9 +14,9 @@ class TVmazeShowDetails:
 
         Returns: creates TVmazeShowDetails class object
         """
-        self.showID = showID
-        self.debug = debug
-        self.detailsJSON = None
+        self.__showID = showID
+        self.__debug = debug
+        self.__detailsJSON = None
 
     def getShowDetails(self):
         """Makes initial request to API and calls parseShowDetails with raw
@@ -24,24 +24,21 @@ class TVmazeShowDetails:
 
         Arguments: N/A
 
-        Returns:
-            detailsJSON:    new JSON returned from parseShowDetails
+        Returns: sets detailsJSON member
         """
-        searchURL = "http://api.tvmaze.com/shows/" + str(self.showID) \
+        searchURL = "http://api.tvmaze.com/shows/" + str(self.__showID) \
             + "?embed=cast"
 
         response = requests.get(searchURL)
         data = response.json()
 
         # converts dictionary to JSON
-        self.detailsJSON = json.dumps(self.parseShowDetails(data))
-        if(self.debug):
-            print(self.detailsJSON)
-
-        return self.detailsJSON
+        self.__detailsJSON = json.dumps(self.parseShowDetails(data))
+        if(self.__debug):
+            print(self.__detailsJSON)
 
     def parseShowDetails(self, data):
-        """Parses the resulting JSON
+        """Parses the resulting JSON from getShowDetails
 
         Arguments:
             data:    JSON response from API query in getShowDetails
@@ -51,7 +48,8 @@ class TVmazeShowDetails:
 
         Example:
             {"id": ID number, "title": "show title",
-            "year": "year premiered, N/A if unavailable", "imdbRating": rating,
+            "year": "year premiered, N/A if unavailable",
+            "numSeasons": number of seasons, "imdbRating": rating,
             "network": "name of network",
             "poster": "link to poster, N/A if unavailable",
             "summary": "plot of show", "cast": [{"name": "actor name",
@@ -96,10 +94,13 @@ class TVmazeShowDetails:
             cast.append(tempCast)
             count += 1
 
+        numSeasons = self.getNumSeasons()
+
         details = {
-            "id": self.showID,
+            "id": self.__showID,
             "title": title,
             "year": year,
+            "numSeasons": numSeasons,
             "imdbRating": imdbRating,
             "network": network,
             "poster": poster,
@@ -108,3 +109,28 @@ class TVmazeShowDetails:
         }
 
         return details
+
+    def getNumSeasons(self):
+        """Get the number of seasons
+
+        Arguments: N/A
+
+        Returns: the number of seasons
+        """
+        searchURL = "http://api.tvmaze.com/shows/" + str(self.__showID) \
+            + "/seasons"
+
+        response = requests.get(searchURL)
+        data = response.json()
+
+        return data[-1]["number"]
+
+    def getDetailsJSON(self):
+        """Getter function for detailsJSON
+
+        Arguments: N/A
+
+        Returns:
+            detailsJSON:    JSON containing show details
+        """
+        return self.__detailsJSON
