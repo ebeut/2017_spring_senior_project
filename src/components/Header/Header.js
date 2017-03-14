@@ -86,7 +86,7 @@ export class Header extends Component {
                     Calendar
                 </MenuItem>
             ));
-            
+
             settingsMenuItem = ((
                 <MenuItem
                     leftIcon={< Settings />}
@@ -157,7 +157,7 @@ export class Header extends Component {
 
                             <MenuItem
                                 leftIcon={< Search />}
-                                onClick={() => this.dispatchNewRoute('/counter')}
+                                onClick={() => this.dispatchNewRoute('/search')}
                                 style={{
                                     textAlign: 'left',
                                 }}

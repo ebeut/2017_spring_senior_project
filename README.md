@@ -43,6 +43,11 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 - `./tvmaze.py -h` will show all possible command line options
 - `--debug` option prints JSON that is returned to the terminal
 
+## TVmaze Python Script
+- Windows Users
+- C:\Users\n_sin\AppData\Local\Programs\Python\Python36-32\python.exe .\tvmaze.py --title "the walking dead" --search --debug
+- must call the python interpreter then run the file as a parameter
+
 ### Search
 - `./tvmaze.py --title "Title of Show" --search` returns JSON with all shows from the search including: ID, show title, year premiered, and a link to its poster
 ```
