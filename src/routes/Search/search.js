@@ -18,7 +18,7 @@ export default class SearchPage extends Component {
   };
 
   componentWillMount () {
-   // this.props.getShows();
+    this.props.getShows('the wal');
   }
 
   runSearch = (searchContent) => {
@@ -59,7 +59,8 @@ export default class SearchPage extends Component {
               {image: "",name: "Mirror", year: 2012},
               {image: "",name: "Lost", year: 2015},
               {image: "",name: "Naruto", year: 1978},
-              {image: "",name: "Empire", year: 2200}]}
+              {image: "",name: "Empire", year: 2200}
+              ]}
           />
         </div>
       </div>

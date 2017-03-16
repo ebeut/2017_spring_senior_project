@@ -4,6 +4,7 @@ import Home from './Home'
 import CounterRoute from './Counter'
 import TestRoute from './Test-Btn';
 import SearchRoute from './Search';
+import ShowInfoPage from './Show-Info';
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -15,9 +16,10 @@ export const createRoutes = (store) => ({
   childRoutes : [
     CounterRoute(store),
     TestRoute(store),
-    SearchRoute(store)
+    SearchRoute(store),
+    ShowInfoPage(store)
   ]
-})
+});
 
 /*  Note: childRoutes can be chunked or otherwise loaded programmatically
     using getChildRoutes with the following signature:
