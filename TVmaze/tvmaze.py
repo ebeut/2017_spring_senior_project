@@ -3,6 +3,7 @@ from tvmaze_args import TVmazeArgs
 from tvmaze_search import TVmazeSearch
 from tvmaze_show_details import TVmazeShowDetails
 from tvmaze_episodes import TVmazeEpisodes
+from tvmaze_trending import TVmazeTrending
 
 
 def main():
@@ -11,12 +12,14 @@ def main():
     Arguments: N/A
 
     Returns:
-        getResultJSON():     if search option provided, JSON containing search
-                             results based on title provided
-        getDetailsJSON():    if details option provided, JSON containing
-                             details related to the ID provided
-        getEpisodeJSON():    if episodes option provided, JSON containing
-                             episodes for season provided
+        getResultJSON():      if search option provided, JSON containing search
+                              results based on title provided
+        getDetailsJSON():     if details option provided, JSON containing
+                              details related to the ID provided
+        getEpisodeJSON():     if episodes option provided, JSON containing
+                              episodes for season provided
+        getTrendingJSON():    if trending option provided, JSON containing
+                              trending shows from Rotten Tomato
     """
     args = TVmazeArgs()
 
@@ -38,6 +41,12 @@ def main():
                                   args.getDebug())
         episodes.getEpisodes()
         return episodes.getEpisodeJSON()
+
+    # trending
+    if(args.getTrending()):
+        trending = TVmazeTrending(args.getDebug())
+        trending.getTrending()
+        return trending.getTrendingJSON()
 
 
 if __name__ == '__main__':

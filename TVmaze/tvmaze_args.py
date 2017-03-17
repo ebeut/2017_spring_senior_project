@@ -15,7 +15,7 @@ class TVmazeArgs:
         parser = argparse.ArgumentParser(description="TVmaze API Script",
                                          prog="tvmaze.py")
 
-        # mutual exclusion between --id and --title
+        # mutual exclusion between --id, --title, --trending
         group = parser.add_mutually_exclusive_group()
         # mutual exclusion between --details and --episodes
         group1 = parser.add_mutually_exclusive_group()
@@ -31,6 +31,10 @@ class TVmazeArgs:
         # --title
         group.add_argument("--title", help="Title of show", dest="showTitle",
                            type=str)
+
+        # --trending
+        group.add_argument("--trending", help="Get trending shows",
+                           dest="trending", action="store_true", default=False)
 
         # --search
         parser.add_argument("--search", help="Search for show", dest="search",
@@ -66,6 +70,7 @@ class TVmazeArgs:
 
         self.__showID = args.showID
         self.__showTitle = args.showTitle
+        self.__trending = args.trending
         self.__search = args.search
         self.__details = args.details
         self.__episodeSeason = args.seasonNum
@@ -90,6 +95,17 @@ class TVmazeArgs:
             showTitle:    title of show provided in CLI
         """
         return self.__showTitle
+
+    def getTrending(self):
+        """Getter for trending
+
+        Arguments: N/A
+
+        Returns:
+            trending:    boolean value based on if trending provided in CLI
+                         True if provided, False if not
+        """
+        return self.__trending
 
     def getSearch(self):
         """Getter for search
