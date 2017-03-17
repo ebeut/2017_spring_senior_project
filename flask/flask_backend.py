@@ -9,7 +9,6 @@ from flask_trending import FlaskTrending
 app = Flask(__name__)
 
 
-# search
 @app.route("/search/<showTitle>")
 def api_search(showTitle):
     """Search request to flask backend. Show title must have "+" instead of
@@ -40,7 +39,6 @@ def api_search(showTitle):
     return searchJSON
 
 
-# show details
 @app.route("/details/<int:showID>")
 def api_details(showID):
     """Details request to flask backend
@@ -78,7 +76,6 @@ def api_details(showID):
     return detailsJSON
 
 
-# episode
 @app.route("/episodes/<int:showID>/<int:seasonNum>")
 def api_episodes(showID, seasonNum):
     """Episodes request to flask backend
@@ -109,7 +106,6 @@ def api_episodes(showID, seasonNum):
     return episodesJSON
 
 
-# trending
 @app.route("/trending")
 def api_trending():
     """Trending request to flask backend
