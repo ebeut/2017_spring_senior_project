@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 import requests
-import json
 
 
 class TVmazeSearch:
-    def __init__(self, title, debug):
+    def __init__(self, title):
         """Constructor for TVmazeSearch class
 
         Arguments:
             title:    title of show provided in CLI arguments
-            debug:    True to print JSON, False not to
 
         Returns: creates TVmazeSearch class object
         """
         self.__title = title
-        self.__debug = debug
         self.__resultJSON = None
 
     def search(self):
@@ -26,15 +23,12 @@ class TVmazeSearch:
         Returns: sets resultJSON member
         """
         searchURL = "http://api.tvmaze.com/search/shows?q="
-        searchTitle = self.__title.replace(" ", "+")
+        # searchTitle = self.__title.replace(" ", "+")
 
-        response = requests.get(searchURL + searchTitle)
+        response = requests.get(searchURL + self.__title)
         data = response.json()
 
-        # convert list of dictionaries to JSON
-        self.__resultJSON = json.dumps(self.parseSearchResults(data))
-        if(self.__debug):
-            print(self.__resultJSON)
+        self.__resultJSON = self.parseSearchResults(data)
 
     def parseSearchResults(self, results):
         """Parses the resulting JSON from search
@@ -45,11 +39,6 @@ class TVmazeSearch:
         Returns:
             searchResults:    list containing a dictionary for each show in
                               the search results
-
-        Example:
-            [{"id": "id number", "title": "show title",
-            "year": "year premiered, N/A if unavailable", "imdbRating": rating,
-            "poster": "link to poster, N/A if unavailable"}]
         """
         searchResults = []
 

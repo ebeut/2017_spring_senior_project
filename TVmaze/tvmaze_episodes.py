@@ -1,24 +1,21 @@
 #!/bin/usr/env python3
 import requests
-import json
 import datetime
 import re
 
 
 class TVmazeEpisodes:
-    def __init__(self, showID, epSeason, debug):
+    def __init__(self, showID, epSeason):
         """Constructor for TVmazeEpisodes class
 
         Arguments:
             showID:      ID for show from CLI
             epSeason:    season number, from CLI, used to get episodes from
-            debug:       True to print JSON, False not to
 
         Returns: creates TVmazeEpisodes class object
         """
         self.__showID = showID
         self.__epSeason = epSeason
-        self.__debug = debug
         self.__episodeJSON = None
 
     def getEpisodes(self):
@@ -35,10 +32,7 @@ class TVmazeEpisodes:
         response = requests.get(searchURL)
         data = response.json()
 
-        # converts list of dictionaries to JSON
-        self.__episodeJSON = json.dumps(self.parseEpisodes(data))
-        if(self.__debug):
-            print(self.__episodeJSON)
+        self.__episodeJSON = self.parseEpisodes(data)
 
     def parseEpisodes(self, data):
         """Parses the resulting JSON from getEpisodes
@@ -48,11 +42,6 @@ class TVmazeEpisodes:
 
         Returns:
             episodes:    list containing a dictionary for each episode
-
-        Example:
-            [{"name": "name of episode", "season": season number,
-            "number": episode number, "date": "date aired",
-            "summary": "summary of episode"}]
         """
         episodes = []
         flag = False  # to check season number

@@ -1,21 +1,18 @@
 #!/bin/usr/env python3
 import requests
-import json
 import re
 
 
 class TVmazeShowDetails:
-    def __init__(self, showID, debug):
+    def __init__(self, showID):
         """Constructor for TVmazeShowDetails class
 
         Arguments:
             showID:    ID of show provided in CLI arguments
-            debug:     True to print JSON, False not to
 
         Returns: creates TVmazeShowDetails class object
         """
         self.__showID = showID
-        self.__debug = debug
         self.__detailsJSON = None
 
     def getShowDetails(self):
@@ -32,10 +29,7 @@ class TVmazeShowDetails:
         response = requests.get(searchURL)
         data = response.json()
 
-        # converts dictionary to JSON
-        self.__detailsJSON = json.dumps(self.parseShowDetails(data))
-        if(self.__debug):
-            print(self.__detailsJSON)
+        self.__detailsJSON = self.parseShowDetails(data)
 
     def parseShowDetails(self, data):
         """Parses the resulting JSON from getShowDetails
@@ -45,16 +39,6 @@ class TVmazeShowDetails:
 
         Returns:
             details:    dictionary containing relevant show details
-
-        Example:
-            {"id": ID number, "title": "show title",
-            "year": "year premiered, N/A if unavailable",
-            "numSeasons": number of seasons, "imdbRating": rating,
-            "network": "name of network, N/A if unavailable",
-            "poster": "link to poster, N/A if unavailable",
-            "summary": "plot of show", "cast": [{"name": "actor name",
-            "character": "character actor plays",
-            "image": "link to image of actor, N/A if unavailable"}]}
         """
         cast = []
 

@@ -1,53 +1,142 @@
 #!/usr/bin/env python3
-from tvmaze_args import TVmazeArgs
+from flask import Flask, jsonify
 from tvmaze_search import TVmazeSearch
 from tvmaze_show_details import TVmazeShowDetails
 from tvmaze_episodes import TVmazeEpisodes
 from tvmaze_trending import TVmazeTrending
 
 
-def main():
-    """Main function for TVmaze script
+app = Flask(__name__)
+
+
+# search
+@app.route("/search/<showTitle>")
+def api_search(showTitle):
+    """Search request to flask backend. Show title must have "+" instead of
+    spaces (ex. the+office).
+
+    Arguments:
+        showTitle:    title of show with "+" instead of spaces (ex. the+office)
+
+    Returns:
+        searchJSON: JSON containing search results
+
+    Example:
+        [
+            {
+                "id": ID number,
+                "imdbRating": IMDb rating,
+                "poster": "link to poster, N/A if unavailable"
+                "title": "show title",
+                "year": year premiered, N/A if unavailable
+            }
+        ]
+    """
+    searchShows = TVmazeSearch(showTitle)
+    searchShows.search()
+
+    searchJSON = jsonify(searchShows.getResultJSON())
+    searchJSON.status_code = 200
+    return searchJSON
+
+
+# show details
+@app.route("/details/<int:showID>")
+def api_details(showID):
+    """Details request to flask backend
+
+    Arguments:
+        showID:    ID number for show from TVmaze API
+
+    Returns:
+        detailsJSON:    JSON containing show details
+
+    Example:
+        {
+            "cast": [
+                {
+                    "character": "character actor plays",
+                    "image": "link to image of actor, N/A if unavailable",
+                    "name": "actor name"
+                }
+            ],
+            "id": ID number,
+            "imdbRating": IMDb rating,
+            "network": "name of network, N/A if unavailable",
+            "numSeasons": number of seasons,
+            "poster": "link to poster, N/A if unavailable",
+            "summary": "plot of show",
+            "title": "show title",
+            "year": year premiered, N/A if unavailable
+        }
+    """
+    showDetails = TVmazeShowDetails(showID)
+    showDetails.getShowDetails()
+
+    detailsJSON = jsonify(showDetails.getDetailsJSON())
+    detailsJSON.status_code = 200
+    return detailsJSON
+
+
+# episode
+@app.route("/episodes/<int:showID>/<int:seasonNum>")
+def api_episodes(showID, seasonNum):
+    """Episodes request to flask backend
+
+    Arguments:
+        showID:       ID number for show from TVmaze API
+        seasonNum:    number of season
+
+    Returns:
+        episodesJSON:    JSON containing episodes for the provided season
+
+    Example:
+        [
+            {
+                "date": "date aired",
+                "name": "name of episode",
+                "number": episode number,
+                "season": season number,
+                "summary": "summary of episode"
+            }
+        ]
+    """
+    episodes = TVmazeEpisodes(showID, seasonNum)
+    episodes.getEpisodes()
+
+    episodesJSON = jsonify(episodes.getEpisodeJSON())
+    episodesJSON.status_code = 200
+    return episodesJSON
+
+
+# trending
+@app.route("/trending")
+def api_trending():
+    """Trending request to flask backend
 
     Arguments: N/A
 
     Returns:
-        getResultJSON():      if search option provided, JSON containing search
-                              results based on title provided
-        getDetailsJSON():     if details option provided, JSON containing
-                              details related to the ID provided
-        getEpisodeJSON():     if episodes option provided, JSON containing
-                              episodes for season provided
-        getTrendingJSON():    if trending option provided, JSON containing
-                              trending shows from Rotten Tomato
+        trendingJSON:    JSON containing trending shows from Rotten Tomato
+
+    Example:
+        [
+            {
+                "id": ID number,
+                "imdbRating": IMDb rating,
+                "poster": "link to poster, N/A if unavailable"
+                "title": "show title",
+                "year": year premiered, N/A if unavailable
+            }
+        ]
     """
-    args = TVmazeArgs()
+    trending = TVmazeTrending()
+    trending.getTrending()
 
-    # search functionality
-    if(args.getSearch()):
-        searchShows = TVmazeSearch(args.getShowTitle(), args.getDebug())
-        searchShows.search()
-        return searchShows.getResultJSON()
-
-    # show details functionality
-    if(args.getDetails()):
-        showDetails = TVmazeShowDetails(args.getShowID(), args.getDebug())
-        showDetails.getShowDetails()
-        return showDetails.getDetailsJSON()
-
-    # episode functionality
-    if(args.getEpisodeSeason()):
-        episodes = TVmazeEpisodes(args.getShowID(), args.getEpisodeSeason(),
-                                  args.getDebug())
-        episodes.getEpisodes()
-        return episodes.getEpisodeJSON()
-
-    # trending
-    if(args.getTrending()):
-        trending = TVmazeTrending(args.getDebug())
-        trending.getTrending()
-        return trending.getTrendingJSON()
+    trendingJSON = jsonify(trending.getTrendingJSON())
+    trendingJSON.status_code = 200
+    return trendingJSON
 
 
 if __name__ == '__main__':
-    main()
+    app.run()

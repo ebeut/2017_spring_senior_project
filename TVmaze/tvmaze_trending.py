@@ -2,19 +2,16 @@
 
 import requests
 from bs4 import BeautifulSoup
-import json
 
 
 class TVmazeTrending:
-    def __init__(self, debug):
+    def __init__(self):
         """Constructor for TVmazeTrending class
 
-        Arguments:
-            debug:    True to print JSON, false not to
+        Arguments: N/A
 
         Returns: creates TVmazeTrending class object
         """
-        self.__debug = debug
         self.__trendingJSON = None
 
     def getRottenTomato(self):
@@ -62,10 +59,7 @@ class TVmazeTrending:
             # add dictionary returned for trending show to list
             results.append(tempShow)
 
-        # convert list of dictionaries to JSON
-        self.__trendingJSON = json.dumps(results)
-        if(self.__debug):
-            print(results)
+        self.__trendingJSON = results
 
     def parseTrending(self, data):
         """Parses the resulting JSON from each trending title
@@ -75,11 +69,6 @@ class TVmazeTrending:
 
         Returns:
             temp:    dictionary for each show
-
-        Example:
-            {"id": "id number", "title": "show title",
-            "year": "year premiered, N/A if unavailable", "imdbRating": rating,
-            "poster": "link to poster, N/A if unavailable"}
         """
         showID = data["id"]
         title = data["name"]
