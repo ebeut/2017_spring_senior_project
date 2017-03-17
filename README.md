@@ -60,7 +60,7 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 {"id": ID number, "title": "show title",
 "year": "year premiered, N/A if unavailable",
 "numSeasons": number of seasons, "imdbRating": rating,
-"network": "name of network",
+"network": "name of network, N/A if unavailable",
 "poster": "link to poster, N/A if unavailable",
 "summary": "plot of show", "cast": [{"name": "actor name",
 "character": "character actor plays",

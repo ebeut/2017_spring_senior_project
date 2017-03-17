@@ -50,7 +50,7 @@ class TVmazeShowDetails:
             {"id": ID number, "title": "show title",
             "year": "year premiered, N/A if unavailable",
             "numSeasons": number of seasons, "imdbRating": rating,
-            "network": "name of network",
+            "network": "name of network, N/A if unavailable",
             "poster": "link to poster, N/A if unavailable",
             "summary": "plot of show", "cast": [{"name": "actor name",
             "character": "character actor plays",
@@ -67,7 +67,11 @@ class TVmazeShowDetails:
             year = "N/A"  # premiere date unavailable
 
         imdbRating = data["rating"]["average"]
-        network = data["network"]["name"]
+
+        try:
+            network = data["network"]["name"]
+        except TypeError:
+            network = "N/A"  # network unavailable
 
         try:
             poster = data["image"]["medium"]
