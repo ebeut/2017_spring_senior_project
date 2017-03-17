@@ -2,14 +2,14 @@
 import requests
 
 
-class TVmazeSearch:
+class FlaskSearch:
     def __init__(self, title):
-        """Constructor for TVmazeSearch class
+        """Constructor for FlaskSearch class
 
         Arguments:
             title:    title of show provided in CLI arguments
 
-        Returns: creates TVmazeSearch class object
+        Returns: creates FlaskSearch class object
         """
         self.__title = title
         self.__resultJSON = None
