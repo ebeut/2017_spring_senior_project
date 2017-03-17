@@ -60,7 +60,7 @@ class FlaskEpisodes:
 
                 # not every episode has a summary, will result in empty string
                 # removes html tags from summary
-                summary = re.sub("<.*?>", "", episode["summary"])
+                summary = re.sub("<.*?>", "", str(episode["summary"]))
 
                 temp = {
                     "name": name,
