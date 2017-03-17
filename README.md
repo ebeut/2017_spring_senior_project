@@ -21,7 +21,6 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 
 ## Packages
 - [Material-UI](http://www.material-ui.com/#/)
-- [Python-Shell](https://github.com/extrabacon/python-shell)
 - [React-Big-Calendar](https://github.com/intljusticemission/react-big-calendar)
 
 ## APIs
@@ -38,47 +37,71 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
     - `npm run dev`
 4. From a web browser navigate to "localhost:3000"
 
-## TVmaze Python Script
-- Make script executable `chmod +x tvmaze.py`
-- `./tvmaze.py -h` will show all possible command line options
-- `--debug` option prints JSON that is returned to the terminal
-- Windows Users
-    - `C:\Users\n_sin\AppData\Local\Programs\Python\Python36-32\python.exe .\tvmaze.py --title "the walking dead" --search --debug`
-    - must call the python interpreter then run the file as a parameter
-
-### Trending
-- `./tvmaze.py --trending` returns JSON with all the trending shows from Rotten Tomato, each show includes: ID, show title, year premiered, IMDb rating, and a link to its poster
-```
-[{"id": "id number", "title": "show title",
-"year": "year premiered, N/A if unavailable", "imdbRating": rating,
-"poster": "link to poster, N/A if unavailable"}]
-```
+## Flask Backend
+- Make executable `chmod +x flask_backend.py` or run `python3 flask_backend.py`
+    - If missing Flask, run `pip3 install Flask`
+- Should then see `* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)`
 
 ### Search
-- `./tvmaze.py --title "Title of Show" --search` returns JSON with all shows from the search including: ID, show title, year premiered, IMDb rating, and a link to its poster
+- `http://127.0.0.1:5000/search/title+of+show` returns JSON with all shows from the search including: ID, show title, year premiered, IMDb rating, and a link to its poster
 ```
-[{"id": "id number", "title": "show title",
-"year": "year premiered, N/A if unavailable", "imdbRating": rating,
-"poster": "link to poster, N/A if unavailable"}]
+[
+    {
+        "id": ID number,
+        "imdbRating": IMDb rating,
+        "poster": "link to poster, N/A if unavailable"
+        "title": "show title",
+        "year": year premiered, N/A if unavailable
+    }
+]
 ```
 
 ### Show Details
-- `./tvmaze.py --id ID number --details` returns JSON containing details about the show connected to the provided ID. Details included: ID, show title, year premiered, IMDb rating, network it is televised on, a link to its poster, a summary of the plot, and cast members.
+- `http://127.0.0.1:5000/details/idNumber` returns JSON containing details about the show connected to the provided ID. Details included: ID, show title, year premiered, IMDb rating, network it is televised on, a link to its poster, a summary of the plot, and cast members.
 ```
-{"id": ID number, "title": "show title",
-"year": "year premiered, N/A if unavailable",
-"numSeasons": number of seasons, "imdbRating": rating,
-"network": "name of network, N/A if unavailable",
-"poster": "link to poster, N/A if unavailable",
-"summary": "plot of show", "cast": [{"name": "actor name",
-"character": "character actor plays",
-"image": "link to image of actor, N/A if unavailable"}]}
+{
+    "cast": [
+        {
+            "character": "character actor plays",
+            "image": "link to image of actor, N/A if unavailable",
+            "name": "actor name"
+        }
+    ],
+    "id": ID number,
+    "imdbRating": IMDb rating,
+    "network": "name of network, N/A if unavailable",
+    "numSeasons": number of seasons,
+    "poster": "link to poster, N/A if unavailable",
+    "summary": "plot of show",
+    "title": "show title",
+    "year": year premiered, N/A if unavailable
+}
 ```
 
 ### Episodes
-- `./tvmaze.py --id ID number --episodes season number` returns JSON containing all the episodes for the provided season based on the ID. The episodes include: the name of the episode, the season number, the episode number, the date aired, and a summary of the episode.
+- `http://127.0.0.1:5000/episodes/idNumber/seasonNumber` returns JSON containing all the episodes for the provided season based on the ID. The episodes include: the name of the episode, the season number, the episode number, the date aired, and a summary of the episode.
 ```
-[{"name": "name of episode", "season": season number,
-"number": episode number, "date": "date aired",
-"summary": "summary of episode"}]
+[
+    {
+        "date": "date aired",
+        "name": "name of episode",
+        "number": episode number,
+        "season": season number,
+        "summary": "summary of episode"
+    }
+]
+```
+
+### Trending
+- `http://127.0.0.1:5000/trending` returns JSON with all the trending shows from Rotten Tomato, each show includes: ID, show title, year premiered, IMDb rating, and a link to its poster
+```
+[
+    {
+        "id": ID number,
+        "imdbRating": IMDb rating,
+        "poster": "link to poster, N/A if unavailable"
+        "title": "show title",
+        "year": year premiered, N/A if unavailable
+    }
+]
 ```
