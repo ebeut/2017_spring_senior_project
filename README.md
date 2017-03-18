@@ -49,7 +49,7 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
     {
         "id": ID number,
         "imdbRating": IMDb rating,
-        "poster": "link to poster, N/A if unavailable"
+        "poster": "link to poster, N/A if unavailable",
         "title": "show title",
         "year": year premiered, N/A if unavailable
     }
@@ -99,7 +99,7 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
     {
         "id": ID number,
         "imdbRating": IMDb rating,
-        "poster": "link to poster, N/A if unavailable"
+        "poster": "link to poster, N/A if unavailable",
         "title": "show title",
         "year": year premiered, N/A if unavailable
     }

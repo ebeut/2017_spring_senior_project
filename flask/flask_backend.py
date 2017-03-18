@@ -25,7 +25,7 @@ def api_search(showTitle):
             {
                 "id": ID number,
                 "imdbRating": IMDb rating,
-                "poster": "link to poster, N/A if unavailable"
+                "poster": "link to poster, N/A if unavailable",
                 "title": "show title",
                 "year": year premiered, N/A if unavailable
             }
@@ -120,7 +120,7 @@ def api_trending():
             {
                 "id": ID number,
                 "imdbRating": IMDb rating,
-                "poster": "link to poster, N/A if unavailable"
+                "poster": "link to poster, N/A if unavailable",
                 "title": "show title",
                 "year": year premiered, N/A if unavailable
             }
