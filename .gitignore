@@ -9,3 +9,4 @@ coverage
 .idea/
 
 __pycache__/
+.cache/
