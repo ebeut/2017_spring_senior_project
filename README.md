@@ -39,7 +39,10 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 
 ## Flask Backend
 - Make executable `chmod +x flask_backend.py` or run `python3 flask_backend.py`
-    - If missing Flask, run `pip3 install Flask`
+    - Libraries needed:
+        - Flask: `pip install Flask`
+        - requests: `pip install requests`
+        - BeautifulSoup: `pip install beautifulsoup4`
 - Should then see `* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)`
 
 ### Search
@@ -105,3 +108,11 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
     }
 ]
 ```
+
+## pytest
+- Unit testing for Flask backend
+- Libraries needed:
+    - pytest: `pip install pytest`
+    - requests: `pip install requests`
+- From flask directory call `pytest`
+    - `pytest -v` for verbose
