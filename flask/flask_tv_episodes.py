@@ -4,15 +4,15 @@ import datetime
 import re
 
 
-class FlaskEpisodes:
+class FlaskTvEpisodes:
     def __init__(self, showID, epSeason):
-        """Constructor for FlaskEpisodes class
+        """Constructor for FlaskTvEpisodes class
 
         Arguments:
             showID:      ID for show from CLI
             epSeason:    season number, from CLI, used to get episodes from
 
-        Returns: creates FlaskEpisodes class object
+        Returns: creates FlaskTvEpisodes class object
         """
         self.__showID = showID
         self.__epSeason = epSeason

@@ -3,14 +3,14 @@ import requests
 import re
 
 
-class FlaskDetails:
+class FlaskTvDetails:
     def __init__(self, showID):
-        """Constructor for FlaskDetails class
+        """Constructor for FlaskTvDetails class
 
         Arguments:
             showID:    ID of show provided in CLI arguments
 
-        Returns: creates FlaskDetails class object
+        Returns: creates FlaskTvDetails class object
         """
         self.__showID = showID
         self.__detailsJSON = None

@@ -4,13 +4,13 @@ import requests
 from bs4 import BeautifulSoup
 
 
-class FlaskTrending:
+class FlaskTvTrending:
     def __init__(self):
-        """Constructor for FlaskTrending class
+        """Constructor for FlaskTvTrending class
 
         Arguments: N/A
 
-        Returns: creates FlaskTrending class object
+        Returns: creates FlaskTvTrending class object
         """
         self.__trendingJSON = None
 

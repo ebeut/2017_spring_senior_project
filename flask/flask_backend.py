@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify
-from flask_search import FlaskSearch
-from flask_details import FlaskDetails
-from flask_episodes import FlaskEpisodes
-from flask_trending import FlaskTrending
+from flask_tv_search import FlaskTvSearch
+from flask_tv_details import FlaskTvDetails
+from flask_tv_episodes import FlaskTvEpisodes
+from flask_tv_trending import FlaskTvTrending
 
 
 app = Flask(__name__)
@@ -31,7 +31,7 @@ def api_search(showTitle):
             }
         ]
     """
-    searchShows = FlaskSearch(showTitle)
+    searchShows = FlaskTvSearch(showTitle)
     searchShows.search()
 
     searchJSON = jsonify(searchShows.getResultJSON())
@@ -68,7 +68,7 @@ def api_details(showID):
             "year": year premiered, N/A if unavailable
         }
     """
-    showDetails = FlaskDetails(showID)
+    showDetails = FlaskTvDetails(showID)
     showDetails.getShowDetails()
 
     detailsJSON = jsonify(showDetails.getDetailsJSON())
@@ -98,7 +98,7 @@ def api_episodes(showID, seasonNum):
             }
         ]
     """
-    episodes = FlaskEpisodes(showID, seasonNum)
+    episodes = FlaskTvEpisodes(showID, seasonNum)
     episodes.getEpisodes()
 
     episodesJSON = jsonify(episodes.getEpisodeJSON())
@@ -126,7 +126,7 @@ def api_trending():
             }
         ]
     """
-    trending = FlaskTrending()
+    trending = FlaskTvTrending()
     trending.getTrending()
 
     trendingJSON = jsonify(trending.getTrendingJSON())
