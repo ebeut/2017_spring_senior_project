@@ -20,6 +20,12 @@ def details_request():
 
 
 @pytest.fixture
+def episodes_request():
+    """Request for episodes JSON (ex. The Office season 1)"""
+    return requests.get("http://localhost:5000/episodes/526/1")
+
+
+@pytest.fixture
 def trending_request():
     """Request for trending JSON"""
     return requests.get("http://localhost:5000/trending")
@@ -65,6 +71,27 @@ def test_details_keys(details_request):
     for item in detailsKeys:
         if item not in data:
             assert item in data
+
+
+def test_episodes_status(episodes_request):
+    """Checks that episodes status is 200 (OK)"""
+    assert episodes_request.status_code == status_ok
+
+
+def test_episodes_content(episodes_request):
+    """Checks that episodes Content-Type is application/json"""
+    assert episodes_request.headers["Content-Type"] == type_json
+
+
+def test_episodes_key(episodes_request):
+    """Checks that episodes JSON has correct keys"""
+    episodesKeys = ["date", "name", "number", "season", "summary"]
+    data = episodes_request.json()
+    episode = data[0]
+
+    for key in episodesKeys:
+        if key not in episode:
+            assert key in episode
 
 
 def test_trending_status(trending_request):
