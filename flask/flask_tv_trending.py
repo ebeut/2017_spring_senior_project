@@ -4,6 +4,11 @@ import requests
 from bs4 import BeautifulSoup
 
 
+class IncorrectStatus(Exception):
+    """Custom exception, HTML status is not 200 OK"""
+    pass
+
+
 class FlaskTvTrending:
     def __init__(self):
         """Constructor for FlaskTvTrending class
@@ -53,7 +58,12 @@ class FlaskTvTrending:
         for title in titles:
             searchTitle = title.replace(" ", "+")
             response = requests.get(searchURL + searchTitle)
-            if(response.status_code != 200):  # status OK
+            try:
+                if(response.status_code != 200):
+                    raise IncorrectStatus
+            except IncorrectStatus:
+                print("Warning: \"" + title + "\" does not exist on TVmaze," +
+                      " omitted from JSON")
                 continue
             data = response.json()
 
