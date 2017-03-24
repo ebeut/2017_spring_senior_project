@@ -53,6 +53,8 @@ class FlaskTvTrending:
         for title in titles:
             searchTitle = title.replace(" ", "+")
             response = requests.get(searchURL + searchTitle)
+            if(response.status_code != 200):  # status OK
+                continue
             data = response.json()
 
             tempShow = self.parseTrending(data)

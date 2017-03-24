@@ -10,25 +10,25 @@ type_json = "application/json"
 @pytest.fixture
 def search_request():
     """Request for search JSON (ex. The Office)"""
-    return requests.get("http://localhost:5000/search/the+office")
+    return requests.get("http://localhost:5000/tv/search/the+office")
 
 
 @pytest.fixture
 def details_request():
     """Request for details JSON (ex. The Office)"""
-    return requests.get("http://localhost:5000/details/526")
+    return requests.get("http://localhost:5000/tv/details/526")
 
 
 @pytest.fixture
 def episodes_request():
     """Request for episodes JSON (ex. The Office season 1)"""
-    return requests.get("http://localhost:5000/episodes/526/1")
+    return requests.get("http://localhost:5000/tv/episodes/526/1")
 
 
 @pytest.fixture
 def trending_request():
     """Request for trending JSON"""
-    return requests.get("http://localhost:5000/trending")
+    return requests.get("http://localhost:5000/tv/trending")
 
 
 def test_search_status(search_request):

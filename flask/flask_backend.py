@@ -9,7 +9,7 @@ from flask_tv_trending import FlaskTvTrending
 app = Flask(__name__)
 
 
-@app.route("/search/<showTitle>")
+@app.route("/tv/search/<showTitle>")
 def api_search(showTitle):
     """Search request to flask backend. Show title must have "+" instead of
     spaces (ex. the+office).
@@ -39,7 +39,7 @@ def api_search(showTitle):
     return searchJSON
 
 
-@app.route("/details/<int:showID>")
+@app.route("/tv/details/<int:showID>")
 def api_details(showID):
     """Details request to flask backend
 
@@ -76,7 +76,7 @@ def api_details(showID):
     return detailsJSON
 
 
-@app.route("/episodes/<int:showID>/<int:seasonNum>")
+@app.route("/tv/episodes/<int:showID>/<int:seasonNum>")
 def api_episodes(showID, seasonNum):
     """Episodes request to flask backend
 
@@ -106,7 +106,7 @@ def api_episodes(showID, seasonNum):
     return episodesJSON
 
 
-@app.route("/trending")
+@app.route("/tv/trending")
 def api_trending():
     """Trending request to flask backend
 

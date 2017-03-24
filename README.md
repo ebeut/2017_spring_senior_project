@@ -46,7 +46,7 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 - Should then see `* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)`
 
 ### Search
-- `http://127.0.0.1:5000/search/title+of+show` returns JSON with all shows from the search including: ID, show title, year premiered, IMDb rating, and a link to its poster
+- `http://127.0.0.1:5000/tv/search/title+of+show` returns JSON with all shows from the search including: ID, show title, year premiered, IMDb rating, and a link to its poster
 ```
 [
     {
@@ -60,7 +60,7 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 ```
 
 ### Show Details
-- `http://127.0.0.1:5000/details/idNumber` returns JSON containing details about the show connected to the provided ID. Details included: ID, show title, year premiered, IMDb rating, network it is televised on, a link to its poster, a summary of the plot, and cast members.
+- `http://127.0.0.1:5000/tv/details/idNumber` returns JSON containing details about the show connected to the provided ID. Details included: ID, show title, year premiered, IMDb rating, network it is televised on, a link to its poster, a summary of the plot, and cast members.
 ```
 {
     "cast": [
@@ -82,7 +82,7 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 ```
 
 ### Episodes
-- `http://127.0.0.1:5000/episodes/idNumber/seasonNumber` returns JSON containing all the episodes for the provided season based on the ID. The episodes include: the name of the episode, the season number, the episode number, the date aired, and a summary of the episode.
+- `http://127.0.0.1:5000/tv/episodes/idNumber/seasonNumber` returns JSON containing all the episodes for the provided season based on the ID. The episodes include: the name of the episode, the season number, the episode number, the date aired, and a summary of the episode.
 ```
 [
     {
@@ -96,7 +96,7 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 ```
 
 ### Trending
-- `http://127.0.0.1:5000/trending` returns JSON with all the trending shows from Rotten Tomato, each show includes: ID, show title, year premiered, IMDb rating, and a link to its poster
+- `http://127.0.0.1:5000/tv/trending` returns JSON with all the trending shows from Rotten Tomato, each show includes: ID, show title, year premiered, IMDb rating, and a link to its poster
 ```
 [
     {
