@@ -4,9 +4,11 @@ from flask_tv_search import FlaskTvSearch
 from flask_tv_details import FlaskTvDetails
 from flask_tv_episodes import FlaskTvEpisodes
 from flask_tv_trending import FlaskTvTrending
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+cor = CORS(app, resources={r"/*": {"origin": "*"}}, supports_credentials=True)
 
 
 @app.route("/tv/search/<showTitle>")

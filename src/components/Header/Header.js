@@ -174,7 +174,6 @@ export class Header extends Component {
                 <AppBar
                     title="The Watch List"
                     iconElementRight={loginButton}
-                    iconClassNameRight="muidocs-icon-navigation-expand-more"
                     onLeftIconButtonTouchTap={() => this.openNav()}
                     style={{
                         backgroundColor: blueA700,

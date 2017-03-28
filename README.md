@@ -38,11 +38,12 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 4. From a web browser navigate to "localhost:3000"
 
 ## Flask Backend
-- Make executable `chmod +x flask_backend.py` or run `python3 flask_backend.py`
+- Make executable `chmod +x flask_backend.py` or run `python flask_backend.py`
     - Libraries needed:
         - Flask: `pip install Flask`
         - requests: `pip install requests`
         - BeautifulSoup: `pip install beautifulsoup4`
+        - Flask-CORS: `pip install flask-cors`
 - Should then see `* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)`
 
 ### Search
