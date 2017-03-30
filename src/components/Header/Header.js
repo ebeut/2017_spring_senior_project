@@ -13,9 +13,11 @@ import Search from 'material-ui/svg-icons/action/search';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import Home from 'material-ui/svg-icons/action/Home';
 import Event from 'material-ui/svg-icons/action/event';
+import GoogleLogin from 'react-google-login';
 import ExitToApp from 'material-ui/svg-icons/action/exit-to-app'
 import Settings from 'material-ui/svg-icons/action/settings'
 import PowerSettingsNew from 'material-ui/svg-icons/action/power-settings-new'
+
 
 // just for toggle for testing
 const styles = {
@@ -67,7 +69,12 @@ export class Header extends Component {
         // Used for logged toggle
         this.setState({logged: logged});
     };
-
+    onSuccessfullLogin = (response) => {
+      console.log ("logged in successfully", response)
+    }
+    onFailedLogin = (response) => {
+      console.log ("logged in failed", response)
+    }
     render () {
         let calendarMenuItem = null;
         let settingsMenuItem = null;
@@ -100,18 +107,22 @@ export class Header extends Component {
             ));
 
             loginButton = ((
-                <FlatButton {...this.props}
-                    label="Sign Out"
-                    icon={< PowerSettingsNew />}
-                />
+              <GoogleLogin
+            clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={this.onSuccessfullLogin}
+            onFailure={this.onFailedLogin}
+          />
             ));
         }
         else {
             loginButton = ((
-                <FlatButton {...this.props}
-                    label="Login"
-                    icon={< ExitToApp />}
-                />
+              <GoogleLogin
+            clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={this.onSuccessfullLogin}
+            onFailure={this.onFailedLogin}
+          />
             ));
         }
 
