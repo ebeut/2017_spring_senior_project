@@ -31,18 +31,18 @@ export class ShowSquare extends Component {
     const currContent = this.props.content;
     const id = this.props.id;
     return (
-      <div id={`${id}-grid`}>
-        <GridList id={`${id}-grid-list`} cols={5.1} >
+      <div id={`${id}-grid`} style={{padding:4, width: 1065, margin:'0 auto'}}>
+        <GridList id={`${id}-grid-list`} cols={5} cellHeight={295} style={{width: 1065}}>
           {currContent.map((content, index) => (
             <GridTile
               id={`${content.title}-grid-title`}
               key={index}
               title={
                 <FlatButton
-                  label={`${content.title}\n${content.year}`}
+                  label={`${content.title}\n(${content.year})`}
                   primary
-                  style={{textAlign: 'left', fontStyle: 'Arial'}}
-                  labelStyle={{fontSize: 10}}
+                  style={{textAlign: 'left', color: 'white'}}
+                  labelStyle={{fontSize: 12, fontWeight: 'bold'}}
                   onClick={ () => {this.viewShow(index) }}
                 />
               }
@@ -51,7 +51,7 @@ export class ShowSquare extends Component {
                 <IconButton
                   onClick={ () => {this.addToFav(index) }}
                 >
-                  <StarBorder />
+                  <StarBorder color='white'/>
                 </IconButton>
               }
             >
