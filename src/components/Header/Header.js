@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
-import { blueA700 } from 'material-ui/styles/colors';
+import { blue500 } from 'material-ui/styles/colors';
 import Search from 'material-ui/svg-icons/action/search';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import Home from 'material-ui/svg-icons/action/Home';
@@ -128,7 +128,7 @@ export class Header extends Component {
                                 style={{
                                     textAlign: 'center',
                                     padding: '20px',
-                                    backgroundColor: blueA700
+                                    backgroundColor: blue500
                                 }}
                             >
                                 <Avatar size={100} icon={< AccountCircle />} />
@@ -176,7 +176,7 @@ export class Header extends Component {
                     iconElementRight={loginButton}
                     onLeftIconButtonTouchTap={() => this.openNav()}
                     style={{
-                        backgroundColor: blueA700,
+                        backgroundColor: blue500,
                         textAlign: 'left',
                     }}
                 />
