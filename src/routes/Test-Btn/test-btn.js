@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
-
+import GoogleLogin from 'react-google-login';
+//577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com
 export default class TestBtn extends Component {
 
   constructor(props){
@@ -31,7 +32,9 @@ export default class TestBtn extends Component {
       this.setState({testOpen: true});
     }
   }
-
+test = () => {
+  console.log("works")
+}
   render() {
     return (
     <div>
@@ -47,8 +50,13 @@ export default class TestBtn extends Component {
         onTouchTap={this.testAction}
         primary={true}
       />
+      <GoogleLogin
+    clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
+    buttonText="Login"
+    onSuccess={this.test}
+    onFailure={this.test}
+  />
     </div>
     )
   }
 }
-
