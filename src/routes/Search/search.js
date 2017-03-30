@@ -7,27 +7,45 @@ export default class SearchPage extends Component {
   constructor(props){
     super(props);
     this.state = {
-      results: ['some','test','data','for','now'],
+      results: [],
+      searching: false,
+      sqrContent: [],
     }
   }
 
   static propTypes = {
     searchRes: PropTypes.object,
-    getShows: PropTypes.func,
     searchTVAPI: PropTypes.func,
   };
 
-  componentWillMount () {
-    this.props.getShows('the wal');
-  }
-
   runSearch = (searchContent) => {
-   // this.props.searchTVAPI(searchContent);
+    this.setState({searching: true});
+    this.props.searchTVAPI(searchContent);
   };
 
   componentWillReceiveProps (newProps) {
-    const currProps = this.props;
+    if (this.props.searchRes.searchResults != newProps.searchRes.searchResults) {
+      let results = [];
+      if (newProps.searchRes.searchResults) {
+        newProps.searchRes.searchResults.map((show) => {
+          if (results.indexOf(show.title) == -1) {
+            results.push(show.title);
+          }
+        });
+        this.setState({results});
+      }
+      if (this.state.searching && newProps.searchRes.searchResults){
+        const sqrContent = newProps.searchRes.searchResults;
+        this.setState({searching: false, sqrContent});
+      }
+    }
   }
+
+  searchUpdated = (search) => {
+    if (search.length % 4 == 0 && search){
+      this.props.searchTVAPI(search);
+    }
+  };
 
   render () {
     let outerDiv = {
@@ -47,20 +65,11 @@ export default class SearchPage extends Component {
             dataSource={this.state.results}
             onNewRequest={this.runSearch}
             maxSearchResults={20}
+            onUpdateInput={this.searchUpdated}
           />
           <ShowSquare
-            id="test"
-            content={[
-              {image: "",name: "The Walking Dead", year: 2011},
-              {image: "",name: "Game of Thrones", year: 2000},
-              {image: "",name: "Gotham", year: 2000},
-              {image: "",name: "Flash", year: 1995},
-              {image: "",name: "Arrow", year: 2008},
-              {image: "",name: "Mirror", year: 2012},
-              {image: "",name: "Lost", year: 2015},
-              {image: "",name: "Naruto", year: 1978},
-              {image: "",name: "Empire", year: 2200}
-              ]}
+            id="search-squares"
+            content={this.state.sqrContent}
           />
         </div>
       </div>

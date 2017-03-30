@@ -35,26 +35,27 @@ export class ShowSquare extends Component {
         <GridList id={`${id}-grid-list`} cols={5.1} >
           {currContent.map((content, index) => (
             <GridTile
-              id={`${content.name}-grid-title`}
+              id={`${content.title}-grid-title`}
               key={index}
               title={
                 <FlatButton
-                  label={`${content.name} - ${content.year}`}
+                  label={`${content.title}\n${content.year}`}
                   primary
-                  style={{textAlign: 'left'}}
-                  onClick={ (e) => {this.viewShow(index) }}
+                  style={{textAlign: 'left', fontStyle: 'Arial'}}
+                  labelStyle={{fontSize: 10}}
+                  onClick={ () => {this.viewShow(index) }}
                 />
               }
               style={{textAlign: 'left'}}
               actionIcon={
                 <IconButton
-                  onClick={ (e) => {this.addToFav(index) }}
+                  onClick={ () => {this.addToFav(index) }}
                 >
                   <StarBorder />
                 </IconButton>
               }
             >
-              <img src={content.image ? content.image : Logo} />
+              <img src={content.poster && content.poster != 'N/A' ? content.poster : Logo} />
             </GridTile>
           ))}
         </GridList>

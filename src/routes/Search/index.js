@@ -6,7 +6,7 @@ export default (store) => ({
     require.ensure([], (require) => {
       const SearchPage = require('./search-reducer').default;
       const reducer = require('./action').default;
-      injectReducer(store, { key: 'search', reducer });
+      injectReducer(store, { key: 'searchRes', reducer });
       cb(null, SearchPage);
     }, 'search')
   }

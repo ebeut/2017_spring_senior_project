@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { searchTVAPI, getShows } from './action';
+import { searchTVAPI } from './action';
 import SearchPage from './search';
 
-const mapDispatchToProps = { searchTVAPI, getShows };
+const mapDispatchToProps = { searchTVAPI };
 
 const mapStateToProps = (state => ({searchRes: state.searchRes}));
 
