@@ -107,22 +107,38 @@ export class Header extends Component {
             ));
 
             loginButton = ((
-              <GoogleLogin
-            clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={this.onSuccessfullLogin}
-            onFailure={this.onFailedLogin}
-          />
+                <GoogleLogin
+                    clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
+                    buttonText="Sign Out"
+                    onSuccess={this.onSuccessfullLogin}
+                    onFailure={this.onFailedLogin}
+                    style={{
+                        background: blue500,
+                        color: 'white',
+                        fontSize: 18,
+                        border: 'None',
+                        paddingTop: 13,
+                        marginRight: 8,
+                    }}
+                />
             ));
         }
         else {
             loginButton = ((
-              <GoogleLogin
-            clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={this.onSuccessfullLogin}
-            onFailure={this.onFailedLogin}
-          />
+                <GoogleLogin
+                    clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
+                    buttonText="Login"
+                    onSuccess={this.onSuccessfullLogin}
+                    onFailure={this.onFailedLogin}
+                    style={{
+                        background: blue500,
+                        color: 'white',
+                        fontSize: 18,
+                        border: 'None',
+                        paddingTop: 13,
+                        marginRight: 8,
+                    }}
+                />
             ));
         }
 
