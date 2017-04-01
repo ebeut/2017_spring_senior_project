@@ -85,7 +85,7 @@ export class Header extends Component {
             calendarMenuItem = ((
                 <MenuItem
                     leftIcon={< Event />}
-                    //onClick={() => this.dispatchNewRoute('/counter')}
+                    onClick={() => this.dispatchNewRoute('/calendar')}
                     style={{
                         textAlign: 'left',
                     }}

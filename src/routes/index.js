@@ -5,6 +5,7 @@ import CounterRoute from './Counter'
 import TestRoute from './Test-Btn';
 import SearchRoute from './Search';
 import ShowInfoPage from './Show-Info';
+import CalendarPage from './Calendar';
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -17,7 +18,8 @@ export const createRoutes = (store) => ({
     CounterRoute(store),
     TestRoute(store),
     SearchRoute(store),
-    ShowInfoPage(store)
+    ShowInfoPage(store),
+    CalendarPage(store),
   ]
 });
 
