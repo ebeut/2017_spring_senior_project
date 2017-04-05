@@ -5,7 +5,7 @@ export const SHOW_INFO_FAIL = `${SHOW_INFO}_FAIL`;
 export const SHOW_INFO_OK = `${SHOW_INFO}_OK`;
 
 export const getShowInfo = (showId) => {
-  const url = `que?-${showId}`;
+  const url = `http://localhost:5000/tv/details/${showId}`;
   return (dispatch) => {
     dispatch({type: SHOW_INFO});
     request.get(url).end((err, res) => {
@@ -27,14 +27,15 @@ const initialState = {};
 export default function showInfoReducer (state = initialState, action) {
   switch (action.type) {
     case SHOW_INFO: {
-      return { ...initialState, getting: true, err: null }
+      return { ...initialState, gettingShowInfo: true, showInfoErr: null }
     }
     case SHOW_INFO_FAIL: {
-      return { ...initialState, getting: false, err: action.err}
+      return { ...initialState, gettingShowInfo: false, showInfoEerr: action.err}
     }
     case SHOW_INFO_OK: {
-      const data = JSON.stringify(action.res);
-      return { ...initialState, getting: false, data}
+      const showInfo = action.res.body;
+      console.log(action.res);
+      return { ...initialState, gettingShowInfo: false, showInfo}
     }
     default:
       return initialState;
