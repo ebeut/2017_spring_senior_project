@@ -4,6 +4,7 @@ import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import FlatButton from 'material-ui/FlatButton';
 import Logo from '../../../logo.png';
+import { browserHistory } from 'react-router';
 
 export class ShowSquare extends Component {
 
@@ -17,6 +18,7 @@ export class ShowSquare extends Component {
   static PropTypes = {
     id: PropTypes.string.isRequired,
     content: PropTypes.array.isRequired,
+    getShowInfo: PropTypes.func,
   };
 
   addToFav  (index) {
@@ -24,7 +26,9 @@ export class ShowSquare extends Component {
   };
 
   viewShow (index) {
-    console.log("add router call to change the route as well as make an action call for this show",this.props.content[index])
+    console.log("add router call to change the route as well as make an action call for this show",this.props.content[index]);
+    this.props.getShowInfo(this.props.content[index].id);
+    browserHistory.push('/showInfo');
   }
 
   render () {
@@ -64,3 +68,4 @@ export class ShowSquare extends Component {
   }
 
 }
+

@@ -29,6 +29,7 @@ export default class SearchPage extends Component {
   static propTypes = {
     searchRes: PropTypes.object,
     searchTVAPI: PropTypes.func,
+    getShowInfo: PropTypes.func,
   };
 
   runSearch = (searchContent) => {
@@ -86,6 +87,7 @@ export default class SearchPage extends Component {
           <ShowSquare
             id="search-squares"
             content={this.state.sqrContent}
+            getShowInfo={this.props.getShowInfo}
           />
         </div>
       </div>

@@ -1,13 +1,13 @@
 import { injectReducer } from '../../store/reducers';
 
 export default (store) => ({
-  path: 'show-info',
+  path: 'showInfo',
   getComponent (nextState, cb) {
     require.ensure([], (require) => {
       const ShowInfo = require('./show-info-reducer').default;
       const reducer = require('./action').default;
-      injectReducer(store, { key: 'show-info', reducer });
+      injectReducer(store, { key: 'showInfo', reducer });
       cb(null, ShowInfo);
-    }, 'show-info')
+    }, 'showInfo')
   }
 })
