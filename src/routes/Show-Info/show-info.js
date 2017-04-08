@@ -25,14 +25,17 @@ export default class ShowInfoPage extends Component {
 
   static propTypes = {
     showInfo: PropTypes.object,
+    getShowSeasonInfo: PropTypes.func
   };
 
   componentWillReceiveProps(newProps) {
-    console.log(newProps);
+    console.log("in component",newProps);
     if (this.props.showInfo.gettingShowInfo !== newProps.showInfo.gettingShowInfo && newProps.showInfo.gettingShowInfo)
       this.setState({open: true});
     if (this.props.showInfo.gettingShowInfo !== newProps.showInfo.gettingShowInfo && !newProps.showInfo.gettingShowInfo)
       this.setState({open: false});
+    //if (this.props.showInfo !== newProps.showInfo && newProps.showInfo.show && newProps.showInfo && newProps.showInfo.show.id)
+     // this.props.getShowSeasonInfo(newProps.showInfo.show.id,1);
   }
 
   backToSrch = () => {
@@ -41,35 +44,36 @@ export default class ShowInfoPage extends Component {
 
   seasonChange = (event, index, season) => {
     this.setState({season});
+    //this.props.getShowSeasonInfo(this.props.showInfo.show.id,season);
   };
 
   mkSeasonDropDown (){
-    if (!this.props.showInfo.showInfo) return (<div />);
-    const seasons = []
-    for (let i = 0; i < this.props.showInfo.showInfo.numSeasons; i++) {
+    if (!this.props.showInfo.show.numSeasons) return (<div>Number of season's not available</div>);
+    const seasons = [];
+    for (let i = 0; i < this.props.showInfo.show.numSeasons; i++) {
       seasons.push(i+1);
     }
     return (
     <DropDownMenu value={this.state.season} onChange={this.seasonChange}>
       {seasons.map((season) => (
-        <MenuItem key={season} value={season} primaryText={season} />
+        <MenuItem key={season} value={season} primaryText={`Season ${season}`} />
       ))}
     </DropDownMenu>
     )
   }
 
   mkCast () {
-    if (!this.props.showInfo.showInfo) return (<div />);
+    if (!this.props.showInfo.show.cast) return (<div>Cast not available</div>);
     return (
       <div style={{display: 'inline-flex'}}>
-        {this.props.showInfo.showInfo.cast.map((cast) => (
+        {this.props.showInfo ? this.props.showInfo.show.cast.map((cast) => (
           <div key={cast.character} style={{paddingLeft: 15}}>
             <h3>
               {`${cast.name} as ${cast.character}`}
             </h3>
             <img src={cast.image} />
           </div>
-        ))}
+        )): <div> Loading.... </div>}
       </div>
     )
   }
@@ -86,20 +90,19 @@ export default class ShowInfoPage extends Component {
           </div>
         </Dialog>
         <div style={{display: 'inline-flex', width: '100%', height: '50%'}}>
-          {console.log(this.props)}
           <Paper id="show-poster" style={{width: '25%'}} zDepth={5} >
-            <img style={{width: '100%', padding: 10, height: '100%'}} src={this.props.showInfo.showInfo ? this.props.showInfo.showInfo.poster : Logo}/>
+            <img style={{width: '100%', padding: 10, height: '100%'}} src={this.props.showInfo.show ? this.props.showInfo.show.poster : Logo}/>
           </Paper>
           <div style={{paddingLeft: 15, width: '70%'}}>
             <div style={{paddingBottom: 20}}>
               <Paper id="show-synopsis" style={{height: '45%', padding: 10, overflowY: 'auto'}} zDepth={5} >
                 <h3 style={{textAlign: 'center'}}>Synopsis</h3>
                 <br />
-                {this.props.showInfo.showInfo ? this.props.showInfo.showInfo.summary : "..."}
+                {this.props.showInfo.show.summary ? this.props.showInfo.show.summary : "..."}
               </Paper>
             </div>
             <div style={{textAlign: 'center'}}>
-              <Paper id="show-cast" style={{width: '70%', height: '45%', padding: 10, overflowY: 'auto'}} zDepth={5} >
+              <Paper id="show-cast" style={{height: '45%', padding: 10, overflowY: 'auto'}} zDepth={5} >
                 <h3 style={{textAlign: 'center'}}>Cast</h3><br />
                 {this.mkCast()}
               </Paper>
@@ -107,10 +110,16 @@ export default class ShowInfoPage extends Component {
           </div>
         </div>
         <div>
-          <Paper id="show-episodes" zDepth={5} style={{overflowY: 'auto'}}>Episodes</Paper>
-          <Paper is="show-seasons" zDepth={5} style={{overflowY: 'auto'}} >
-            {this.mkSeasonDropDown()}
-          </Paper>
+          <div style={{display: 'inline-flex'}}>
+            <div style={{paddingRight: 15}}>
+              <Paper id="show-seasons" zDepth={5} style={{overflowY: 'auto'}} >
+                {this.mkSeasonDropDown()}
+              </Paper>
+            </div>
+            <Paper id="show-episodes" zDepth={5} style={{overflowY: 'auto'}}>
+              Episodes
+            </Paper>
+          </div>
         </div>
       </div>
     );
@@ -125,7 +134,7 @@ export default class ShowInfoPage extends Component {
     );
     return (
       <div id="show-info-page" style={{minHeight: '100%'}}>
-        {this.props.showInfo.showInfo ? showInfo : noInfo}
+        {this.props.showInfo.show ? showInfo : noInfo}
       </div>
     );
   }
