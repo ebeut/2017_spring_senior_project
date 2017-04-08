@@ -76,24 +76,11 @@ export class Header extends Component {
       console.log ("logged in failed", response)
     }
     render () {
-        let calendarMenuItem = null;
         let settingsMenuItem = null;
         let loginButton = null;
 
         // check if logged in
         if(this.state.logged) {
-            calendarMenuItem = ((
-                <MenuItem
-                    leftIcon={< Event />}
-                    onClick={() => this.dispatchNewRoute('/calendar')}
-                    style={{
-                        textAlign: 'left',
-                    }}
-                >
-                    Calendar
-                </MenuItem>
-            ));
-
             settingsMenuItem = ((
                 <MenuItem
                     leftIcon={< Settings />}
@@ -192,7 +179,15 @@ export class Header extends Component {
                                 Search
                             </MenuItem>
 
-                            {calendarMenuItem}
+                            <MenuItem
+                                leftIcon={< Event />}
+                                onClick={() => this.dispatchNewRoute('/calendar')}
+                                style={{
+                                    textAlign: 'left',
+                                }}
+                            >
+                                Calendar
+                            </MenuItem>
 
                             {settingsMenuItem}
                         </div>
