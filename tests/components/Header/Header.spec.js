@@ -1,38 +1,31 @@
-{/*
 import React from 'react'
 import { Header } from 'components/Header/Header'
-import { IndexLink, Link } from 'react-router'
 import { shallow } from 'enzyme'
 
-describe('(Component) Header', () => {
-  let _wrapper
+describe('Header component', () => {
+  let wrap;
 
   beforeEach(() => {
-    _wrapper = shallow(<Header />)
-  })
+    wrap = shallow(<Header />)
+  });
+  it('Should render', () => {
+    expect(wrap.find('div')).to.exist;
+  });
+  it('Should show correct components when logged in or out', () => {
+    expect(wrap.find('#header-home-btn')).to.exist;
+    expect(wrap.find('#header-search-btn')).to.exist;
+    expect(wrap.find('#header-calender-btn')).to.not.exist;
+    expect(wrap.find('#header-settings-btn')).to.not.exist;
+    let login = wrap.find('#header-app-bar').props().iconElementRight;
+    expect(login.props.buttonText).to.equal('Login');
 
-  it('Renders a welcome message', () => {
-    const welcome = _wrapper.find('h1')
-    expect(welcome).to.exist
-    expect(welcome.text()).to.match(/React Redux Starter Kit/)
-  })
+    wrap.setState({logged: true});
+    login = wrap.find('#header-app-bar').props().iconElementRight;
+    expect(wrap.find('#header-home-btn')).to.exist;
+    expect(wrap.find('#header-search-btn')).to.exist;
+    expect(wrap.find('#header-calender-btn')).to.exist;
+    expect(wrap.find('#header-settings-btn')).to.exist;
+    expect(login.props.buttonText).to.equal('Sign Out');
 
-  describe('Navigation links...', () => {
-    it('Should render a Link to Home route', () => {
-      expect(_wrapper.contains(
-        <IndexLink activeClassName='route--active' to='/'>
-          Home
-        </IndexLink>
-      )).to.be.true
-    })
-
-    it('Should render a Link to Counter route', () => {
-      expect(_wrapper.contains(
-        <Link activeClassName='route--active' to='/counter'>
-          Counter
-        </Link>
-      )).to.be.true
-    })
-  })
-})
-*/}
+  });
+});

@@ -84,6 +84,7 @@ export class Header extends Component {
         if(this.state.logged) {
             calendarMenuItem = ((
                 <MenuItem
+                    id="header-calender-btn"
                     leftIcon={< Event />}
                     onClick={() => this.dispatchNewRoute('/calendar')}
                     style={{
@@ -96,6 +97,7 @@ export class Header extends Component {
 
             settingsMenuItem = ((
                 <MenuItem
+                    id="header-settings-btn"
                     leftIcon={< Settings />}
                     //onClick={() => this.dispatchNewRoute('/counter')}
                     style={{
@@ -108,6 +110,7 @@ export class Header extends Component {
 
             loginButton = ((
                 <GoogleLogin
+                    id="login-btn"
                     clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
                     buttonText="Sign Out"
                     onSuccess={this.onSuccessfullLogin}
@@ -126,6 +129,7 @@ export class Header extends Component {
         else {
             loginButton = ((
                 <GoogleLogin
+                  id="login-btn"
                     clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
                     buttonText="Login"
                     onSuccess={this.onSuccessfullLogin}
@@ -143,8 +147,9 @@ export class Header extends Component {
         }
 
         return (
-            <div>
+            <div id="header">
                 <LeftNav
+                    id="header-left-nav"
                     open={this.state.open}
                     onRequestChange={() => this.handleClickOutside()}
                     docked={false}
@@ -158,7 +163,7 @@ export class Header extends Component {
                                     backgroundColor: blue500
                                 }}
                             >
-                                <Avatar size={100} icon={< AccountCircle />} />
+                                <Avatar id="header-user-avatar" size={100} icon={< AccountCircle />} />
                                 <Toggle // toggle for testing
                                     label="Logged"
                                     defaultToggled={false}
@@ -173,6 +178,7 @@ export class Header extends Component {
                                 />
                             </div>
                             <MenuItem
+                                id="header-home-btn"
                                 leftIcon={< Home />}
                                 onClick={() => this.dispatchNewRoute('/')}
                                 style={{
@@ -183,6 +189,7 @@ export class Header extends Component {
                             </MenuItem>
 
                             <MenuItem
+                                id="header-search-btn"
                                 leftIcon={< Search />}
                                 onClick={() => this.dispatchNewRoute('/search')}
                                 style={{
@@ -199,6 +206,7 @@ export class Header extends Component {
                     }
                 </LeftNav>
                 <AppBar
+                    id="header-app-bar"
                     title="The Watch List"
                     iconElementRight={loginButton}
                     onLeftIconButtonTouchTap={() => this.openNav()}
