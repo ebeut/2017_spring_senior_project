@@ -7,6 +7,9 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import CircularProgress from 'material-ui/CircularProgress';
 import { browserHistory } from 'react-router';
+import Checkbox from 'material-ui/Checkbox';
+import Divider from 'material-ui/Divider';
+import {List, ListItem} from 'material-ui/List';
 
 export default class ShowInfoPage extends Component {
 
@@ -14,10 +17,16 @@ export default class ShowInfoPage extends Component {
     super(props);
     this.state = {
       open: false,
+      id: 0,
       poster: '',
       title: '',
       cast: [],
       season: 1,
+      rating: 0.0,
+      summary: '',
+      network: '',
+      numSeasons: 0,
+      year: '',
       episodeTitle: [],
       episodeDescription: []
     }
@@ -30,12 +39,30 @@ export default class ShowInfoPage extends Component {
 
   componentWillReceiveProps(newProps) {
     console.log("in component",newProps);
-    if (this.props.showInfo.gettingShowInfo !== newProps.showInfo.gettingShowInfo && newProps.showInfo.gettingShowInfo)
+    const newStuff = newProps.showInfo;
+    if (this.props.showInfo.gettingShowInfo !== newStuff.gettingShowInfo && newProps.showInfo.gettingShowInfo)
       this.setState({open: true});
-    if (this.props.showInfo.gettingShowInfo !== newProps.showInfo.gettingShowInfo && !newProps.showInfo.gettingShowInfo)
+    if (this.props.showInfo.gettingShowInfo !== newStuff.gettingShowInfo && !newProps.showInfo.gettingShowInfo)
       this.setState({open: false});
-    //if (this.props.showInfo !== newProps.showInfo && newProps.showInfo.show && newProps.showInfo && newProps.showInfo.show.id)
-     // this.props.getShowSeasonInfo(newProps.showInfo.show.id,1);
+    if (this.props.showInfo !== newProps.showInfo && newStuff.show && newStuff && newProps.showInfo.show.id && newStuff.showSeasonInfo.length === 0) {
+      this.setState({
+        poster: newStuff.show.poster,
+        title: newStuff.show.title,
+        cast: newStuff.show.cast,
+        rating: newStuff.show.imdbRating,
+        summary: newStuff.show.summary,
+        network: newStuff.show.network,
+        year: newStuff.show.year,
+        id: newStuff.show.id,
+        numSeasons: newStuff.show.numSeasons,
+      });
+      this.props.getShowSeasonInfo(newStuff.show.id, 1);
+    }
+    if (this.props.showInfo !== newProps.showInfo && newStuff.show && newStuff && newProps.showInfo.show.id && newStuff.showSeasonInfo.length > 0) {
+      this.setState({
+
+      })
+    }
   }
 
   backToSrch = () => {
@@ -44,13 +71,33 @@ export default class ShowInfoPage extends Component {
 
   seasonChange = (event, index, season) => {
     this.setState({season});
-    //this.props.getShowSeasonInfo(this.props.showInfo.show.id,season);
+    this.props.getShowSeasonInfo(this.state.id,season);
   };
 
+  mkEpisodeList () {
+    if (this.props.showInfo.showSeasonInfo.length === 0) return (<div>loading .....</div>)
+    const episodes = (
+      <List>
+        {this.props.showInfo.showSeasonInfo.map((episode) => (
+          <div key={episode.number} style={{height: '100%'}}>
+            <ListItem
+              style={{height: '100%'}}
+              primaryText={`${episode.number}: ${episode.name} ${episode.date} ${episode.time}`}
+              secondaryText={<div style={{height: '100%', overflow: 'visible', whiteSpace: 'normal'}}>{`${episode.summary}`}</div>}
+              leftCheckbox={<Checkbox />}
+            />
+            <Divider />
+          </div>
+        ))}
+      </List>
+    );
+    return episodes;
+  }
+
   mkSeasonDropDown (){
-    if (!this.props.showInfo.show.numSeasons) return (<div>Number of season's not available</div>);
+    if (!this.state.numSeasons) return (<div>Number of season's not available</div>);
     const seasons = [];
-    for (let i = 0; i < this.props.showInfo.show.numSeasons; i++) {
+    for (let i = 0; i < this.state.numSeasons; i++) {
       seasons.push(i+1);
     }
     return (
@@ -63,10 +110,10 @@ export default class ShowInfoPage extends Component {
   }
 
   mkCast () {
-    if (!this.props.showInfo.show.cast) return (<div>Cast not available</div>);
+    if (!this.state.cast) return (<div>Cast not available</div>);
     return (
       <div style={{display: 'inline-flex'}}>
-        {this.props.showInfo ? this.props.showInfo.show.cast.map((cast) => (
+        {this.props.showInfo ? this.state.cast.map((cast) => (
           <div key={cast.character} style={{paddingLeft: 15}}>
             <h3>
               {`${cast.name} as ${cast.character}`}
@@ -91,14 +138,14 @@ export default class ShowInfoPage extends Component {
         </Dialog>
         <div style={{display: 'inline-flex', width: '100%', height: '50%'}}>
           <Paper id="show-poster" style={{width: '25%'}} zDepth={5} >
-            <img style={{width: '100%', padding: 10, height: '100%'}} src={this.props.showInfo.show ? this.props.showInfo.show.poster : Logo}/>
+            <img style={{width: '100%', padding: 10, height: '100%'}} src={this.state.poster ? this.state.poster : Logo}/>
           </Paper>
           <div style={{paddingLeft: 15, width: '70%'}}>
             <div style={{paddingBottom: 20}}>
               <Paper id="show-synopsis" style={{height: '45%', padding: 10, overflowY: 'auto'}} zDepth={5} >
                 <h3 style={{textAlign: 'center'}}>Synopsis</h3>
                 <br />
-                {this.props.showInfo.show.summary ? this.props.showInfo.show.summary : "..."}
+                {this.state.summary ? this.state.summary : "..."}
               </Paper>
             </div>
             <div style={{textAlign: 'center'}}>
@@ -110,15 +157,22 @@ export default class ShowInfoPage extends Component {
           </div>
         </div>
         <div>
-          <div style={{display: 'inline-flex'}}>
-            <div style={{paddingRight: 15}}>
+          <div style={{display: 'inline-flex', paddingTop: 15, width: '100%'}}>
+            <div style={{paddingRight: 15, width: '10%'}}>
               <Paper id="show-seasons" zDepth={5} style={{overflowY: 'auto'}} >
                 {this.mkSeasonDropDown()}
               </Paper>
             </div>
-            <Paper id="show-episodes" zDepth={5} style={{overflowY: 'auto'}}>
-              Episodes
-            </Paper>
+            <div style={{width: '90%'}}>
+              <Paper id="show-episodes" zDepth={5} >
+                <h3 id="season-title" style={{textAlign: 'center'}}>
+                  {this.state.season ? `Season ${this.state.season}` : 'N/A'}
+                </h3>
+                <div id="episode-list">
+                  {this.mkEpisodeList()}
+                </div>
+              </Paper>
+            </div>
           </div>
         </div>
       </div>
@@ -134,7 +188,7 @@ export default class ShowInfoPage extends Component {
     );
     return (
       <div id="show-info-page" style={{minHeight: '100%'}}>
-        {this.props.showInfo.show ? showInfo : noInfo}
+        {this.state.id ? showInfo : noInfo}
       </div>
     );
   }
