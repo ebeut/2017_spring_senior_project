@@ -38,13 +38,12 @@ export default class ShowInfoPage extends Component {
   };
 
   componentWillReceiveProps(newProps) {
-    console.log("in component",newProps);
     const newStuff = newProps.showInfo;
     if (this.props.showInfo.gettingShowInfo !== newStuff.gettingShowInfo && newProps.showInfo.gettingShowInfo)
       this.setState({open: true});
     if (this.props.showInfo.gettingShowInfo !== newStuff.gettingShowInfo && !newProps.showInfo.gettingShowInfo)
       this.setState({open: false});
-    if (this.props.showInfo !== newProps.showInfo && newStuff.show && newStuff && newProps.showInfo.show.id && newStuff.showSeasonInfo.length === 0) {
+    if (this.props.showInfo !== newProps.showInfo && newStuff.show && newProps.showInfo.show.id) {
       this.setState({
         poster: newStuff.show.poster,
         title: newStuff.show.title,
@@ -182,7 +181,7 @@ export default class ShowInfoPage extends Component {
         Please go back to search page to find the show you are looking for
         <br />
         <div style={{textAlign: 'center'}}>
-          <RaisedButton label="Go back to search" primary onTouchTap={this.backToSrch} />
+          <RaisedButton id="show-info-back-to-search" label="Go back to search" primary onTouchTap={this.backToSrch} />
         </div>
       </div>
     );
