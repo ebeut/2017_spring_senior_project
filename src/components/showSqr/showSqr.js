@@ -8,13 +8,6 @@ import { browserHistory } from 'react-router';
 
 export class ShowSquare extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      temp: null
-    }
-  }
-
   static PropTypes = {
     id: PropTypes.string.isRequired,
     content: PropTypes.array.isRequired,
@@ -26,7 +19,6 @@ export class ShowSquare extends Component {
   };
 
   viewShow (index) {
-    console.log("add router call to change the route as well as make an action call for this show",this.props.content[index]);
     this.props.getShowInfo(this.props.content[index].id);
     browserHistory.push('/showInfo');
   }
