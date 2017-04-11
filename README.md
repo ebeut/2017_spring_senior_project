@@ -22,6 +22,7 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 ## Packages
 - [Material-UI](http://www.material-ui.com/#/)
 - [React-Big-Calendar](https://github.com/intljusticemission/react-big-calendar)
+- [React-Google-Login](https://github.com/anthonyjgrove/react-google-login)
 
 ## APIs
 - [TVmaze](http://www.tvmaze.com/api)
@@ -91,7 +92,8 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
         "name": "name of episode",
         "number": episode number,
         "season": season number,
-        "summary": "summary of episode"
+        "summary": "summary of episode",
+        "time": "24 hour format time aired"
     }
 ]
 ```

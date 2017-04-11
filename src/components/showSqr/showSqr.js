@@ -4,19 +4,14 @@ import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import FlatButton from 'material-ui/FlatButton';
 import Logo from '../../../logo.png';
+import { browserHistory } from 'react-router';
 
 export class ShowSquare extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      temp: null
-    }
-  }
 
   static PropTypes = {
     id: PropTypes.string.isRequired,
     content: PropTypes.array.isRequired,
+    getShowInfo: PropTypes.func,
   };
 
   addToFav  (index) {
@@ -24,25 +19,26 @@ export class ShowSquare extends Component {
   };
 
   viewShow (index) {
-    console.log("add router call to change the route as well as make an action call for this show",this.props.content[index])
+    this.props.getShowInfo(this.props.content[index].id);
+    browserHistory.push('/showInfo');
   }
 
   render () {
     const currContent = this.props.content;
     const id = this.props.id;
     return (
-      <div id={`${id}-grid`}>
-        <GridList id={`${id}-grid-list`} cols={5.1} >
+      <div id={`${id}-grid`} style={{padding:4, width: 1065, margin:'0 auto'}}>
+        <GridList id={`${id}-grid-list`} cols={5} cellHeight={295} style={{width: 1065}}>
           {currContent.map((content, index) => (
             <GridTile
               id={`${content.title}-grid-title`}
               key={index}
               title={
                 <FlatButton
-                  label={`${content.title}\n${content.year}`}
+                  label={`${content.title}\n(${content.year})`}
                   primary
-                  style={{textAlign: 'left', fontStyle: 'Arial'}}
-                  labelStyle={{fontSize: 10}}
+                  style={{textAlign: 'left', color: 'white'}}
+                  labelStyle={{fontSize: 12, fontWeight: 'bold'}}
                   onClick={ () => {this.viewShow(index) }}
                 />
               }
@@ -51,7 +47,7 @@ export class ShowSquare extends Component {
                 <IconButton
                   onClick={ () => {this.addToFav(index) }}
                 >
-                  <StarBorder />
+                  <StarBorder color='white'/>
                 </IconButton>
               }
             >
@@ -64,3 +60,4 @@ export class ShowSquare extends Component {
   }
 
 }
+

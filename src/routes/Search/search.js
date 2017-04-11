@@ -1,6 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
-import { ShowSquare } from '../../components/showSqr/showSqr'
+import { ShowSquare } from '../../components/showSqr/showSqr';
+import { blue500, pinkA200 } from 'material-ui/styles/colors';
+
+const styles = {
+    underlineStyle: {
+        borderColor: blue500,
+    },
+    floatingLabelFocusStyle: {
+        color: pinkA200,
+    },
+    underlineFocusStyle: {
+        borderColor: pinkA200,
+    },
+}
 
 export default class SearchPage extends Component {
 
@@ -16,6 +29,7 @@ export default class SearchPage extends Component {
   static propTypes = {
     searchRes: PropTypes.object,
     searchTVAPI: PropTypes.func,
+    getShowInfo: PropTypes.func,
   };
 
   runSearch = (searchContent) => {
@@ -66,10 +80,14 @@ export default class SearchPage extends Component {
             onNewRequest={this.runSearch}
             maxSearchResults={20}
             onUpdateInput={this.searchUpdated}
+            underlineStyle={styles.underlineStyle}
+            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+            underlineFocusStyle={styles.underlineFocusStyle}
           />
           <ShowSquare
             id="search-squares"
             content={this.state.sqrContent}
+            getShowInfo={this.props.getShowInfo}
           />
         </div>
       </div>

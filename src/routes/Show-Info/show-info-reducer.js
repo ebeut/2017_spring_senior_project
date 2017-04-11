@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { getShowInfo } from './action';
 import ShowInfoPage from './show-info';
+import { getShowSeasonInfo } from './action';
 
-const mapDispatchToProps = { getShowInfo };
+const mapDispatchToProps = { getShowSeasonInfo };
 
 const mapStateToProps = (state) => ({ showInfo : state.showInfo });
 

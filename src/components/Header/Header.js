@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
-import { blueA700 } from 'material-ui/styles/colors';
+import { blue500 } from 'material-ui/styles/colors';
 import Search from 'material-ui/svg-icons/action/search';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import Home from 'material-ui/svg-icons/action/Home';
@@ -84,8 +84,9 @@ export class Header extends Component {
         if(this.state.logged) {
             calendarMenuItem = ((
                 <MenuItem
+                    id="header-calender-btn"
                     leftIcon={< Event />}
-                    //onClick={() => this.dispatchNewRoute('/counter')}
+                    onClick={() => this.dispatchNewRoute('/calendar')}
                     style={{
                         textAlign: 'left',
                     }}
@@ -96,6 +97,7 @@ export class Header extends Component {
 
             settingsMenuItem = ((
                 <MenuItem
+                    id="header-settings-btn"
                     leftIcon={< Settings />}
                     //onClick={() => this.dispatchNewRoute('/counter')}
                     style={{
@@ -107,28 +109,47 @@ export class Header extends Component {
             ));
 
             loginButton = ((
-              <GoogleLogin
-            clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={this.onSuccessfullLogin}
-            onFailure={this.onFailedLogin}
-          />
+                <GoogleLogin
+                    id="login-btn"
+                    clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
+                    buttonText="Sign Out"
+                    onSuccess={this.onSuccessfullLogin}
+                    onFailure={this.onFailedLogin}
+                    style={{
+                        background: blue500,
+                        color: 'white',
+                        fontSize: 18,
+                        border: 'None',
+                        paddingTop: 13,
+                        marginRight: 8,
+                    }}
+                />
             ));
         }
         else {
             loginButton = ((
-              <GoogleLogin
-            clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={this.onSuccessfullLogin}
-            onFailure={this.onFailedLogin}
-          />
+                <GoogleLogin
+                  id="login-btn"
+                    clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
+                    buttonText="Login"
+                    onSuccess={this.onSuccessfullLogin}
+                    onFailure={this.onFailedLogin}
+                    style={{
+                        background: blue500,
+                        color: 'white',
+                        fontSize: 18,
+                        border: 'None',
+                        paddingTop: 13,
+                        marginRight: 8,
+                    }}
+                />
             ));
         }
 
         return (
-            <div>
+            <div id="header">
                 <LeftNav
+                    id="header-left-nav"
                     open={this.state.open}
                     onRequestChange={() => this.handleClickOutside()}
                     docked={false}
@@ -139,10 +160,10 @@ export class Header extends Component {
                                 style={{
                                     textAlign: 'center',
                                     padding: '20px',
-                                    backgroundColor: blueA700
+                                    backgroundColor: blue500
                                 }}
                             >
-                                <Avatar size={100} icon={< AccountCircle />} />
+                                <Avatar id="header-user-avatar" size={100} icon={< AccountCircle />} />
                                 <Toggle // toggle for testing
                                     label="Logged"
                                     defaultToggled={false}
@@ -157,6 +178,7 @@ export class Header extends Component {
                                 />
                             </div>
                             <MenuItem
+                                id="header-home-btn"
                                 leftIcon={< Home />}
                                 onClick={() => this.dispatchNewRoute('/')}
                                 style={{
@@ -167,6 +189,7 @@ export class Header extends Component {
                             </MenuItem>
 
                             <MenuItem
+                                id="header-search-btn"
                                 leftIcon={< Search />}
                                 onClick={() => this.dispatchNewRoute('/search')}
                                 style={{
@@ -183,11 +206,12 @@ export class Header extends Component {
                     }
                 </LeftNav>
                 <AppBar
+                    id="header-app-bar"
                     title="The Watch List"
                     iconElementRight={loginButton}
                     onLeftIconButtonTouchTap={() => this.openNav()}
                     style={{
-                        backgroundColor: blueA700,
+                        backgroundColor: blue500,
                         textAlign: 'left',
                     }}
                 />

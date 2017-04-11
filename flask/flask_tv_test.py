@@ -85,7 +85,7 @@ def test_episodes_content(episodes_request):
 
 def test_episodes_key(episodes_request):
     """Checks that episodes JSON has correct keys"""
-    episodesKeys = ["date", "name", "number", "season", "summary"]
+    episodesKeys = ["date", "name", "number", "season", "summary", "time"]
     data = episodes_request.json()
     episode = data[0]
 

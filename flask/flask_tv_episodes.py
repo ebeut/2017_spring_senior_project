@@ -58,6 +58,8 @@ class FlaskTvEpisodes:
                 # format date (ex. Mar 10, 2017)
                 date = self.formatAirDate(date)
 
+                time = episode["airtime"]  # 24 hour format
+
                 # not every episode has a summary, will result in empty string
                 # removes html tags from summary
                 summary = re.sub("<.*?>", "", str(episode["summary"]))
@@ -67,6 +69,7 @@ class FlaskTvEpisodes:
                     "season": season,
                     "number": number,
                     "date": date,
+                    "time": time,
                     "summary": summary
                 }
                 episodes.append(temp)

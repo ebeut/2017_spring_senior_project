@@ -1,13 +1,13 @@
 import { injectReducer } from '../../store/reducers';
 
 export default (store) => ({
-  path: 'showInfo',
+  path: 'calendar',
   getComponent (nextState, cb) {
     require.ensure([], (require) => {
-      const ShowInfo = require('./show-info-reducer').default;
+      const Calendar = require('./calendar-reducer').default;
       const reducer = require('./action').default;
-      injectReducer(store, { key: 'showInfo', reducer });
-      cb(null, ShowInfo);
-    }, 'showInfo')
+      injectReducer(store, { key: 'calendar', reducer });
+      cb(null, Calendar);
+  }, 'calendar')
   }
 })
