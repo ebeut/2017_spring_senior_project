@@ -4,11 +4,21 @@ from flask_tv_search import FlaskTvSearch
 from flask_tv_details import FlaskTvDetails
 from flask_tv_episodes import FlaskTvEpisodes
 from flask_tv_trending import FlaskTvTrending
+from TVMazeDB import Database
 from flask_cors import CORS
 
 
 app = Flask(__name__)
 cor = CORS(app, resources={r"/*": {"origin": "*"}}, supports_credentials=True)
+
+"""Trying to figure out db connection with flask"""
+
+"""@app.route("/home")
+def api_database(db_file):
+
+    watchListdb = Database(db_file)
+    watchListdb."""
+
 
 
 @app.route("/tv/search/<showTitle>")
