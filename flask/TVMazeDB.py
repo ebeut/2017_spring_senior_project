@@ -24,14 +24,13 @@ class Database:
     def create_row(conn, watchlist):
         sql = ''' INSERT INTO watchlist(email, showId, lastWatched)
                 VALUES(?,?,?) '''
-                cur = conn.cursor()
-                cur.execute(sql, watchlist)
-                return cur.lastrowid
+        cur = conn.cursor()
+        cur.execute(sql, watchlist)
+        return cur.lastrowid
 
     #def addFaveShow(email, showId);
     def addFaveShow(conn, watchlist):
-        cur.execute("INSERT INTO watchlist
-                VALUES (?,?,?)", (showId))
+        cur.execute("INSERT INTO watchlist VALUES (?,?,?)", (showId))
 
     #def updateLatestWatched(email, showId), lastWatched;
     def updateLatestWatched(conn, watchlist):
