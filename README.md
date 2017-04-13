@@ -91,6 +91,7 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
         "date": "date aired",
         "name": "name of episode",
         "number": episode number,
+        "runtime": length of episode,
         "season": season number,
         "summary": "summary of episode",
         "time": "24 hour format time aired"
