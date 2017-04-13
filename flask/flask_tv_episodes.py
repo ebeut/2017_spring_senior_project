@@ -66,6 +66,7 @@ class FlaskTvEpisodes:
                 summary = re.sub("<.*?>", "", str(episode["summary"]))
 
                 temp = {
+                    "id": self.__showID,
                     "name": name,
                     "season": season,
                     "number": number,

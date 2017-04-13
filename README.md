@@ -89,6 +89,7 @@ Bases of framework pulled from [React Redux Starter Kit](https://github.com/dave
 [
     {
         "date": "date aired",
+        "id": ID number,
         "name": "name of episode",
         "number": episode number,
         "runtime": length of episode,

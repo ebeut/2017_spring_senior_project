@@ -6,7 +6,10 @@ export default (store) => ({
     require.ensure([], (require) => {
       const Calendar = require('./calendar-reducer').default;
       const reducer = require('./action').default;
-      injectReducer(store, { key: 'calendar', reducer });
+      injectReducer(store, { key: 'calendarData', reducer });
+
+      const reducerShow = require('../Show-Info/action').default;
+      injectReducer(store, { key: 'showInfo', reducer: reducerShow });
       cb(null, Calendar);
   }, 'calendar')
   }

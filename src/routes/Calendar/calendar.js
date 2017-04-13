@@ -5,16 +5,113 @@ import moment from 'moment';
 import './calendar.css';
 
 BigCalendar.momentLocalizer(moment);
-const events = [
-    {
-        'title': 'Legion',
-        'start': new Date(2017, 2, 29, 22, 0, 0),
-        'end': new Date(2017, 2, 29, 23, 0, 0),
-        'desc': 'Airs on FX at 10pm'
-    },
-]
+
+// used to save information from previous Flask requests
+var titleNetwork =[]
+// will hold all the episodes that the calendar will display
+var events = []
 
 export default class CalendarPage extends Component {
+    static propTypes = {
+        calendarData: PropTypes.object,
+        showData: PropTypes.object,
+        getTrending: PropTypes.func,
+        getShowSeasonInfo: PropTypes.func,
+        getShowInfo: PropTypes.func,
+    };
+
+    componentWillMount () {
+        this.props.getTrending()
+    }
+
+    componentWillReceiveProps(newProps) {
+        if(this.props.showData != newProps.showData && newProps.showData) {
+            if(newProps.showData.show.id) {
+                // information to be saved from show details request
+                var temp = {
+                    'id': newProps.showData.show.id,
+                    'title': newProps.showData.show.title,
+                    'network': newProps.showData.show.network,
+                    'season': newProps.showData.show.numSeasons,
+                }
+                titleNetwork.push(temp)
+                this.props.getShowSeasonInfo(newProps.showData.show.id, newProps.showData.show.numSeasons)
+            }
+
+            if(newProps.showData.showSeasonInfo) {
+                if(newProps.showData.showSeasonInfo.length != 0) {
+                    newProps.showData.showSeasonInfo.map((episode) => {
+                        for (var i = 0; i < titleNetwork.length; i++) {
+                            // check that IDs match to match info to episodes
+                            if(titleNetwork[i].id == episode.id) {
+                                var tempTitle = titleNetwork[i].title
+                                var tempEpiTitle = episode.name
+                                var tempEpiNum = episode.number
+                                var tempEpiDesc = episode.summary
+                                var tempNetwork = titleNetwork[i].network
+
+                                var tempDate = new Date(episode.date)
+                                var tempTime = episode.time
+
+                                if(tempTime) {
+                                    var tempArr = tempTime.split(":")
+                                    var tempHour = Number(tempArr[0])
+                                    var tempMin = Number(tempArr[1])
+                                    tempDate.setHours(tempHour)
+                                    tempDate.setMinutes(tempMin)
+
+                                    // convert to 12 hour time and set AM/PM
+                                    if (tempHour > 12) {
+                                        var tempTwelveHour = tempHour - 12
+                                        var ampm = "PM"
+                                    }
+                                    else if (tempHour == 12) {
+                                        var ampm = "PM"
+                                    }
+                                    else {
+                                        var ampm = "AM"
+                                    }
+
+                                    var tempDesc = "\"" + tempEpiTitle + "\"\n" + tempEpiDesc + "\n\nAirs on " + tempNetwork + " at " + tempTwelveHour + " " + ampm
+                                }
+                                else {  // if episode does not have a time
+                                    tempDate.setHours(0)
+                                    tempDate.setMinutes(0)
+                                    var tempDesc = "\"" + tempEpiTitle + "\"\n" + tempEpiDesc
+                                }
+
+                                // create the event/episode to add to events
+                                var tempEvent = {
+                                    'title': "s" + titleNetwork[i].season + "e" + tempEpiNum + " " + tempTitle,
+                                    'start': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours(), tempDate.getMinutes()),
+                                    'end': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours()+1, tempDate.getMinutes()),
+                                    'desc': tempDesc
+                                }
+
+                                events.push(tempEvent)
+                                break
+                            }
+                        }
+                    });
+                }
+            }
+        }
+
+        if(this.props.calendarData.trendingData != newProps.calendarData.trendingData) {
+            if(newProps.calendarData.trendingData) {
+                for(var i = 0; i < newProps.calendarData.trendingData.length; i++) {
+                    var show = newProps.calendarData.trendingData[i]
+                    this.props.getShowInfo(show.id)
+                }
+            }
+        }
+    }
+
+    // to clear events from calendar when user navigates away
+    componentWillUnmount() {
+        events = []
+    }
+
     render () {
         return (
             <div
@@ -28,6 +125,7 @@ export default class CalendarPage extends Component {
                 }}
             >
                 <BigCalendar
+                    popup
                     selectable
                     events={events}
                     onSelectEvent={event => alert(event.desc)}
