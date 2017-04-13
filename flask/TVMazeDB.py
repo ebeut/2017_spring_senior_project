@@ -1,6 +1,8 @@
 import sqlite3
 from sqlite3 import Error
 
+
+
 class Database:
     def create_connection(db_file):
     #create a database connection to a SQLite database
@@ -19,26 +21,56 @@ class Database:
                 except Error as e:
                     print(e)
 #insert row
-    def create_row(conn, watchlistRow):
-        sql = ''' INSERT INTO watchlist(userId, name, email, begin_date, end_date, showId, showTitle, episode, season)
-                VALUES(?,?,?,?,?,?,?,?) '''
+    def create_row(conn, watchlist):
+        sql = ''' INSERT INTO watchlist(email, showId, lastWatched)
+                VALUES(?,?,?) '''
                 cur = conn.cursor()
-                cur.execute(sql, watchlistRow)
+                cur.execute(sql, watchlist)
                 return cur.lastrowid
+
+    #def addFaveShow(email, showId);
+    def addFaveShow(conn, watchlist):
+        cur.execute("INSERT INTO watchlist
+                VALUES (?,?,?)", (showId))
+
+    #def updateLatestWatched(email, showId), lastWatched;
+    def updateLatestWatched(conn, watchlist):
+        sql = ''' UPDATE watchlist
+                  SET latestWatched = ?
+        cur = conn.cursor()
+        cur.execute(sql, watchlist)
+                VALUES(?,?,?)'''
+        conn.commit()
+
+    #read latest watched show
+    def readLatestWatched(conn, watchlist):
+        cur = conn.cursor()
+        cur.execute("SELECT latestWatched FROM watchlist WHERE email =?", (email))
+
+        rows = cur.fetchall()
+
+        for row in rows:
+            print(row)
+
+    #read favorite shows
+    def readFaveShow(conn, watchlist):
+        cur = conn.cursor()
+        cur.execute("SELECT showId FROM watchlist WHERE email=?", (email))
+
+        rows = cur.fetchall()
+
+        for row in rows:
+            print(row)
+
+
 #create database file
     def main():
         database = "Users\TheWatchList.db"
  #Create table
-        sql_create_watchlist_table = """ CREATE TABLE IF NOT EXISTS watchlist (
-                                        userId integer PRIMARY KEY,
-                                        name text NOT NULL,
-										email text NOT NULL,
-                                        begin_date text,
-                                        end_date text,
+        watchlist = """ CREATE TABLE IF NOT EXISTS watchlist (
+                                        email integer PRIMARY KEY,
 										showId integer,
-                                        showTitle text,
-										episode integer,
-										season integer,
+                                        lastWatched float,
                                     ); """
 
 

@@ -11,13 +11,21 @@ from flask_cors import CORS
 app = Flask(__name__)
 cor = CORS(app, resources={r"/*": {"origin": "*"}}, supports_credentials=True)
 
-"""Trying to figure out db connection with flask"""
+"""
+@app.route("/db/insert/<email>/<showId>/<lastWatched>")
+def create_row(conn, watchlist):
 
-"""@app.route("/home")
-def api_database(db_file):
+@app.route("/db/favorite/<email>/showId>/<lastWatched>")
+def addFaveShow(conn, watchlist):
 
-    watchListdb = Database(db_file)
-    watchListdb."""
+@app.route("/db/updateLatest/<email>/<showId/<lastWatched>")
+def updateLatestWatched(conn, watchlist):
+
+@app.route("db/readLatestWatched/<email>/<showId/<lastWatched>")
+def readLatestWatched(conn, watchlist):
+
+@app.route("db/readFaveShow/<email>/<showId/<lastWatched>")
+def readFaveShow(conn, watchlist):"""
 
 
 
