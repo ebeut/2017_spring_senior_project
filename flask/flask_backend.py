@@ -4,11 +4,29 @@ from flask_tv_search import FlaskTvSearch
 from flask_tv_details import FlaskTvDetails
 from flask_tv_episodes import FlaskTvEpisodes
 from flask_tv_trending import FlaskTvTrending
+from TVMazeDB import Database
 from flask_cors import CORS
 
 
 app = Flask(__name__)
 cor = CORS(app, resources={r"/*": {"origin": "*"}}, supports_credentials=True)
+
+"""
+@app.route("/db/insert/<email>/<showId>/<lastWatched>")
+def create_row(conn, watchlist):
+
+@app.route("/db/favorite/<email>/showId>/<lastWatched>")
+def addFaveShow(conn, watchlist):
+
+@app.route("/db/updateLatest/<email>/<showId/<lastWatched>")
+def updateLatestWatched(conn, watchlist):
+
+@app.route("db/readLatestWatched/<email>/<showId/<lastWatched>")
+def readLatestWatched(conn, watchlist):
+
+@app.route("db/readFaveShow/<email>/<showId/<lastWatched>")
+def readFaveShow(conn, watchlist):"""
+
 
 
 @app.route("/tv/search/<showTitle>")

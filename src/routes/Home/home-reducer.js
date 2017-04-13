@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { getHomePageData } from './action';
-import HomePage from './components/home';
+import HomePage from './components/Home';
 
 const mapDispatchToProps = { getHomePageData };
 
