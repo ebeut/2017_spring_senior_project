@@ -84,22 +84,21 @@ class FlaskTvEpisodes:
         return episodes
 
     def formatAirDate(self, date):
-      """Takes the date from the original JSON and reformats
+        """Takes the date from the original JSON and reformats
 
-      Arguments:
-          date:    original date from JSON
+        Arguments:
+            date:    original date from JSON
 
-      Returns: reformatted date (ex. Mar 10, 2017)
-      """
-      year, month, day = date.split("-")
-      newDate = datetime.date(int(year), int(month), int(day))
-      # format date (ex. Mar 10, 2017)
-      try:
-        formatDate = newDate.strftime("%b %-d, %Y")
-      except ValueError as m:
-        formatDate = newDate
-      return formatDate
-
+        Returns: reformatted date (ex. Mar 10, 2017)
+        """
+        year, month, day = date.split("-")
+        newDate = datetime.date(int(year), int(month), int(day))
+        # format date (ex. Mar 10, 2017)
+        try:
+            formatDate = newDate.strftime("%b %-d, %Y")
+        except ValueError as m:
+            formatDate = newDate
+        return formatDate
 
     def getEpisodeJSON(self):
         """Getter function for episodeJSON
