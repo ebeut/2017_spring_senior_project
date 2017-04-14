@@ -81,19 +81,6 @@ export class Header extends Component {
 
         // check if logged in
         if(this.state.logged) {
-            calendarMenuItem = ((
-                <MenuItem
-                    id="header-calender-btn"
-                    leftIcon={< Event />}
-                    onClick={() => this.dispatchNewRoute('/calendar')}
-                    style={{
-                        textAlign: 'left',
-                    }}
-                >
-                    Calendar
-                </MenuItem>
-            ));
-
             settingsMenuItem = ((
                 <MenuItem
                     id="header-settings-btn"
