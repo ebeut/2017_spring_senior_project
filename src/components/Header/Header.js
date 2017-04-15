@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { IndexLink, Link } from 'react-router';
 import { browserHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import LeftNav from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
-import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 import { blue500 } from 'material-ui/styles/colors';
 import Search from 'material-ui/svg-icons/action/search';
@@ -14,9 +11,7 @@ import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import Home from 'material-ui/svg-icons/action/Home';
 import Event from 'material-ui/svg-icons/action/event';
 import GoogleLogin from 'react-google-login';
-import ExitToApp from 'material-ui/svg-icons/action/exit-to-app'
 import Settings from 'material-ui/svg-icons/action/settings'
-import PowerSettingsNew from 'material-ui/svg-icons/action/power-settings-new'
 
 
 // just for toggle for testing
