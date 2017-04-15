@@ -38,13 +38,13 @@ export default class HomePage extends Component {
 
   render () {
     let sqr = (
-      <div>Loading..... Please wait</div>
+      <div id="home-loading">Loading..... Please wait</div>
     );
 
     if (this.state.sqrContent.length > 0) {
       sqr = (
         <ShowSquare
-          id="search-squares"
+          id="home-squares"
           content={this.state.sqrContent}
           getShowInfo={this.props.getShowInfo}
         />
@@ -52,7 +52,9 @@ export default class HomePage extends Component {
     }
     return (
       <div id="home-page">
-        <h4 style={{textAlign: 'center'}}>{this.isLogedIn() ? 'Your Favorite\'s' : 'Top Trending Shows'}</h4>
+        <h4 id="home-title" style={{textAlign: 'center'}}>
+          {this.isLogedIn() ? 'Your Favorite\'s' : 'Top Trending Shows'}
+        </h4>
         {sqr}
       </div>
     );
