@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import BigCalendar from 'react-big-calendar';
+import Loading from '../../components/Loading';
 import moment from 'moment';
 
 import './calendar.css';
@@ -12,6 +13,12 @@ var titleNetwork =[]
 var events = []
 
 export default class CalendarPage extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      open: false,
+    }
+  }
     static propTypes = {
         calendarData: PropTypes.object,
         showData: PropTypes.object,
@@ -22,6 +29,7 @@ export default class CalendarPage extends Component {
 
     componentWillMount () {
         if(events.length <= 0) {
+            this.setState({open: true});
             this.props.getTrending()
         }
     }
@@ -96,6 +104,7 @@ export default class CalendarPage extends Component {
                         }
                     });
                 }
+                this.setState({open: false});
             }
         }
 
@@ -121,6 +130,7 @@ export default class CalendarPage extends Component {
                     height: 800,
                 }}
             >
+                <Loading open={this.state.open}/>
                 <BigCalendar
                     popup
                     selectable

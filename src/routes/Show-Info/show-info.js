@@ -1,14 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import Logo from '../../../logo.png';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-import CircularProgress from 'material-ui/CircularProgress';
 import { browserHistory } from 'react-router';
 import Checkbox from 'material-ui/Checkbox';
 import Divider from 'material-ui/Divider';
+import Loading from '../../components/Loading';
 import {List, ListItem} from 'material-ui/List';
 
 export default class ShowInfoPage extends Component {
@@ -28,7 +26,7 @@ export default class ShowInfoPage extends Component {
       numSeasons: 0,
       year: '',
       episodeTitle: [],
-      episodeDescription: []
+      episodeDescription: [],
     }
   }
 
@@ -37,12 +35,19 @@ export default class ShowInfoPage extends Component {
     getShowSeasonInfo: PropTypes.func
   };
 
+  componentDidMount() {
+    this.setState({open: true});
+  }
+
   componentWillReceiveProps(newProps) {
     const newStuff = newProps.showInfo;
-    if (this.props.showInfo.gettingShowInfo !== newStuff.gettingShowInfo && newProps.showInfo.gettingShowInfo)
+    if (this.props.showSeasonInfo != newStuff.showSeasonInfo && this.props.showInfo.show && newStuff.gettingShowSeasonInfo){
       this.setState({open: true});
-    if (this.props.showInfo.gettingShowInfo !== newStuff.gettingShowInfo && !newProps.showInfo.gettingShowInfo)
+    }
+    if (this.props.showSeasonInfo != newStuff.showSeasonInfo && this.props.showInfo.show && !newStuff.gettingShowSeasonInfo){
       this.setState({open: false});
+    }
+
     if (this.props.showInfo !== newProps.showInfo && newStuff.show && newProps.showInfo.show.id) {
       this.setState({
         poster: newStuff.show.poster,
@@ -127,14 +132,7 @@ export default class ShowInfoPage extends Component {
   render () {
     const showInfo = (
       <div>
-        <Dialog
-          title="Content is loading please wait"
-          open={this.state.open}
-        >
-          <div style={{textAlign: 'center'}}>
-            <CircularProgress size={60} thickness={7} />
-          </div>
-        </Dialog>
+        <Loading open={this.state.open} />
         <div style={{display: 'inline-flex', width: '100%', height: '50%'}}>
           <Paper id="show-poster" style={{width: '25%'}} zDepth={5} >
             <img style={{width: '100%', padding: 10, height: '100%'}} src={this.state.poster && this.state.poster != 'N/A' ? this.state.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'}/>

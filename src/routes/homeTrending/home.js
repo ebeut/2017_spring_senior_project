@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { ShowSquare } from '../../components/showSqr/showSqr';
+import Loading from '../../components/Loading';
 
 
 export default class HomePage extends Component {
@@ -8,6 +9,7 @@ export default class HomePage extends Component {
     super(props);
     this.state = {
       sqrContent: [],
+      open: false,
     }
   }
 
@@ -25,6 +27,7 @@ export default class HomePage extends Component {
   }
 
   componentWillMount () {
+    this.setState({open: true});
     this.isLogedIn() ? this.props.getHomePageData() : this.props.getTrending();
   }
 
@@ -32,13 +35,13 @@ export default class HomePage extends Component {
     if (this.props.homeData.homeData != newProps.homeData.homeData && newProps.homeData.homeData) {
       this.setState({sqrContent: newProps.homeData.homeData});
     } else if (this.props.calendarData.trendingData != newProps.calendarData.trendingData && newProps.calendarData.trendingData) {
-      this.setState({sqrContent: newProps.calendarData.trendingData});
+      this.setState({sqrContent: newProps.calendarData.trendingData, open: false});
     }
   }
 
   render () {
     let sqr = (
-      <div id="home-loading">Loading..... Please wait</div>
+      <div id="home-loading" />
     );
 
     if (this.state.sqrContent.length > 0) {
@@ -52,6 +55,7 @@ export default class HomePage extends Component {
     }
     return (
       <div id="home-page">
+        <Loading open={this.state.open} />
         <h4 id="home-title" style={{textAlign: 'center'}}>
           {this.isLogedIn() ? 'Your Favorite\'s' : 'Top Trending Shows'}
         </h4>
