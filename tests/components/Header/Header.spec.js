@@ -23,9 +23,8 @@ describe('Header component', () => {
     login = wrap.find('#header-app-bar').props().iconElementRight;
     expect(wrap.find('#header-home-btn')).to.exist;
     expect(wrap.find('#header-search-btn')).to.exist;
-    expect(wrap.find('#header-calender-btn')).to.exist;
+    expect(wrap.find('#header-calendar-btn')).to.exist;
     expect(wrap.find('#header-settings-btn')).to.exist;
     expect(login.props.buttonText).to.equal('Sign Out');
-
   });
 });

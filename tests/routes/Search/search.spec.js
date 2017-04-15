@@ -83,9 +83,11 @@ describe('Search component', () => {
     spies = {};
     props = {
       searchRes : {},
+      calendarData: {},
       ...bindActionCreators({
-        searchTVAPI : (spies.searchTVAPI = sinon.spy()),
-        getShowInfo   : (spies.getShowInfo = sinon.spy())
+        searchTVAPI: (spies.searchTVAPI = sinon.spy()),
+        getShowInfo: (spies.getShowInfo = sinon.spy()),
+        getTrending: (spies.getTrending = sinon.spy())
       }, spies.dispatch = sinon.spy()),
       contextTypes: {router: '/search'}
     };
@@ -96,13 +98,14 @@ describe('Search component', () => {
     expect(wrap.find('#auto-complete-search')).to.exist;
   });
   it('Should dispatch an async action when the user clicks enter', () => {
-    spies.dispatch.should.have.not.been.called;
+    spies.searchTVAPI.should.have.not.been.called;
+    spies.getTrending.should.have.been.called;
     wrap.instance().searchUpdated('1234');
-    spies.dispatch.should.have.been.called;
+    spies.searchTVAPI.should.have.been.called;
   });
   it('Should be able to read in data from the async call', () => {
-    wrap.instance().componentWillReceiveProps({searchRes: {}, gettingSearchRes: true });
-    wrap.instance().componentWillReceiveProps({searchRes: {searchResults}});
+    wrap.instance().componentWillReceiveProps({searchRes: {}, gettingSearchRes: true, calendarData: {trendingData: []} });
+    wrap.instance().componentWillReceiveProps({searchRes: {searchResults}, calendarData: {trendingData: []}});
     wrap.setState({searching: true});
     expect(wrap.state().results.length).to.equal(searchResults.length);
   });

@@ -181,6 +181,7 @@ export class Header extends Component {
                             </MenuItem>
 
                             <MenuItem
+                                id="header-calendar-btn"
                                 leftIcon={< Event />}
                                 onClick={() => this.dispatchNewRoute('/calendar')}
                                 style={{
