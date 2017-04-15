@@ -51,7 +51,7 @@ export class ShowSquare extends Component {
                 </IconButton>
               }
             >
-              <img src={content.poster && content.poster != 'N/A' ? content.poster : Logo} />
+              <img src={content.poster && content.poster != 'N/A' ? content.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'} />
             </GridTile>
           ))}
         </GridList>
@@ -60,4 +60,3 @@ export class ShowSquare extends Component {
   }
 
 }
-

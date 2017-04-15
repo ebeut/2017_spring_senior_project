@@ -21,7 +21,9 @@ export default class CalendarPage extends Component {
     };
 
     componentWillMount () {
-        this.props.getTrending()
+        if(events.length <= 0) {
+            this.props.getTrending()
+        }
     }
 
     componentWillReceiveProps(newProps) {
@@ -105,11 +107,6 @@ export default class CalendarPage extends Component {
                 }
             }
         }
-    }
-
-    // to clear events from calendar when user navigates away
-    componentWillUnmount() {
-        events = []
     }
 
     render () {

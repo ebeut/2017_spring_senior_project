@@ -137,7 +137,7 @@ export default class ShowInfoPage extends Component {
         </Dialog>
         <div style={{display: 'inline-flex', width: '100%', height: '50%'}}>
           <Paper id="show-poster" style={{width: '25%'}} zDepth={5} >
-            <img style={{width: '100%', padding: 10, height: '100%'}} src={this.state.poster ? this.state.poster : Logo}/>
+            <img style={{width: '100%', padding: 10, height: '100%'}} src={this.state.poster && this.state.poster != 'N/A' ? this.state.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'}/>
           </Paper>
           <div style={{paddingLeft: 15, width: '70%'}}>
             <div style={{paddingBottom: 20}}>
