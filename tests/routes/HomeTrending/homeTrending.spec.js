@@ -108,6 +108,5 @@ describe('Home component', () => {
     wrap.instance().componentWillReceiveProps({calendarData: {}, homeData: {homeData: trending}});
     expect(wrap.find('#home-loading')).to.not.exist;
     expect(wrap.find('#home-squares')).to.exist;
-
   });
 });
