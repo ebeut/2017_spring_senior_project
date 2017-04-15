@@ -91,7 +91,7 @@ export default class SearchPage extends Component {
     return (
       <div id="search-page" style={outerDiv}>
         <div style={{textAlign: 'center'}}>
-          <Loading open={this.state.open} />
+          <Loading id="search-loading" open={this.state.open} />
           <AutoComplete
             id="auto-complete-search"
             floatingLabelText="Search for a show"

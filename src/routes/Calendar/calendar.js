@@ -130,8 +130,9 @@ export default class CalendarPage extends Component {
                     height: 800,
                 }}
             >
-                <Loading open={this.state.open}/>
+                <Loading id="calendar-loading" open={this.state.open}/>
                 <BigCalendar
+                    id="calendar-big-calendar"
                     popup
                     selectable
                     events={events}

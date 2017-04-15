@@ -132,7 +132,7 @@ export default class ShowInfoPage extends Component {
   render () {
     const showInfo = (
       <div>
-        <Loading open={this.state.open} />
+        <Loading id="show-info-loading" open={this.state.open} />
         <div style={{display: 'inline-flex', width: '100%', height: '50%'}}>
           <Paper id="show-poster" style={{width: '25%'}} zDepth={5} >
             <img style={{width: '100%', padding: 10, height: '100%'}} src={this.state.poster && this.state.poster != 'N/A' ? this.state.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'}/>
