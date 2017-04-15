@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 import { ShowSquare } from '../../components/showSqr/showSqr';
+import Loading from '../../components/Loading';
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
 
 const styles = {
@@ -13,7 +14,7 @@ const styles = {
     underlineFocusStyle: {
         borderColor: pinkA200,
     },
-}
+};
 
 export default class SearchPage extends Component {
 
@@ -23,14 +24,22 @@ export default class SearchPage extends Component {
       results: [],
       searching: false,
       sqrContent: [],
+      open: false,
     }
   }
 
   static propTypes = {
     searchRes: PropTypes.object,
+    calendarData: PropTypes.object,
+    getTrending: PropTypes.func,
     searchTVAPI: PropTypes.func,
     getShowInfo: PropTypes.func,
   };
+
+  componentWillMount () {
+    this.props.getTrending();
+    this.setState({open: true});
+  }
 
   runSearch = (searchContent) => {
     this.setState({searching: true});
@@ -38,6 +47,16 @@ export default class SearchPage extends Component {
   };
 
   componentWillReceiveProps (newProps) {
+    if (this.props.calendarData.trendingData != newProps.calendarData.trendingData && newProps.calendarData.trendingData) {
+      let results = [];
+      this.setState({open: false});
+      newProps.calendarData.trendingData.map((show) => {
+        if (results.indexOf(show.title) == -1) {
+          results.push(show.title);
+        }
+      });
+      this.setState({sqrContent: newProps.calendarData.trendingData, results});
+    }
     if (this.props.searchRes.searchResults != newProps.searchRes.searchResults) {
       let results = [];
       if (newProps.searchRes.searchResults) {
@@ -72,6 +91,7 @@ export default class SearchPage extends Component {
     return (
       <div id="search-page" style={outerDiv}>
         <div style={{textAlign: 'center'}}>
+          <Loading open={this.state.open} />
           <AutoComplete
             id="auto-complete-search"
             floatingLabelText="Search for a show"
