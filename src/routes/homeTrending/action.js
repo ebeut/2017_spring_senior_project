@@ -5,11 +5,17 @@ export const HOME_DATA = 'HOW_DATA';
 export const HOME_DATA_FAIL = `${HOME_DATA}_FAIL`;
 export const HOME_DATA_OK = `${HOME_DATA}_OK`;
 
-export const getHomePageData = (isSignedIn) => {
-  if (isSignedIn) {
-    // makes a call to the backend to get infor from db
-  } else {
-    // makes a call to backend to get trending/popular shows
+export const getHomePageData = () => {
+  const url = 'https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json';
+  return (dispatch) => {
+    dispatch({type: HOME_DATA});
+    request.get(url).end((err, res) => {
+      if (err || !res.ok) {
+        dispatch({type: HOME_DATA_FAIL, err});
+      } else {
+        dispatch({type: HOME_DATA_OK, res});
+      }
+    });
   }
 };
 
@@ -28,7 +34,7 @@ export default function homePageData (state = initialState, action) {
       return { ...initialState, gettingSearchRes: false, gettingSearchResErr: action.err }
     }
     case HOME_DATA_OK: {
-      const homeData = action.res;
+      const homeData = action.res.body;
       return { ...initialState, gettingSearchRes: false, homeData }
     }
     default:

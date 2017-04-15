@@ -7,7 +7,7 @@ export const CALENDAR_OK = `${CALENDAR}_OK`;
 
 export const getTrending = () => {
     const url = `http://127.0.0.1:5000/tv/trending`;
-    console.log(url)
+   // console.log(url);
     return (dispatch) => {
       dispatch({type: CALENDAR});
       request.get(url).end((err, res) => {

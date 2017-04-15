@@ -6,6 +6,7 @@ import TestRoute from './Test-Btn';
 import SearchRoute from './Search';
 import ShowInfoPage from './Show-Info';
 import CalendarPage from './Calendar';
+import HomePage from './homeTrending';
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -15,6 +16,7 @@ export const createRoutes = (store) => ({
   component   : CoreLayout,
   indexRoute  : Home,
   childRoutes : [
+    HomePage(store),
     CounterRoute(store),
     TestRoute(store),
     SearchRoute(store),
