@@ -218,7 +218,7 @@ describe('Show Info component', () => {
     props = {
       showInfo: {show: {}, showSeasonInfo: []},
       ...bindActionCreators({
-        getShowSeasonInfo: (spies.searchTVAPI = sinon.spy()),
+        getShowSeasonInfo: (spies.getShowSeasonInfo = sinon.spy()),
       }, spies.dispatch = sinon.spy()),
     };
     wrap = shallow(<ShowInfo {...props} />)
@@ -267,4 +267,17 @@ describe('Show Info component', () => {
     wrap.instance().componentWillReceiveProps({showInfo: {show: showInfoData, showSeasonInfo: []}});;
     spies.dispatch.should.have.been.called;
   });
+  it('Should show loading dialog when there is no data', () => {
+    wrap.instance().componentDidMount();
+    wrap.instance().componentWillReceiveProps({showInfo: {showSeasonInfo: {}, gettingShowSeasonInfo: true}});
+    expect(wrap.state().open).to.be.true;
+    wrap.instance().componentWillReceiveProps({showInfo: {showSeasonInfo: {}, gettingShowSeasonInfo: false}});
+    expect(wrap.state().open).to.be.false;
+  });
+  it('Should make async calls at the right time', () => {
+    spies.getShowSeasonInfo.should.have.not.been.called;
+    wrap.instance().seasonChange(null,null,5);
+    expect(wrap.state().season).to.equal(5);
+    spies.getShowSeasonInfo.should.have.been.called;
+  })
 });

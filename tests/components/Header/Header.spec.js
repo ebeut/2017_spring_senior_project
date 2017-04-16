@@ -27,4 +27,13 @@ describe('Header component', () => {
     expect(wrap.find('#header-settings-btn')).to.exist;
     expect(login.props.buttonText).to.equal('Sign Out');
   });
+  it('Should have navigation with the correct behavior', () => {
+    expect(wrap.state().open).to.be.false;
+    wrap.instance().openNav();
+    expect(wrap.state().open).to.be.true;
+    wrap.instance().handleClickOutside();
+    expect(wrap.state().open).to.be.false;
+    wrap.instance().openNav();
+    expect(wrap.state().open).to.be.true;
+  });
 });

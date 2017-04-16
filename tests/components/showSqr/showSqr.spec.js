@@ -97,4 +97,10 @@ describe('Show Square component', () => {
     expect(wrap.find('img').length).to.equal(searchResults.length);
     expect(wrap.find('GridTile').length).to.equal(searchResults.length);
   });
+  it('Should make the async call to get the data', () => {
+    spies.getShowInfo.should.have.not.been.called;
+    wrap.instance().addToFav(0);
+    wrap.instance().viewShow(0);
+    spies.getShowInfo.should.have.been.called;
+  })
 });

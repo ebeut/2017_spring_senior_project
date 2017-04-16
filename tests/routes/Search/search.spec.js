@@ -109,4 +109,15 @@ describe('Search component', () => {
     wrap.setState({searching: true});
     expect(wrap.state().results.length).to.equal(searchResults.length);
   });
+  it('Should make async call when search is ran', () => {
+    expect(wrap.state().open).to.be.true;
+    spies.searchTVAPI.should.not.have.been.called;
+    wrap.instance().runSearch('testing');
+    spies.searchTVAPI.should.have.been.called;
+  })
+  it('Should add trending to autofill component', () => {
+    expect(wrap.state().open).to.be.true;
+    wrap.instance().componentWillReceiveProps({calendarData: {trendingData: searchResults}, searchRes: {searchResults: []}});
+    expect(wrap.state().open).to.be.false;
+  });
 });
