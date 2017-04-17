@@ -91,13 +91,18 @@ class FlaskTvEpisodes:
 
         Returns: reformatted date (ex. Mar 10, 2017)
         """
-        year, month, day = date.split("-")
-        newDate = datetime.date(int(year), int(month), int(day))
+        try:
+            year, month, day = date.split("-")
+            newDate = datetime.date(int(year), int(month), int(day))
+        except ValueError:
+            newDate = "N/A"
+
         # format date (ex. Mar 10, 2017)
         try:
             formatDate = newDate.strftime("%b %-d, %Y")
-        except ValueError as m:
+        except (ValueError, AttributeError):
             formatDate = newDate
+
         return formatDate
 
     def getEpisodeJSON(self):
