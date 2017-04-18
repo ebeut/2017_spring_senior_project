@@ -11,6 +11,12 @@ from flask_cors import CORS
 app = Flask(__name__)
 cor = CORS(app, resources={r"/*": {"origin": "*"}}, supports_credentials=True)
 
+@app.cli.command('initdb')
+def initdb_command():
+    """Initializes the database."""
+    init_db()
+    print('Initialized the database.')
+
 
 @app.route("/db/insert/<email>/<showId>/<lastWatched>")
 def create_row(email, showId, lastWatched):
@@ -22,7 +28,7 @@ def create_row(email, showId, lastWatched):
     return dbCreateRowJSON
 
 
-@app.route("/db/favorite/<email>/showId>/<lastWatched>")
+@app.route("/db/favorite/<email>/<showId>/<lastWatched>")
 def addFaveShow(showId):
     dbFave = FlaskFave(showId)
     dbFave.addFaveShow()
@@ -31,7 +37,7 @@ def addFaveShow(showId):
     dbFaveJSON.status_code = 200
     return dbFaveJSON
 
-@app.route("/db/updateLatest/<email>/<showId/<lastWatched>")
+@app.route("/db/updateLatest/<email>/<showId>/<lastWatched>")
 def updateLastWatched(lastWatched):
     dbLastWatched = FlaskLast(lastWatched)
     dbLastWatched.addLastWatched()
@@ -40,7 +46,7 @@ def updateLastWatched(lastWatched):
     dbLastWatchedJSON.status_code = 200
     return dbLastWatchedJSON
 
-@app.route("db/readLatestWatched/<email>/<showId/<lastWatched>")
+@app.route("/db/readLatestWatched/<email>/<showId>/<lastWatched>")
 def readLastWatched(lastWatched, email):
     dbReadLast = FlaskReadLast(lastWatched, email)
     dbReadLast.addReadLast()
@@ -49,7 +55,7 @@ def readLastWatched(lastWatched, email):
     dbReadLastJSONstatus_code = 200
     return dbReadLastJSON
 
-@app.route("db/readFaveShow/<email>/<showId/<lastWatched>")
+@app.route("/db/readFaveShow/<email>/<showId>/<lastWatched>")
 def readFaveShow(showId, email):
     dbReadFave = FlaskReadFave(showId, email)
     dbReadFave.addReadFave()
