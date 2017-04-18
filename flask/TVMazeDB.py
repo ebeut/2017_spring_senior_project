@@ -20,8 +20,11 @@ class Database:
                     c.execute(create_table_sql)
                 except Error as e:
                     print(e)
+
+
+
 #insert row
-    def create_row(conn, watchlist):
+    def create_row(email, showId, lastWatched):
         sql = ''' INSERT INTO watchlist(email, showId, lastWatched)
                 VALUES(?,?,?) '''
         cur = conn.cursor()
@@ -29,22 +32,24 @@ class Database:
         return cur.lastrowid
 
     #def addFaveShow(email, showId);
-    def addFaveShow(conn, watchlist):
-        cur.execute("INSERT INTO watchlist VALUES (?,?,?)", (showId))
+
+    def addFaveShow(showId):
+        cur.execute("INSERT INTO watchlist
+                VALUES (?,?,?)", (showId))
 
     #def updateLatestWatched(email, showId), lastWatched;
-    def updateLatestWatched(conn, watchlist):
+    def updateLastWatched(latestWatched):
         sql = ''' UPDATE watchlist
-                  SET latestWatched = ?
+                  SET lastWatched = ?
         cur = conn.cursor()
         cur.execute(sql, watchlist)
                 VALUES(?,?,?)'''
         conn.commit()
 
     #read latest watched show
-    def readLatestWatched(conn, watchlist):
+    def readLastWatched(lastWatched, email):
         cur = conn.cursor()
-        cur.execute("SELECT latestWatched FROM watchlist WHERE email =?", (email))
+        cur.execute("SELECT lastWatched FROM watchlist WHERE email =?", (email))
 
         rows = cur.fetchall()
 
@@ -52,7 +57,7 @@ class Database:
             print(row)
 
     #read favorite shows
-    def readFaveShow(conn, watchlist):
+    def readFaveShow(showId, email):
         cur = conn.cursor()
         cur.execute("SELECT showId FROM watchlist WHERE email=?", (email))
 
@@ -60,6 +65,35 @@ class Database:
 
         for row in rows:
             print(row)
+
+    def connect_db():
+    """Connects to the specific database."""
+        rv = sqlite3.connect(app.config['watchlist'])
+        rv.row_factory = sqlite3.Row
+        return rv
+
+
+    def get_db():
+        if not hasattr(g, 'sqlite_db'):
+        g.sqlite_db = connect_db()
+    return g.sqlite_db
+
+    def close_db(error):
+    """Closes the database again at the end of the request."""
+    if hasattr(g, 'sqlite_db'):
+        g.sqlite_db.close()
+
+    def init_db():
+    db = get_db()
+    with app.open_resource('schema.sql', mode='r') as f:
+        db.cursor().executescript(f.read())
+    db.commit()
+
+    @app.cli.command('initdb')
+    def initdb_command():
+    """Initializes the database."""
+    init_db()
+    print('Initialized the database.')
 
 
 #create database file

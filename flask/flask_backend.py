@@ -11,21 +11,46 @@ from flask_cors import CORS
 app = Flask(__name__)
 cor = CORS(app, resources={r"/*": {"origin": "*"}}, supports_credentials=True)
 
-"""
+
 @app.route("/db/insert/<email>/<showId>/<lastWatched>")
-def create_row(conn, watchlist):
+def create_row(email, showId, lastWatched):
+    dbCreateRow = FlaskDB(email, showId, lastWatched)
+    dbCreateRow.create_row()
+
+    dbCreateRowJSON = jsonify(dbCreateRow.getRowJSON())
+    dbCreateRowJSON.status_code = 200
+    return dbCreateRowJSON
+
 
 @app.route("/db/favorite/<email>/showId>/<lastWatched>")
-def addFaveShow(conn, watchlist):
+def addFaveShow(showId):
+    dbFave = FlaskFave(showId)
+    dbFave.addFaveShow()
+
+    dbFaveJSON = jsonify(dbFaveJSON.getFaveJSON())
+    dbFaveJSON.status_code = 200
+    return dbFaveJSON
 
 @app.route("/db/updateLatest/<email>/<showId/<lastWatched>")
-def updateLatestWatched(conn, watchlist):
+def updateLastWatched(lastWatched):
+    dbLastWatched = FlaskLast(lastWatched)
+    dbLastWatched.addLastWatched()
+
+    dbLastWatchedJSON = jsonify(dbLastWatched.getLastWatchedJSON())
+    dbLastWatchedJSON.status_code = 200
+    return dbLastWatchedJSON
 
 @app.route("db/readLatestWatched/<email>/<showId/<lastWatched>")
-def readLatestWatched(conn, watchlist):
+def readLastWatched(lastWatched, email):
+    dbReadLast = FlaskReadLast(lastWatched, email)
+    dbReadLast.addReadLast()
+
+    dbReadLastJSON = jsonify(dbReadLast.getReadLastJSON())
+    dbReadLastJSONstatus_code = 200
+    return dbReadLastJSON
 
 @app.route("db/readFaveShow/<email>/<showId/<lastWatched>")
-def readFaveShow(conn, watchlist):"""
+def readFaveShow(showId, email):
 
 
 
