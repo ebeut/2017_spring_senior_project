@@ -51,6 +51,12 @@ def readLastWatched(lastWatched, email):
 
 @app.route("db/readFaveShow/<email>/<showId/<lastWatched>")
 def readFaveShow(showId, email):
+    dbReadFave = FlaskReadFave(showId, email)
+    dbReadFave.addReadFave()
+
+    dbReadFaveJSON = jsonify(dbReadFave.getReadFaveJSON())
+    dbReadFaveJSONstatus_code = 200
+    return dbReadFaveJSON
 
 
 
