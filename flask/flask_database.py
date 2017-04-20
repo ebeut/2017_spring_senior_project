@@ -86,7 +86,7 @@ class FlaskDatabase:
         Arguments:
             email:    user's email
 
-        Returns:    create_dict_shows()
+        Returns:    create_list()
         """
         conn = self.get_connection()
         cur = conn.cursor()
@@ -95,28 +95,23 @@ class FlaskDatabase:
         rows = cur.fetchall()
         conn.close()
 
-        return self.create_dict_shows(rows)
+        return self.create_list(rows, 2)
 
-    def create_dict_shows(self, rows):
-        """Converts rows to dictionary
+    def create_list(self, rows, colNum):
+        """Converts rows to list
 
         Arguments:
             rows:    tuple with row info
 
         Returns:
-            fav_list:    list of dictionaries containing rows
+            li:    list of dictionaries containing rows
         """
-        fav_list = []
+        li = []
 
         for row in rows:
-            temp = {
-                "id": row[0],
-                "email": row[1],
-                "showID": row[2],
-            }
-            fav_list.append(temp)
+            li.append(row[colNum])
 
-        return fav_list
+        return li
 
     def print_table(self):
         """Displays table as HTML page
