@@ -35,7 +35,7 @@ class FlaskDatabase:
             print(" * Error creating table:", m)
             sys.exit()
 
-    def get_connection(self):
+    def getConnection(self):
         """Get a database connection
 
         Arguments: N/A
@@ -44,7 +44,7 @@ class FlaskDatabase:
         """
         return sqlite3.connect("TheWatchList.db")
 
-    def insert_show(self, email, showID):
+    def insertShow(self, email, showID):
         """Add entry to main table
 
         Arguments:
@@ -53,7 +53,7 @@ class FlaskDatabase:
 
         Returns: N/A
         """
-        conn = self.get_connection()
+        conn = self.getConnection()
         cur = conn.cursor()
 
         cur.execute("INSERT INTO WATCHLIST(EMAIL, SHOWID) \
@@ -62,7 +62,7 @@ class FlaskDatabase:
         flash("Entry added")
         conn.close()
 
-    def remove_show(self, email, showID):
+    def removeShow(self, email, showID):
         """Removes entry from main table
 
         Arguments:
@@ -71,7 +71,7 @@ class FlaskDatabase:
 
         Returns: N/A
         """
-        conn = self.get_connection()
+        conn = self.getConnection()
         cur = conn.cursor()
 
         cur.execute("DELETE FROM WATCHLIST WHERE email=? AND showID=?",
@@ -80,24 +80,24 @@ class FlaskDatabase:
         flash("Entry removed")
         conn.close()
 
-    def get_favorites(self, email):
+    def getFavorites(self, email):
         """Get rows(favorites) for email provided
 
         Arguments:
             email:    user's email
 
-        Returns:    create_list()
+        Returns:    createList()
         """
-        conn = self.get_connection()
+        conn = self.getConnection()
         cur = conn.cursor()
         cur.execute("SELECT * FROM WATCHLIST WHERE email=?", (email,))
 
         rows = cur.fetchall()
         conn.close()
 
-        return self.create_list(rows, 2)
+        return self.createList(rows, 2)
 
-    def create_list(self, rows, colNum):
+    def createList(self, rows, colNum):
         """Converts rows to list
 
         Arguments:
@@ -113,26 +113,26 @@ class FlaskDatabase:
 
         return li
 
-    def print_table(self):
+    def printTable(self):
         """Displays table as HTML page
 
         Arguments: N/A
 
         Returns: HTML rendering
         """
-        conn = self.get_connection()
+        conn = self.getConnection()
         cursor = conn.execute("SELECT idnum, email, showid from \
                                      WATCHLIST")
         return render_template('print_table.html', items=cursor.fetchall())
 
-    def print_table_episodes(self):
+    def printTableEpisodes(self):
         """Displays table of episodes as HTML page
 
         Arguments: N/A
 
         Returns: HTML rendering
         """
-        conn = self.get_connection()
+        conn = self.getConnection()
         cursor = conn.execute("SELECT idnum, epinum from \
                                      EPISODES")
         return render_template('print_table_episodes.html',

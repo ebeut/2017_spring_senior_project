@@ -26,7 +26,7 @@ def api_show_table():
 
     Returns: HTML rendering
     """
-    return db.print_table()
+    return db.printTable()
 
 
 @app.route("/db/epi")
@@ -37,7 +37,7 @@ def api_show_episodes():
 
     Returns: HTML rendering
     """
-    return db.print_table_episodes()
+    return db.printTableEpisodes()
 
 
 @app.route("/db/insert/<email>/<showID>")
@@ -50,7 +50,7 @@ def api_insert_show(email, showID):
 
     Returns: redirects to /db
     """
-    db.insert_show(email, showID)
+    db.insertShow(email, showID)
     return redirect(url_for("api_show_table"))
 
 
@@ -64,7 +64,7 @@ def api_remove_show(email, showID):
 
     Returns: redirects to /db
     """
-    db.remove_show(email, showID)
+    db.removeShow(email, showID)
     return redirect(url_for("api_show_table"))
 
 
@@ -87,7 +87,7 @@ def api_fav(email):
             }
         ]
     """
-    favsJSON = jsonify(db.get_favorites(email))
+    favsJSON = jsonify(db.getFavorites(email))
     favsJSON.status_code = 200
     return favsJSON
 
