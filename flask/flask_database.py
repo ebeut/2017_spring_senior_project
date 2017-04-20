@@ -54,13 +54,22 @@ class FlaskDatabase:
         Returns: N/A
         """
         conn = self.getConnection()
-        cur = conn.cursor()
 
-        cur.execute("INSERT INTO WATCHLIST(EMAIL, SHOWID) \
-                    VALUES(?, ?);", (email, showID))
-        conn.commit()
-        flash("Entry added")
-        conn.close()
+        cur_check = conn.cursor()
+        cur_check.execute("SELECT * FROM WATCHLIST WHERE email=? AND showid=?",
+                          (email, showID))
+
+        if not cur_check.fetchone():
+            cur = conn.cursor()
+
+            cur.execute("INSERT INTO WATCHLIST(EMAIL, SHOWID) \
+                        VALUES(?, ?);", (email, showID))
+            conn.commit()
+            flash("Entry added")
+            conn.close()
+        else:
+            flash("Entry already exists")
+            conn.close()
 
     def removeShow(self, email, showID):
         """Removes entry from main table
