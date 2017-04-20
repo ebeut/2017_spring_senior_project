@@ -104,7 +104,8 @@ class FlaskDatabase:
         """
         conn = self.getConnection()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM WATCHLIST WHERE email=?", (email,))
+        cur.execute("SELECT * FROM WATCHLIST WHERE email=? ORDER BY \
+                    LASTWATCHED DESC", (email,))
 
         rows = cur.fetchall()
         conn.close()
