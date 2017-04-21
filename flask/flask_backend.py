@@ -1,69 +1,161 @@
 #!/usr/bin/env python3
-from flask import Flask, jsonify
+from flask import Flask, jsonify, redirect, url_for
 from flask_tv_search import FlaskTvSearch
 from flask_tv_details import FlaskTvDetails
 from flask_tv_episodes import FlaskTvEpisodes
 from flask_tv_trending import FlaskTvTrending
-from TVMazeDB import Database
+from flask_database import FlaskDatabase
 from flask_cors import CORS
 
 
 app = Flask(__name__)
 cor = CORS(app, resources={r"/*": {"origin": "*"}}, supports_credentials=True)
 
-@app.cli.command('initdb')
-def initdb_command():
-    """Initializes the database."""
-    init_db()
-    print('Initialized the database.')
+db = FlaskDatabase()  # initializes database
+
+#######################
+# Database App Routes #
+#######################
 
 
-@app.route("/db/insert/<email>/<showId>/<lastWatched>")
-def create_row(email, showId, lastWatched):
-    dbCreateRow = FlaskDB(email, showId, lastWatched)
-    dbCreateRow.create_row()
+@app.route("/db")
+def api_show_table():
+    """Displays main table as HTML page
 
-    dbCreateRowJSON = jsonify(dbCreateRow.getRowJSON())
-    dbCreateRowJSON.status_code = 200
-    return dbCreateRowJSON
+    Arguments: N/A
+
+    Returns: HTML rendering
+    """
+    return db.printTable()
 
 
-@app.route("/db/favorite/<email>/<showId>/<lastWatched>")
-def addFaveShow(showId):
-    dbFave = FlaskFave(showId)
-    dbFave.addFaveShow()
+@app.route("/db/epi")
+def api_show_episodes():
+    """Displays episode table as HTML page
 
-    dbFaveJSON = jsonify(dbFaveJSON.getFaveJSON())
-    dbFaveJSON.status_code = 200
-    return dbFaveJSON
+    Arguments: N/A
 
-@app.route("/db/updateLatest/<email>/<showId>/<lastWatched>")
-def updateLastWatched(lastWatched):
-    dbLastWatched = FlaskLast(lastWatched)
-    dbLastWatched.addLastWatched()
+    Returns: HTML rendering
+    """
+    return db.printTableEpisodes()
 
-    dbLastWatchedJSON = jsonify(dbLastWatched.getLastWatchedJSON())
-    dbLastWatchedJSON.status_code = 200
-    return dbLastWatchedJSON
 
-@app.route("/db/readLatestWatched/<email>/<showId>/<lastWatched>")
-def readLastWatched(lastWatched, email):
-    dbReadLast = FlaskReadLast(lastWatched, email)
-    dbReadLast.addReadLast()
+@app.route("/db/usr")
+def api_show_users():
+    """Displays user table as HTML page
 
-    dbReadLastJSON = jsonify(dbReadLast.getReadLastJSON())
-    dbReadLastJSONstatus_code = 200
-    return dbReadLastJSON
+    Arguments: N/A
 
-@app.route("/db/readFaveShow/<email>/<showId>/<lastWatched>")
-def readFaveShow(showId, email):
-    dbReadFave = FlaskReadFave(showId, email)
-    dbReadFave.addReadFave()
+    Returns: HTML rendering
+    """
+    return db.printTableUsers()
 
-    dbReadFaveJSON = jsonify(dbReadFave.getReadFaveJSON())
-    dbReadFaveJSONstatus_code = 200
-    return dbReadFaveJSON
 
+@app.route("/db/insert/<username>/<showID>")
+def api_insert_show(username, showID):
+    """Insert row to table through flask backend.
+
+    Arguments:
+        username:    username
+        showID:      show's ID number
+
+    Returns: redirects to /db
+    """
+    db.insertShow(username, showID)
+    return redirect(url_for("api_show_table"))
+
+
+@app.route("/db/remove/<username>/<showID>")
+def api_remove_show(username, showID):
+    """Remove row from table through flask backend.
+
+    Arguments:
+        username:    username
+        showID:      show's ID number
+
+    Returns: redirects to /db
+    """
+    db.removeShow(username, showID)
+    return redirect(url_for("api_show_table"))
+
+
+@app.route("/db/epi/insert/<username>/<showID>/<seasonEpNum>")
+def api_insert_episode(username, showID, seasonEpNum):
+    """Insert row to episode table through flask backend.
+
+    Arguments:
+        username:       username
+        showID:         show's ID number
+        seasonEpNum:    season and episode number (#.#)
+
+    Returns: redirects to /db/epi
+    """
+    db.insertEpisode(username, showID, seasonEpNum)
+    return redirect(url_for("api_show_episodes"))
+
+
+@app.route("/db/epi/remove/<username>/<showID>/<seasonEpNum>")
+def api_remove_episodes(username, showID, seasonEpNum):
+    """Remove row from episode table thorugh flask backend.
+
+    Arguments:
+        username:       username
+        showID:         show's ID number
+        seasonEpNum:    season and episode number (#.#)
+
+    Returns: redirects to /db/epi
+    """
+    db.removeEpisode(username, showID, seasonEpNum)
+    return redirect(url_for("api_show_episodes"))
+
+
+@app.route("/db/fav/<username>")
+def api_fav(username):
+    """Request to get user's favorite shows from flask backend.
+
+    Arguments:
+        username:    username
+
+    Returns:
+        favsJSON:    JSON containing user's favorite shows
+
+    Example:
+        [
+            show ID number,
+            show ID number
+        ]
+    """
+    favsJSON = jsonify(db.getFavorites(username))
+    favsJSON.status_code = 200
+    return favsJSON
+
+
+@app.route("/db/epi/watched/<username>/<showID>")
+def api_watched(username, showID):
+    """Request to get episodes watched for user's specific favorite show from
+    flask backend.
+
+    Arguments:
+        username:       username
+        showID:         show's ID number
+
+    Returns:
+        epiJSON:    JSON cotinaing ordered episodes watched
+
+    Example:
+        [
+            season.episode,
+            season.episode
+        ]
+    """
+    epiJSON = jsonify(db.getWatchedEpisodes(username, showID))
+    epiJSON.status_code = 200
+    return epiJSON
+
+
+#######################
+# TVmaze App Routes #
+#######################
 
 
 @app.route("/tv/search/<showTitle>")
@@ -192,4 +284,5 @@ def api_trending():
 
 
 if __name__ == '__main__':
+    app.secret_key = 'something random'
     app.run(threaded=True)
