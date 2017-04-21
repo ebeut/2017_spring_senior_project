@@ -110,16 +110,36 @@ def api_fav(username):
 
     Example:
         [
-            {
-                "username": "username",
-                "id": user's id number (ascii username added up plus show ID)
-                "showID": show ID number
-            }
+            show ID number,
+            show ID number
         ]
     """
     favsJSON = jsonify(db.getFavorites(username))
     favsJSON.status_code = 200
     return favsJSON
+
+
+@app.route("/db/epi/watched/<username>/<showID>")
+def api_watched(username, showID):
+    """Request to get episodes watched for user's specific favorite show from
+    flask backend.
+
+    Arguments:
+        username:       username
+        showID:         show's ID number
+
+    Returns:
+        epiJSON:    JSON cotinaing ordered episodes watched
+
+    Example:
+        [
+            season.episode,
+            season.episode
+        ]
+    """
+    epiJSON = jsonify(db.getWatchedEpisodes(username, showID))
+    epiJSON.status_code = 200
+    return epiJSON
 
 
 #######################

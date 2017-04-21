@@ -191,6 +191,26 @@ class FlaskDatabase:
 
         return self.createList(rows, 2)
 
+    def getWatchedEpisodes(self, username, showID):
+        """Get episodes watched for specific user and show
+
+        Arguments:
+            username:    username
+            showID:      show's ID number
+
+        Returns:    createList()
+        """
+        conn = self.getConnection()
+        cur = conn.cursor()
+        userID = self.getIdNum(username, showID)
+
+        cur.execute("SELECT * FROM EPISODES WHERE idnum=? ORDER BY \
+                    EPINUM ASC", (userID,))
+        rows = cur.fetchall()
+        conn.close()
+
+        return self.createList(rows, 1)
+
     def createList(self, rows, colNum):
         """Converts rows to list
 
