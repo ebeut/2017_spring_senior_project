@@ -40,55 +40,55 @@ def api_show_episodes():
     return db.printTableEpisodes()
 
 
-@app.route("/db/insert/<email>/<showID>")
-def api_insert_show(email, showID):
+@app.route("/db/insert/<username>/<showID>")
+def api_insert_show(username, showID):
     """Insert row to table through flask backend.
 
     Arguments:
-        email:     user's email address
-        showID:    show's ID number
+        username:    username
+        showID:      show's ID number
 
     Returns: redirects to /db
     """
-    db.insertShow(email, showID)
+    db.insertShow(username, showID)
     return redirect(url_for("api_show_table"))
 
 
-@app.route("/db/remove/<email>/<showID>")
-def api_remove_show(email, showID):
+@app.route("/db/remove/<username>/<showID>")
+def api_remove_show(username, showID):
     """Remove row from table through flask backend.
 
     Arguments:
-        email:     user's email address
-        showID:    show's ID number
+        username:    username
+        showID:      show's ID number
 
     Returns: redirects to /db
     """
-    db.removeShow(email, showID)
+    db.removeShow(username, showID)
     return redirect(url_for("api_show_table"))
 
 
-@app.route("/db/epi/insert/<email>/<showID>/<seasonEpNum>")
-def api_insert_episode(email, showID, seasonEpNum):
+@app.route("/db/epi/insert/<username>/<showID>/<seasonEpNum>")
+def api_insert_episode(username, showID, seasonEpNum):
     """Insert row to episode table through flask backend.
 
     Arguments:
-        email:          user's email address
+        username:       username
         showID:         show's ID number
         seasonEpNum:    season and episode number (#.#)
 
     Returns: redirects to /db/epi
     """
-    db.insertEpisode(email, showID, seasonEpNum)
+    db.insertEpisode(username, showID, seasonEpNum)
     return redirect(url_for("api_show_episodes"))
 
 
-@app.route("/db/fav/<email>")
-def api_fav(email):
+@app.route("/db/fav/<username>")
+def api_fav(username):
     """Request to get user's favorite shows from flask backend.
 
     Arguments:
-        email:    user's email
+        username:    username
 
     Returns:
         favsJSON:    JSON containing user's favorite shows
@@ -96,13 +96,13 @@ def api_fav(email):
     Example:
         [
             {
-                "email": "email address",
-                "id": user's id number (ascii email added up plus show ID)
+                "username": "username",
+                "id": user's id number (ascii username added up plus show ID)
                 "showID": show ID number
             }
         ]
     """
-    favsJSON = jsonify(db.getFavorites(email))
+    favsJSON = jsonify(db.getFavorites(username))
     favsJSON.status_code = 200
     return favsJSON
 
