@@ -96,7 +96,7 @@ def api_insert_episode(username, showID, seasonEpNum):
 
 @app.route("/db/epi/remove/<username>/<showID>/<seasonEpNum>")
 def api_remove_episodes(username, showID, seasonEpNum):
-    """Remove row from episode table thorugh flask backend.
+    """Remove row from episode table through flask backend.
 
     Arguments:
         username:       username
@@ -142,6 +142,19 @@ def api_register(username, hashPwd):
     regJSON = jsonify(regJSON)
     regJSON.status_code = 200
     return regJSON
+
+
+@app.route("/db/usr/signout/<username>")
+def api_sign_out(username):
+    """Updats user table logged in status to false through flask backend.
+
+    Arguments:
+        username:    username
+
+    Returns: redirects to /db/usr
+    """
+    db.signOutUser(username)
+    return redirect(url_for("api_show_users"))
 
 
 @app.route("/db/fav/<username>")

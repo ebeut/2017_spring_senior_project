@@ -72,6 +72,7 @@ class FlaskDatabase:
         if not cur_check.fetchone():
             cur = conn.cursor()
             date = datetime.date.today()
+            date = datetime.date(2012, 1, 1)
 
             cur.execute("INSERT INTO WATCHLIST(USERNAME, SHOWID, LASTWATCHED) \
                         VALUES(?, ?, ?);", (username, showID, date))
@@ -114,14 +115,14 @@ class FlaskDatabase:
         conn = self.getConnection()
         cur = conn.cursor()
 
-        cur.execute("UPDATE WATCHLIST SET lastwatched=? WHERE username=? \
-                    AND showID=?", (datetime.date.today(), username, showID))
-
         cur1 = conn.cursor()
 
         userID = self.getIdNum(username, showID)
 
         if userID:
+            cur.execute("UPDATE WATCHLIST SET lastwatched=? WHERE username=? \
+                        AND showID=?", (datetime.date.today(), username,
+                                        showID))
             cur1.execute("INSERT INTO EPISODES(IDNUM, EPINUM) VALUES(?, ?);",
                          (userID, seasonEpNum))
             conn.commit()
@@ -174,10 +175,29 @@ class FlaskDatabase:
                         VALUES(?, ?, ?);", (username, hashPwd, True))
             conn.commit()
             flash("User added")
+            conn.close()
             return True
         else:
             flash("User already exists")
+            conn.close()
             return False
+
+    def signOutUser(self, username):
+        """Changes user's loggedin status in table to False
+
+        Arguments:
+            username:    username
+
+        Returns: N/A
+        """
+        conn = self.getConnection()
+        cur = conn.cursor()
+
+        cur.execute("UPDATE USERS SET loggedin=? WHERE username=?",
+                    (False, username))
+        conn.commit()
+        flash("User logged out")
+        conn.close()
 
     def getIdNum(self, username, showID):
         """Gets user's unique ID number for user show relationship
