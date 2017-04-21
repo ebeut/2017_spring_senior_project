@@ -108,21 +108,30 @@ class FlaskDatabase:
         conn = self.getConnection()
         cur = conn.cursor()
 
-        cur.execute("SELECT * FROM WATCHLIST WHERE email=? AND showID=?",
-                    (email, showID))
-        row = cur.fetchone()
-        userID = row[0]
-
         cur.execute("UPDATE WATCHLIST SET lastwatched=? WHERE email=? \
                     AND showID=?", (datetime.date.today(), email, showID))
 
         cur1 = conn.cursor()
+
+        userID = self.getIdNum(email, showID)
 
         cur1.execute("INSERT INTO EPISODES(IDNUM, EPINUM) VALUES(?, ?);",
                      (userID, seasonEpNum))
         conn.commit()
         flash("Episode added")
         conn.close()
+
+    def getIdNum(self, email, showID):
+        conn = self.getConnection()
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM WATCHLIST WHERE email=? AND showID=?",
+                    (email, showID))
+        row = cur.fetchone()
+        userID = row[0]
+        conn.close()
+
+        return userID
 
     def getFavorites(self, email):
         """Get rows(favorites) for email provided
