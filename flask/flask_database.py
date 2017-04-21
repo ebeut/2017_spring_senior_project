@@ -33,6 +33,11 @@ class FlaskDatabase:
             conn.execute('''CREATE TABLE IF NOT EXISTS EPISODES
                          (IDNUM INT NOT NULL,
                          EPINUM INT NOT NULL);''')
+            # third table for users info
+            conn.execute('''CREATE TABLE IF NOT EXISTS USERS
+                         (USERNAME TEXT NOT NULL,
+                         HASH TEXT NOT NULL,
+                         LOGGEDIN NUMERIC NOT NULL);''')
             print(" * Tables created successfully")
             conn.close()
         except Exception as m:
@@ -235,9 +240,9 @@ class FlaskDatabase:
         Returns: HTML rendering
         """
         conn = self.getConnection()
-        cursor = conn.execute("SELECT idnum, username, showid, lastwatched from \
+        cursor = conn.execute("SELECT idnum, username, showid, lastwatched FROM \
                                      WATCHLIST")
-        return render_template('print_table.html', items=cursor.fetchall())
+        return render_template("print_table.html", items=cursor.fetchall())
 
     def printTableEpisodes(self):
         """Displays table of episodes as HTML page
@@ -247,7 +252,20 @@ class FlaskDatabase:
         Returns: HTML rendering
         """
         conn = self.getConnection()
-        cursor = conn.execute("SELECT idnum, epinum from \
+        cursor = conn.execute("SELECT idnum, epinum FROM \
                                      EPISODES")
-        return render_template('print_table_episodes.html',
+        return render_template("print_table_episodes.html",
+                               items=cursor.fetchall())
+
+    def printTableUsers(self):
+        """Displays table of users
+
+        Arguments: N/A
+
+        Returns: HTML rendering
+        """
+        conn = self.getConnection()
+        cursor = conn.execute("SELECT username, hash, loggedin FROM \
+                              USERS")
+        return render_template("print_table_users.html",
                                items=cursor.fetchall())

@@ -40,6 +40,17 @@ def api_show_episodes():
     return db.printTableEpisodes()
 
 
+@app.route("/db/usr")
+def api_show_users():
+    """Displays user table as HTML page
+
+    Arguments: N/A
+
+    Returns: HTML rendering
+    """
+    return db.printTableUsers()
+
+
 @app.route("/db/insert/<username>/<showID>")
 def api_insert_show(username, showID):
     """Insert row to table through flask backend.
