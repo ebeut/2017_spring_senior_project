@@ -153,6 +153,32 @@ class FlaskDatabase:
         flash("Episode removed")
         conn.close()
 
+    def registerUser(self, username, hashPwd):
+        """Registers users by adding them to the user table.
+
+        Arguments:
+            username:    username
+            hashPwd:     hashed password
+
+        Returns:
+            True:     username does not exist, added to table
+            False:    username exists, not added to table
+        """
+        conn = self.getConnection()
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM USERS WHERE username=?", (username,))
+
+        if not cur.fetchone():
+            cur.execute("INSERT INTO USERS(USERNAME, HASH, LOGGEDIN) \
+                        VALUES(?, ?, ?);", (username, hashPwd, True))
+            conn.commit()
+            flash("User added")
+            return True
+        else:
+            flash("User already exists")
+            return False
+
     def getIdNum(self, username, showID):
         """Gets user's unique ID number for user show relationship
 
@@ -258,7 +284,7 @@ class FlaskDatabase:
                                items=cursor.fetchall())
 
     def printTableUsers(self):
-        """Displays table of users
+        """Displays table of users, ommits hashed passwords
 
         Arguments: N/A
 

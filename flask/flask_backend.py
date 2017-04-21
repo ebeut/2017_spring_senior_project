@@ -109,6 +109,41 @@ def api_remove_episodes(username, showID, seasonEpNum):
     return redirect(url_for("api_show_episodes"))
 
 
+@app.route("/db/usr/register/<username>/<hashPwd>")
+def api_register(username, hashPwd):
+    """Register user through flask backend
+
+    Arguments:
+        username:    username
+        hashPwd:     hashed password
+
+    Returns:
+        regJSON:    JSON containng whether or not the registration was
+                    successful
+
+    Example:
+        {
+            "error": "Error message or None",
+            "registered": true or false
+        }
+    """
+    reg = db.registerUser(username, hashPwd)
+    if not reg:
+        regJSON = {
+            "registered": reg,
+            "error": "Username already exists"
+        }
+    else:
+        regJSON = {
+            "registered": reg,
+            "error": "None"
+        }
+
+    regJSON = jsonify(regJSON)
+    regJSON.status_code = 200
+    return regJSON
+
+
 @app.route("/db/fav/<username>")
 def api_fav(username):
     """Request to get user's favorite shows from flask backend.
