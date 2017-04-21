@@ -126,6 +126,28 @@ class FlaskDatabase:
 
         conn.close()
 
+    def removeEpisode(self, username, showID, seasonEpNum):
+        """Remove entry from episode table based on user ID num and episode.
+        Updates last watched date in main table.
+
+        Arguments:
+            username:       username
+            showID:         show's ID number
+            seasonEpNum:    season and episode number (#.#)
+
+        Returns: N/A
+        """
+        conn = self.getConnection()
+        cur = conn.cursor()
+
+        userID = self.getIdNum(username, showID)
+
+        cur.execute("DELETE FROM EPISODES WHERE idnum=? AND epinum=?",
+                    (userID, seasonEpNum))
+        conn.commit()
+        flash("Episode removed")
+        conn.close()
+
     def getIdNum(self, username, showID):
         """Gets user's unique ID number for user show relationship
 

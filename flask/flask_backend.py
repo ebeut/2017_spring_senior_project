@@ -83,6 +83,21 @@ def api_insert_episode(username, showID, seasonEpNum):
     return redirect(url_for("api_show_episodes"))
 
 
+@app.route("/db/epi/remove/<username>/<showID>/<seasonEpNum>")
+def api_remove_episodes(username, showID, seasonEpNum):
+    """Remove row from episode table thorugh flask backend.
+
+    Arguments:
+        username:       username
+        showID:         show's ID number
+        seasonEpNum:    season and episode number (#.#)
+
+    Returns: redirects to /db/epi
+    """
+    db.removeEpisode(username, showID, seasonEpNum)
+    return redirect(url_for("api_show_episodes"))
+
+
 @app.route("/db/fav/<username>")
 def api_fav(username):
     """Request to get user's favorite shows from flask backend.
