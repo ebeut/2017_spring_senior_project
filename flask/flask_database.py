@@ -51,8 +51,8 @@ class FlaskDatabase:
         """Add entry to main table
 
         Arguments:
-            email:          user's email address
-            showID:         show's ID number
+            email:     user's email address
+            showID:    show's ID number
 
         Returns: N/A
         """
@@ -80,8 +80,8 @@ class FlaskDatabase:
         """Removes entry from main table
 
         Arguments:
-            email:          user's email address
-            showID:         show's ID number
+            email:     user's email address
+            showID:    show's ID number
 
         Returns: N/A
         """
@@ -92,6 +92,36 @@ class FlaskDatabase:
                     (email, showID))
         conn.commit()
         flash("Entry removed")
+        conn.close()
+
+    def insertEpisode(self, email, showID, seasonEpNum):
+        """Add entry to episode table based on user ID num. Updates last
+        watched date in main table.
+
+        Arguments:
+            email:          user's email address
+            showID:         show's ID number
+            seasonEpNum:    season and episode number (#.#)
+
+        Returns: N/A
+        """
+        conn = self.getConnection()
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM WATCHLIST WHERE email=? AND showID=?",
+                    (email, showID))
+        row = cur.fetchone()
+        userID = row[0]
+
+        cur.execute("UPDATE WATCHLIST SET lastwatched=? WHERE email=? \
+                    AND showID=?", (datetime.date.today(), email, showID))
+
+        cur1 = conn.cursor()
+
+        cur1.execute("INSERT INTO EPISODES(IDNUM, EPINUM) VALUES(?, ?);",
+                     (userID, seasonEpNum))
+        conn.commit()
+        flash("Episode added")
         conn.close()
 
     def getFavorites(self, email):

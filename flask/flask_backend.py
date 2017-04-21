@@ -45,8 +45,8 @@ def api_insert_show(email, showID):
     """Insert row to table through flask backend.
 
     Arguments:
-        email:          user's email address
-        showID:         show's ID number
+        email:     user's email address
+        showID:    show's ID number
 
     Returns: redirects to /db
     """
@@ -59,13 +59,28 @@ def api_remove_show(email, showID):
     """Remove row from table through flask backend.
 
     Arguments:
-        email:          user's email address
-        showID:         show's ID number
+        email:     user's email address
+        showID:    show's ID number
 
     Returns: redirects to /db
     """
     db.removeShow(email, showID)
     return redirect(url_for("api_show_table"))
+
+
+@app.route("/db/epi/insert/<email>/<showID>/<seasonEpNum>")
+def api_insert_episode(email, showID, seasonEpNum):
+    """Insert row to episode table through flask backend.
+
+    Arguments:
+        email:          user's email address
+        showID:         show's ID number
+        seasonEpNum:    season and episode number (#.#)
+
+    Returns: redirects to /db/epi
+    """
+    db.insertEpisode(email, showID, seasonEpNum)
+    return redirect(url_for("api_show_episodes"))
 
 
 @app.route("/db/fav/<email>")
