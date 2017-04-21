@@ -80,6 +80,7 @@ export default class LoginPage extends Component {
 
   login = () => {
     console.log("user logs in");
+    this.props.login(this.state.username, this.state.password);
   };
 
   render() {
@@ -128,6 +129,7 @@ export default class LoginPage extends Component {
                 id="login-new-password"
                 floatingLabelText="Password"
                 hintText="Must be between 5-15 characters"
+                type="password"
                 value={this.state.newPass}
                 errorText={this.state.passError}
                 onChange={this.newPasswordChange}
@@ -136,6 +138,7 @@ export default class LoginPage extends Component {
                 id="login-new-password-validation"
                 floatingLabelText="Re-enter password"
                 hintText="Validating password"
+                type="password"
                 value={this.state.validPass}
                 errorText={this.state.invalidPass}
                 onChange={this.validPasswordChange}

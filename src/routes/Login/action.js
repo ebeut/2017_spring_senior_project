@@ -6,6 +6,7 @@ export const LOGIN_FAIL = `${LOGIN}_FAIL`;
 export const LOGIN_OK = `${LOGIN}_OK`;
 
 export const login = (username, password) => {
+  console.log(username, password);
   const url = 'https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json';
   return (dispatch) => {
     dispatch({type: LOGIN});
