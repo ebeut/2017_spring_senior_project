@@ -72,10 +72,10 @@ class FlaskDatabase:
                         VALUES(?, ?, ?);", (username, showID, date))
             conn.commit()
             flash("Entry added")
-            conn.close()
         else:
             flash("Entry already exists")
-            conn.close()
+
+        conn.close()
 
     def removeShow(self, username, showID):
         """Removes entry from main table
@@ -116,10 +116,14 @@ class FlaskDatabase:
 
         userID = self.getIdNum(username, showID)
 
-        cur1.execute("INSERT INTO EPISODES(IDNUM, EPINUM) VALUES(?, ?);",
-                     (userID, seasonEpNum))
-        conn.commit()
-        flash("Episode added")
+        if userID:
+            cur1.execute("INSERT INTO EPISODES(IDNUM, EPINUM) VALUES(?, ?);",
+                         (userID, seasonEpNum))
+            conn.commit()
+            flash("Episode added")
+        else:
+            flash("Username with show ID does not exist")
+
         conn.close()
 
     def getIdNum(self, username, showID):
@@ -131,6 +135,7 @@ class FlaskDatabase:
 
         Returns:
             userID:    ID number for user and show
+            None:      entry does not exist
         """
         conn = self.getConnection()
         cur = conn.cursor()
@@ -138,7 +143,10 @@ class FlaskDatabase:
         cur.execute("SELECT * FROM WATCHLIST WHERE username=? AND showID=?",
                     (username, showID))
         row = cur.fetchone()
-        userID = row[0]
+        if row:
+            userID = row[0]
+        else:
+            userID = None
         conn.close()
 
         return userID
