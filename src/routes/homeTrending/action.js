@@ -1,12 +1,12 @@
 import request from 'superagent';
 
 //Action Type
-export const HOME_DATA = 'HOW_DATA';
+export const HOME_DATA = 'HOME_DATA';
 export const HOME_DATA_FAIL = `${HOME_DATA}_FAIL`;
 export const HOME_DATA_OK = `${HOME_DATA}_OK`;
 
-export const getHomePageData = () => {
-  const url = 'https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json';
+export const getHomePageData = (username) => {
+  const url = `http://localhost:5000/db/fav/${username}`;
   return (dispatch) => {
     dispatch({type: HOME_DATA});
     request.get(url).end((err, res) => {

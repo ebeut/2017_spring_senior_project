@@ -32,7 +32,12 @@ export default class ShowInfoPage extends Component {
 
   static propTypes = {
     showInfo: PropTypes.object,
-    getShowSeasonInfo: PropTypes.func
+    getShowSeasonInfo: PropTypes.func,
+    addFavorite: PropTypes.func,
+    delEpisode: PropTypes.func,
+    addEpisode: PropTypes.func,
+    delFavorite: PropTypes.func,
+    getEpisodes: PropTypes.func,
   };
 
   componentDidMount() {
