@@ -144,9 +144,22 @@ def api_register(username, hashPwd):
     return regJSON
 
 
+@app.route("/db/usr/remove/<username>")
+def api_remove_user(username):
+    """Removes all information related to username through flask backend
+
+    Arguments:
+        username:    username
+
+    Returns: redirects to /db/usr
+    """
+    db.removeUser(username)
+    return redirect(url_for("api_show_users"))
+
+
 @app.route("/db/usr/signout/<username>")
 def api_sign_out(username):
-    """Updats user table logged in status to false through flask backend.
+    """Updates user table logged in status to false through flask backend.
 
     Arguments:
         username:    username

@@ -182,6 +182,56 @@ class FlaskDatabase:
             conn.close()
             return False
 
+    def removeUser(self, username):
+        """Removes all information related to username from all three tables
+
+        Arguments:
+            username:    username
+
+        Returns: N/A
+        """
+        conn = self.getConnection()
+        cur = conn.cursor()
+
+        cur.execute("DELETE FROM USERS WHERE username=?", (username,))
+        conn.commit()
+        conn.close()
+
+        self.removeUserEpisodes(username)
+
+        conn = self.getConnection()
+        cur = conn.cursor()
+        cur.execute("DELETE FROM WATCHLIST WHERE username=?", (username,))
+
+        conn.commit()
+        flash("User removed")
+        conn.close()
+
+    def removeUserEpisodes(self, username):
+        """Removes all the episodes a user has watched for each show
+
+        Arguments:
+            username:    username
+
+        Returns: N/A
+        """
+        allIds = []
+        conn = self.getConnection()
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM WATCHLIST WHERE username=?", (username,))
+        rows = cur.fetchall()
+
+        for row in rows:
+            allIds.append(row[0])
+
+        for idNum in allIds:
+            cur = conn.cursor()
+            cur.execute("DELETE FROM EPISODES WHERE idnum=?", (idNum,))
+
+        conn.commit()
+        conn.close()
+
     def signOutUser(self, username):
         """Changes user's loggedin status in table to False
 
