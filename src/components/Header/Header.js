@@ -10,7 +10,7 @@ import Search from 'material-ui/svg-icons/action/search';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import Home from 'material-ui/svg-icons/action/Home';
 import Event from 'material-ui/svg-icons/action/event';
-import GoogleLogin from 'react-google-login';
+import RaisedButton from 'material-ui/RaisedButton';
 import Settings from 'material-ui/svg-icons/action/settings'
 
 
@@ -60,16 +60,18 @@ export class Header extends Component {
         });
     }
 
+    login = () => {
+      browserHistory.push('/login');
+    };
+
+    logOut = () => {
+      console.log("log out");
+    };
+
     handleChange = (event, logged) => {
         // Used for logged toggle
         this.setState({logged: logged});
     };
-    onSuccessfullLogin = (response) => {
-      console.log ("logged in successfully", response)
-    }
-    onFailedLogin = (response) => {
-      console.log ("logged in failed", response)
-    }
     render () {
         let settingsMenuItem = null;
         let loginButton = null;
@@ -90,40 +92,20 @@ export class Header extends Component {
             ));
 
             loginButton = ((
-                <GoogleLogin
-                    id="login-btn"
-                    clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
-                    buttonText="Sign Out"
-                    onSuccess={this.onSuccessfullLogin}
-                    onFailure={this.onFailedLogin}
-                    style={{
-                        background: blue500,
-                        color: 'white',
-                        fontSize: 18,
-                        border: 'None',
-                        paddingTop: 13,
-                        marginRight: 8,
-                    }}
+                <RaisedButton
+                  id="header-login-btn"
+                  onTouchTap={this.logOut}
+                  label="Logout"
                 />
             ));
         }
         else {
             loginButton = ((
-                <GoogleLogin
-                  id="login-btn"
-                    clientId="577924513252-oqhh3vilv5pkcjsvtrga222vcepv0303.apps.googleusercontent.com"
-                    buttonText="Login"
-                    onSuccess={this.onSuccessfullLogin}
-                    onFailure={this.onFailedLogin}
-                    style={{
-                        background: blue500,
-                        color: 'white',
-                        fontSize: 18,
-                        border: 'None',
-                        paddingTop: 13,
-                        marginRight: 8,
-                    }}
-                />
+              <RaisedButton
+                id="header-logout-btn"
+                onTouchTap={this.login}
+                label="Login"
+              />
             ));
         }
 

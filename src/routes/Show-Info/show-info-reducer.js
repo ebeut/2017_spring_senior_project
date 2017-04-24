@@ -1,8 +1,22 @@
 import { connect } from 'react-redux';
 import ShowInfoPage from './show-info';
-import { getShowSeasonInfo } from './action';
+import {
+  getShowSeasonInfo,
+  addFavorite,
+  delEpisode,
+  addEpisode,
+  delFavorite,
+  getEpisodes ,
+} from './action';
 
-const mapDispatchToProps = { getShowSeasonInfo };
+const mapDispatchToProps = {
+  getShowSeasonInfo,
+  addFavorite,
+  delEpisode,
+  addEpisode,
+  delFavorite,
+  getEpisodes,
+};
 
 const mapStateToProps = (state) => ({ showInfo : state.showInfo });
 

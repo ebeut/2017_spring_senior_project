@@ -24,7 +24,6 @@ export const SHOW_INFO_OK = `${SHOW_INFO}_OK`;
 
 export const getShowInfo = (showId) => {
   const url = `http://localhost:5000/tv/details/${showId}`;
-  console.log("calling",url);
   return (dispatch) => {
     dispatch({type: SHOW_INFO});
     request.get(url).end((err, res) => {
@@ -36,9 +35,108 @@ export const getShowInfo = (showId) => {
     });
   }
 };
+
+export const ADD_FAV = 'ADD_FAV';
+export const ADD_FAV_FAIL = `${ADD_FAV}_FAIL`;
+export const ADD_FAV_OK = `${ADD_FAV}_OK`;
+
+export const addFavorite = (username, showId) => {
+  const url = `http://localhost:5000/db/insert/${username}/${showId}`;
+  return (dispatch) => {
+    dispatch({type: ADD_FAV});
+    request.get(url).end((err, res) => {
+      if (err || !res.ok) {
+        dispatch({type: ADD_FAV_FAIL, err});
+      } else {
+        dispatch({type: ADD_FAV_OK, res});
+      }
+    });
+  }
+};
+
+export const ADD_EPISODE = 'ADD_EPISODE';
+export const ADD_EPISODE_FAIL = `${ADD_EPISODE}_FAIL`;
+export const ADD_EPISODE_OK = `${ADD_EPISODE}_OK`;
+
+export const addEpisode = (username, showId, sepisode) => {
+  const url = `http://localhost:5000/db/epi/insert/${username}/${showId}/${sepisode}`;
+  return (dispatch) => {
+    dispatch({type: ADD_EPISODE});
+    request.get(url).end((err, res) => {
+      if (err || !res.ok) {
+        dispatch({type: ADD_EPISODE_FAIL, err});
+      } else {
+        dispatch({type: ADD_EPISODE_OK, res});
+      }
+    });
+  }
+};
+
+export const DEL_EPISODE = 'ADD_EPISODE';
+export const DEL_EPISODE_FAIL = `${DEL_EPISODE}_FAIL`;
+export const DEL_EPISODE_OK = `${DEL_EPISODE}_OK`;
+
+export const delEpisode = (username, showId, sepisode) => {
+  const url = `http://localhost:5000/db/epi/delete/${username}/${showId}/${sepisode}`;
+  return (dispatch) => {
+    dispatch({type: DEL_EPISODE});
+    request.get(url).end((err, res) => {
+      if (err || !res.ok) {
+        dispatch({type: DEL_EPISODE_FAIL, err});
+      } else {
+        dispatch({type: DEL_EPISODE_OK, res});
+      }
+    });
+  }
+};
+
+
+export const GET_EPISODE = 'GET_EPISODE';
+export const GET_EPISODE_FAIL = `${GET_EPISODE}_FAIL`;
+export const GET_EPISODE_OK = `${GET_EPISODE}_OK`;
+
+export const getEpisodes = (username, showId) => {
+  const url = `http://localhost:5000/db/epi/watched/${username}/${showId}`;
+  return (dispatch) => {
+    dispatch({type: GET_EPISODE});
+    request.get(url).end((err, res) => {
+      if (err || !res.ok) {
+        dispatch({type: GET_EPISODE_FAIL, err});
+      } else {
+        dispatch({type: GET_EPISODE_OK, res});
+      }
+    });
+  }
+};
+
+
+export const DEL_FAV = 'ADD_FAV';
+export const DEL_FAV_FAIL = `${DEL_FAV}_FAIL`;
+export const DEL_FAV_OK = `${DEL_FAV}_OK`;
+
+export const delFavorite = (username, showId) => {
+  const url = `http://localhost:5000/db/delete/${username}/${showId}`;
+  return (dispatch) => {
+    dispatch({type: DEL_FAV});
+    request.get(url).end((err, res) => {
+      if (err || !res.ok) {
+        dispatch({type: DEL_FAV_FAIL, err});
+      } else {
+        dispatch({type: DEL_FAV_OK, res});
+      }
+    });
+  }
+};
+
+
 export const actions = {
   getShowSeasonInfo,
-  getShowInfo
+  getShowInfo,
+  addFavorite,
+  delEpisode,
+  addEpisode,
+  delFavorite,
+  getEpisodes
 };
 
 const initialState = { show: {}, gettingShowInfo: false, showInfoErr: null, showSeasonInfo: [], gettingShowSeasonInfo: false, showSeasonInfoErr: null};
@@ -65,6 +163,56 @@ export default function showSeasonInfoReducer (state = initialState, action) {
     case SHOW_INFO_OK: {
       const show = action.res.body;
       return { ...initialState, gettingShowInfo: false, show}
+    }
+    case ADD_FAV: {
+      return { ...initialState, gettingShowInfo: true, showInfoErr: null }
+    }
+    case ADD_FAV_FAIL: {
+      return { ...initialState, gettingShowInfo: false, showInfoErr: action.err.response.statusText}
+    }
+    case ADD_FAV_OK: {
+      const addFavRes = action.res.body;
+      return { ...initialState, gettingShowInfo: false, addFavRes}
+    }
+    case ADD_EPISODE: {
+      return { ...initialState, gettingShowInfo: true, showInfoErr: null }
+    }
+    case ADD_EPISODE_FAIL: {
+      return { ...initialState, gettingShowInfo: false, showInfoErr: action.err.response.statusText}
+    }
+    case ADD_EPISODE_OK: {
+      const addEpiRes = action.res.body;
+      return { ...initialState, gettingShowInfo: false, addEpiRes}
+    }
+    case DEL_EPISODE: {
+      return { ...initialState, gettingShowInfo: true, showInfoErr: null }
+    }
+    case DEL_EPISODE_FAIL: {
+      return { ...initialState, gettingShowInfo: false, showInfoErr: action.err.response.statusText}
+    }
+    case DEL_EPISODE_OK: {
+      const delEpiRes = action.res.body;
+      return { ...initialState, gettingShowInfo: false, delEpiRes}
+    }
+    case GET_EPISODE: {
+      return { ...initialState, gettingShowInfo: true, showInfoErr: null }
+    }
+    case GET_EPISODE_FAIL: {
+      return { ...initialState, gettingShowInfo: false, showInfoErr: action.err.response.statusText}
+    }
+    case GET_EPISODE_OK: {
+      const watchedEpiList = action.res.body;
+      return { ...initialState, gettingShowInfo: false, watchedEpiList}
+    }
+    case DEL_FAV: {
+      return { ...initialState, gettingShowInfo: true, showInfoErr: null }
+    }
+    case DEL_FAV_FAIL: {
+      return { ...initialState, gettingShowInfo: false, showInfoErr: action.err.response.statusText}
+    }
+    case DEL_FAV_OK: {
+      const delFavRes = action.res.body;
+      return { ...initialState, gettingShowInfo: false, delFavRes}
     }
     default:
       return initialState;
