@@ -182,6 +182,25 @@ class FlaskDatabase:
             conn.close()
             return False
 
+    def signInUser(self, username, hashPwd):
+        conn = self.getConnection()
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM USERS WHERE username=? AND hash=?",
+                    (username, hashPwd))
+
+        if cur.fetchone():
+            cur.execute("UPDATE USERS SET loggedin=? WHERE username=?",
+                        (True, username))
+            conn.commit()
+            flash("User signed in")
+            conn.close()
+            return True
+        else:
+            flash("Username or password incorrect")
+            conn.close()
+            return False
+
     def removeUser(self, username):
         """Removes all information related to username from all three tables
 

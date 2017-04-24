@@ -144,6 +144,25 @@ def api_register(username, hashPwd):
     return regJSON
 
 
+@app.route("/db/usr/signin/<username>/<hashPwd>")
+def api_sign_in(username, hashPwd):
+    signIn = db.signInUser(username, hashPwd)
+    if not signIn:
+        signInJSON = {
+            "signIn": signIn,
+            "error": "Username or password incorrect"
+        }
+    else:
+        signInJSON = {
+            "signIn": signIn,
+            "error": "None"
+        }
+
+    signInJSON = jsonify(signInJSON)
+    signInJSON.status_code = 200
+    return signInJSON
+
+
 @app.route("/db/usr/remove/<username>")
 def api_remove_user(username):
     """Removes all information related to username through flask backend
