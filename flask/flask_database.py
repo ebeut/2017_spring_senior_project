@@ -72,7 +72,6 @@ class FlaskDatabase:
         if not cur_check.fetchone():
             cur = conn.cursor()
             date = datetime.date.today()
-            date = datetime.date(2012, 1, 1)
 
             cur.execute("INSERT INTO WATCHLIST(USERNAME, SHOWID, LASTWATCHED) \
                         VALUES(?, ?, ?);", (username, showID, date))
