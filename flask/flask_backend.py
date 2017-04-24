@@ -249,6 +249,21 @@ def api_watched(username, showID):
     return epiJSON
 
 
+@app.route("/db/usr/loggedin/<username>")
+def api_check_logged_in(username):
+    """Checks if user is logged in through flask backend
+
+    Arguments:
+        username:    username
+
+    Returns:
+        loggedJSON:    true or false
+    """
+    loggedJSON = jsonify(db.getLoggedIn(username))
+    loggedJSON.status_code = 200
+    return loggedJSON
+
+
 #######################
 # TVmaze App Routes #
 #######################

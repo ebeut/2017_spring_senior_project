@@ -341,6 +341,31 @@ class FlaskDatabase:
 
         return self.createList(rows, 1)
 
+    def getLoggedIn(self, username):
+        """Check if the user is logged in
+
+        Arguments:
+            username:    username
+
+        Returns:
+            False:    user isn't logged in or doesn't exist
+            True:     user is logged in
+        """
+        conn = self.getConnection()
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM USERS WHERE username=?", (username,))
+        usr = cur.fetchone()
+        try:
+            status = usr[2]
+        except TypeError:
+            return False
+
+        if status:
+            return True
+        else:
+            return False
+
     def createList(self, rows, colNum):
         """Converts rows to list
 
