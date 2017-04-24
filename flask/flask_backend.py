@@ -146,6 +146,22 @@ def api_register(username, hashPwd):
 
 @app.route("/db/usr/signin/<username>/<hashPwd>")
 def api_sign_in(username, hashPwd):
+    """Sign in user through flask backend
+
+    Arguments:
+        username:    username
+        hashPwd:     hashed password
+
+    Returns:
+        signInJSON:    JSON containng whether or not the sign in was
+                       successful
+
+    Example:
+        {
+            "error": "Error message or None",
+            "signIn": true or false
+        }
+    """
     signIn = db.signInUser(username, hashPwd)
     if not signIn:
         signInJSON = {

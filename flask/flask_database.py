@@ -183,6 +183,16 @@ class FlaskDatabase:
             return False
 
     def signInUser(self, username, hashPwd):
+        """Sign in user, checks for username and hashed password
+
+        Arguments:
+            username:    username
+            hashPwd:     hashed password
+
+        Returns:
+            True:     username and password correct
+            False:    username or password incorrect
+        """
         conn = self.getConnection()
         cur = conn.cursor()
 
