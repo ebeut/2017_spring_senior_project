@@ -144,39 +144,39 @@ def api_register(username, hashPwd):
     return regJSON
 
 
-@app.route("/db/usr/signin/<username>/<hashPwd>")
-def api_sign_in(username, hashPwd):
-    """Sign in user through flask backend
+@app.route("/db/usr/login/<username>/<hashPwd>")
+def api_login(username, hashPwd):
+    """Login user through flask backend
 
     Arguments:
         username:    username
         hashPwd:     hashed password
 
     Returns:
-        signInJSON:    JSON containng whether or not the sign in was
-                       successful
+        loginJSON:    JSON containng whether or not the login was
+                      successful
 
     Example:
         {
             "error": "Error message or None",
-            "signIn": true or false
+            "login": true or false
         }
     """
-    signIn = db.signInUser(username, hashPwd)
-    if not signIn:
-        signInJSON = {
-            "signIn": signIn,
+    login = db.loginUser(username, hashPwd)
+    if not login:
+        loginJSON = {
+            "login": login,
             "error": "Username or password incorrect"
         }
     else:
-        signInJSON = {
-            "signIn": signIn,
+        loginJSON = {
+            "login": login,
             "error": "None"
         }
 
-    signInJSON = jsonify(signInJSON)
-    signInJSON.status_code = 200
-    return signInJSON
+    loginJSON = jsonify(loginJSON)
+    loginJSON.status_code = 200
+    return loginJSON
 
 
 @app.route("/db/usr/remove/<username>")
@@ -192,8 +192,8 @@ def api_remove_user(username):
     return redirect(url_for("api_show_users"))
 
 
-@app.route("/db/usr/signout/<username>")
-def api_sign_out(username):
+@app.route("/db/usr/logout/<username>")
+def api_log_out(username):
     """Updates user table logged in status to false through flask backend.
 
     Arguments:
@@ -201,7 +201,7 @@ def api_sign_out(username):
 
     Returns: redirects to /db/usr
     """
-    db.signOutUser(username)
+    db.logOutUser(username)
     return redirect(url_for("api_show_users"))
 
 

@@ -182,8 +182,8 @@ class FlaskDatabase:
             conn.close()
             return False
 
-    def signInUser(self, username, hashPwd):
-        """Sign in user, checks for username and hashed password
+    def loginUser(self, username, hashPwd):
+        """Login user, checks for username and hashed password
 
         Arguments:
             username:    username
@@ -203,7 +203,7 @@ class FlaskDatabase:
             cur.execute("UPDATE USERS SET loggedin=? WHERE username=?",
                         (True, username))
             conn.commit()
-            flash("User signed in")
+            flash("User logged in")
             conn.close()
             return True
         else:
@@ -261,7 +261,7 @@ class FlaskDatabase:
         conn.commit()
         conn.close()
 
-    def signOutUser(self, username):
+    def logOutUser(self, username):
         """Changes user's loggedin status in table to False
 
         Arguments:
