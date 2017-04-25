@@ -10,8 +10,12 @@ import Search from 'material-ui/svg-icons/action/search';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import Home from 'material-ui/svg-icons/action/Home';
 import Event from 'material-ui/svg-icons/action/event';
-import RaisedButton from 'material-ui/RaisedButton';
-import Settings from 'material-ui/svg-icons/action/settings'
+import FlatButton from 'material-ui/FlatButton';
+import Settings from 'material-ui/svg-icons/action/settings';
+import ExitToApp from 'material-ui/svg-icons/action/exit-to-app';
+import PowerSettingsNew from 'material-ui/svg-icons/action/power-settings-new';
+import Favorite from 'material-ui/svg-icons/action/favorite';
+
 
 
 // just for toggle for testing
@@ -81,30 +85,32 @@ export class Header extends Component {
             settingsMenuItem = ((
                 <MenuItem
                     id="header-settings-btn"
-                    leftIcon={< Settings />}
+                    leftIcon={< Favorite />}
                     //onClick={() => this.dispatchNewRoute('/counter')}
                     style={{
                         textAlign: 'left',
                     }}
                 >
-                    Settings
+                    Favorites
                 </MenuItem>
             ));
 
             loginButton = ((
-                <RaisedButton
+                <FlatButton
                   id="header-login-btn"
                   onTouchTap={this.logOut}
                   label="Logout"
+                  icon={< PowerSettingsNew />}
                 />
             ));
         }
         else {
             loginButton = ((
-              <RaisedButton
+              <FlatButton
                 id="header-logout-btn"
                 onTouchTap={this.login}
                 label="Login"
+                icon={< ExitToApp />}
               />
             ));
         }
