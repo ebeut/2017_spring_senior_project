@@ -122,7 +122,7 @@ export default class ShowInfoPage extends Component {
   mkCast () {
     if (!this.state.cast) return (<div>Cast not available</div>);
     return (
-      <div style={{display: 'inline-flex', padding: 10}}>
+      <div style={{display: 'inline-flex', padding: 10, paddingLeft: 25}}>
         {this.props.showInfo ? this.state.cast.map((cast) => (
           <div key={cast.character} style={{}}>
             <p style={{float: 'right', textAlign: 'left', paddingLeft: 10, paddingTop: 10, paddingRight: 10}}>
@@ -149,8 +149,13 @@ export default class ShowInfoPage extends Component {
               <Paper id="show-synopsis" style={{height: '45%', padding: 10, overflowY: 'auto'}} zDepth={5} >
                 <h3 style={{textAlign: 'left', paddingLeft: 10}}>Summary</h3>
                 <p style={{padding:10}}>{this.state.summary ? this.state.summary : "..."}</p>
-                <p>{`Show Rating: ${this.state.rating}/10`}</p>
-                {this.mkCast()}
+                <div>
+                    <p style={{padding:10, paddingBottom: 35, paddingTop: 35, paddingRight: 25, float: 'left', borderRight: 'thin solid #000000'}}>
+                        <strong>IMDb</strong> <br />
+                        {`${this.state.rating}/10`}
+                    </p>
+                    {this.mkCast()}
+                </div>
               </Paper>
             </div>
           </div>
