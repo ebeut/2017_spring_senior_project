@@ -43,13 +43,6 @@ export class ShowSquare extends Component {
                 />
               }
               style={{textAlign: 'left'}}
-              actionIcon={
-                <IconButton
-                  onClick={ () => {this.addToFav(index) }}
-                >
-                  <StarBorder color='white'/>
-                </IconButton>
-              }
             >
               <img src={content.poster && content.poster != 'N/A' ? content.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'} />
             </GridTile>
