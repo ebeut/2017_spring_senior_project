@@ -162,7 +162,7 @@ export default class ShowInfoPage extends Component {
         </div>
         <div>
           <div style={{display: 'inline-flex', paddingTop: 15, width: '100%'}}>
-            <div style={{paddingRight: 65, paddingLeft: 35}}>
+            <div style={{paddingRight: 57, paddingLeft: 45}}>
               <Paper id="show-seasons" zDepth={5} style={{}} >
                 {this.mkSeasonDropDown()}
               </Paper>
