@@ -94,7 +94,7 @@ export default class ShowInfoPage extends Component {
               style={{height: '100%'}}
               primaryText={`${episode.number}: ${episode.name} ${episode.date} ${episode.time}`}
               secondaryText={<div style={{height: '100%', overflow: 'visible', whiteSpace: 'normal'}}>{`${episode.summary}`}</div>}
-              leftCheckbox={<Checkbox />}
+              leftCheckbox={<Checkbox iconStyle={{fill: pinkA200}}/>}
             />
             <Divider />
           </div>
@@ -122,13 +122,14 @@ export default class ShowInfoPage extends Component {
   mkCast () {
     if (!this.state.cast) return (<div>Cast not available</div>);
     return (
-      <div style={{display: 'inline-flex'}}>
+      <div style={{display: 'inline-flex', padding: 10}}>
         {this.props.showInfo ? this.state.cast.map((cast) => (
-          <div key={cast.character} style={{paddingLeft: 15}}>
-            <h3>
-              {`${cast.name} as ${cast.character}`}
-            </h3>
-            <img src={cast.image} />
+          <div key={cast.character} style={{}}>
+            <p style={{float: 'right', textAlign: 'left', paddingLeft: 10, paddingTop: 10, paddingRight: 10}}>
+              <strong>{`${cast.name}`}</strong> <br />
+              {`${cast.character}`}
+            </p>
+            <img src={cast.image} style={{height: 98.33, width: 70, float: 'left'}} />
           </div>
         )): <div> Loading.... </div>}
       </div>
@@ -137,23 +138,17 @@ export default class ShowInfoPage extends Component {
 
   render () {
     const showInfo = (
-      <div>
+      <div style={{padding: 20}}>
         <Loading id="show-info-loading" open={this.state.open} />
         <div style={{display: 'inline-flex', width: '100%', height: '50%'}}>
-          <Paper id="show-poster" style={{width: '25%'}} zDepth={5} >
-            <img style={{width: '100%', padding: 10, height: '100%'}} src={this.state.poster && this.state.poster != 'N/A' ? this.state.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'}/>
+          <Paper id="show-poster" style={{width: 230, height: 315}} zDepth={5} >
+            <img style={{padding: 10}} src={this.state.poster && this.state.poster != 'N/A' ? this.state.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'}/>
           </Paper>
-          <div style={{paddingLeft: 15, width: '70%'}}>
-            <div style={{paddingBottom: 20}}>
+          <div style={{paddingLeft: 15, width: '100%'}}>
+            <div style={{}}>
               <Paper id="show-synopsis" style={{height: '45%', padding: 10, overflowY: 'auto'}} zDepth={5} >
-                <h3 style={{textAlign: 'center'}}>Synopsis</h3>
-                <br />
-                {this.state.summary ? this.state.summary : "..."}
-              </Paper>
-            </div>
-            <div style={{textAlign: 'center'}}>
-              <Paper id="show-cast" style={{height: '45%', padding: 10, overflowY: 'auto'}} zDepth={5} >
-                <h3 style={{textAlign: 'center'}}>Cast</h3><br />
+                <h3 style={{textAlign: 'left', paddingLeft: 10}}>Summary</h3>
+                <p style={{padding:10}}>{this.state.summary ? this.state.summary : "..."}</p>
                 {this.mkCast()}
               </Paper>
             </div>
@@ -161,16 +156,13 @@ export default class ShowInfoPage extends Component {
         </div>
         <div>
           <div style={{display: 'inline-flex', paddingTop: 15, width: '100%'}}>
-            <div style={{paddingRight: 15, width: '10%'}}>
-              <Paper id="show-seasons" zDepth={5} style={{overflowY: 'auto'}} >
+            <div style={{paddingRight: 65, paddingLeft: 35}}>
+              <Paper id="show-seasons" zDepth={5} style={{}} >
                 {this.mkSeasonDropDown()}
               </Paper>
             </div>
             <div style={{width: '90%'}}>
               <Paper id="show-episodes" zDepth={5} >
-                <h3 id="season-title" style={{textAlign: 'center'}}>
-                  {this.state.season ? `Season ${this.state.season}` : 'N/A'}
-                </h3>
                 <div id="episode-list">
                   {this.mkEpisodeList()}
                 </div>
@@ -195,11 +187,11 @@ export default class ShowInfoPage extends Component {
                     textAlign: 'center'
                 }}
             >
-                Please go back to search page to find the show you are looking for.
+                If no show information shows up in a second, please go back to search page to find the show you are looking for.
             </h3>
             <br />
             <div style={{textAlign: 'center', paddingBottom: 20}}>
-              <RaisedButton id="show-info-back-to-search" label="Back to Search" labelColor="white" backgroundColor={pinkA200} onTouchTap={this.backToSrch}/>
+              <RaisedButton id="show-info-back-to-search" label="Back to Search" labelColor="#ffffff" backgroundColor={pinkA200} onTouchTap={this.backToSrch}/>
             </div>
         </Paper>
       </div>
