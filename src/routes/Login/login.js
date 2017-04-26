@@ -2,6 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import { blue500, pinkA200 } from 'material-ui/styles/colors';
+
+const styles = {
+    underlineStyle: {
+        borderColor: blue500,
+    },
+    floatingLabelFocusStyle: {
+        color: pinkA200,
+    },
+    underlineFocusStyle: {
+        borderColor: pinkA200,
+    },
+};
 
 
 export default class LoginPage extends Component {
@@ -98,6 +111,9 @@ export default class LoginPage extends Component {
                 floatingLabelText="Username"
                 value={this.state.username}
                 onChange={this.usernameChange}
+                underlineStyle={styles.underlineStyle}
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
               /><br />
               <TextField
                 id="login-username"
@@ -105,18 +121,23 @@ export default class LoginPage extends Component {
                 type="password"
                 value={this.state.password}
                 onChange={this.passwordChange}
+                underlineStyle={styles.underlineStyle}
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
               /><br /><br /><br />
               <RaisedButton
                 id="login-btn"
                 label="Login"
                 onTouchTap={this.login}
                 disabled={validLog}
+                backgroundColor={pinkA200}
+                labelColor="#ffffff"
               />
             </Paper>
           </div>
           <div style={{paddingLeft: 20, height: 500, width: '50%', paddingRight: 50}}>
             <Paper zDepth={5} style={{height: '100%'}}>
-              <h3 style={{paddingTop: 50}}>New User - Register here</h3><br />
+              <h3 style={{paddingTop: 50}}>Create a New Account</h3><br />
               <TextField
                 id="login-new-username"
                 floatingLabelText="Username"
@@ -124,6 +145,9 @@ export default class LoginPage extends Component {
                 value={this.state.newUser}
                 errorText={this.state.userError}
                 onChange={this.newUsernameChange}
+                underlineStyle={styles.underlineStyle}
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
               /><br />
               <TextField
                 id="login-new-password"
@@ -133,6 +157,9 @@ export default class LoginPage extends Component {
                 value={this.state.newPass}
                 errorText={this.state.passError}
                 onChange={this.newPasswordChange}
+                underlineStyle={styles.underlineStyle}
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
               /><br />
               <TextField
                 id="login-new-password-validation"
@@ -142,12 +169,17 @@ export default class LoginPage extends Component {
                 value={this.state.validPass}
                 errorText={this.state.invalidPass}
                 onChange={this.validPasswordChange}
+                underlineStyle={styles.underlineStyle}
+                floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                underlineFocusStyle={styles.underlineFocusStyle}
               /><br /><br /><br />
               <RaisedButton
                 id="register-btn"
                 label="Register"
                 onTouchTap={this.register}
                 disabled={validReg}
+                backgroundColor={pinkA200}
+                labelColor="#ffffff"
               />
             </Paper>
           </div>
