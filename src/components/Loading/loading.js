@@ -15,7 +15,7 @@ export default class Loading extends Component {
         open={this.props.open}
         style={{textAlign: 'center'}}
       >
-        <h2>Content is loading, please wait</h2>
+        <h2 style={{paddingBottom: 25}}>Content is loading, please wait</h2>
         <CircularProgress size={80} thickness={5} color={pinkA200} />
       </Dialog>
     );
