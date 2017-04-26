@@ -64,25 +64,9 @@ export default class CalendarPage extends Component {
                                 var tempTime = episode.time
 
                                 if(tempTime) {
-                                    var tempArr = tempTime.split(":")
-                                    var tempHour = Number(tempArr[0])
-                                    var tempMin = Number(tempArr[1])
-                                    tempDate.setHours(tempHour)
-                                    tempDate.setMinutes(tempMin)
+                                    var tempTwelveHour = moment(tempTime, "HH:mm").format("h:mm A")
 
-                                    // convert to 12 hour time and set AM/PM
-                                    if (tempHour > 12) {
-                                        var tempTwelveHour = tempHour - 12
-                                        var ampm = "PM"
-                                    }
-                                    else if (tempHour == 12) {
-                                        var ampm = "PM"
-                                    }
-                                    else {
-                                        var ampm = "AM"
-                                    }
-
-                                    var tempDesc = "\"" + tempEpiTitle + "\"\n" + tempEpiDesc + "\n\nAirs on " + tempNetwork + " at " + tempTwelveHour + " " + ampm
+                                    var tempDesc = "\"" + tempEpiTitle + "\"\n" + tempEpiDesc + "\n\nAirs on " + tempNetwork + " at " + tempTwelveHour
                                 }
                                 else {  // if episode does not have a time
                                     tempDate.setHours(0)
