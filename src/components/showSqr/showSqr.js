@@ -27,7 +27,7 @@ export class ShowSquare extends Component {
     const currContent = this.props.content;
     const id = this.props.id;
     return (
-      <div id={`${id}-grid`} style={{padding:4, width: 1065, margin:'0 auto'}}>
+      <div id={`${id}-grid`} style={{padding:20, width: 1065, margin:'0 auto'}}>
         <GridList id={`${id}-grid-list`} cols={5} cellHeight={295} style={{width: 1065}}>
           {currContent.map((content, index) => (
             <GridTile
