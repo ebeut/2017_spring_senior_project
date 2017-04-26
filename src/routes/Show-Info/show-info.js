@@ -96,7 +96,7 @@ export default class ShowInfoPage extends Component {
           <div key={episode.number} style={{height: '100%'}}>
             <ListItem
               style={{height: '100%'}}
-              primaryText={`${episode.number}: ${episode.name} ${episode.date} ${moment(episode.time, "HH:mm").format("h:mm A")}`}
+              primaryText={`${episode.number}: "${episode.name}" ${episode.date} ${moment(episode.time, "HH:mm").format("h:mm A") != "Invalid date" ? moment(episode.time, "HH:mm").format("h:mm A") : ""}`}
               secondaryText={<div style={{height: '100%', overflow: 'visible', whiteSpace: 'normal'}}>{`${episode.summary}`}</div>}
               leftCheckbox={<Checkbox iconStyle={{fill: pinkA200}}/>}
             />
