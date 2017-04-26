@@ -10,7 +10,8 @@ import Loading from '../../components/Loading';
 import {List, ListItem} from 'material-ui/List';
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
 import Favorite from 'material-ui/svg-icons/action/favorite';
-import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border'
+import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import moment from 'moment';
 
 export default class ShowInfoPage extends Component {
 
@@ -94,7 +95,7 @@ export default class ShowInfoPage extends Component {
           <div key={episode.number} style={{height: '100%'}}>
             <ListItem
               style={{height: '100%'}}
-              primaryText={`${episode.number}: ${episode.name} ${episode.date} ${episode.time}`}
+              primaryText={`${episode.number}: ${episode.name} ${episode.date} ${moment(episode.time, "HH:mm").format("h:mm A")}`}
               secondaryText={<div style={{height: '100%', overflow: 'visible', whiteSpace: 'normal'}}>{`${episode.summary}`}</div>}
               leftCheckbox={<Checkbox iconStyle={{fill: pinkA200}}/>}
             />
