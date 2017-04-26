@@ -56,8 +56,8 @@ export default class HomePage extends Component {
     return (
       <div id="home-page">
         <Loading id="home-page-loading" open={this.state.open} />
-        <h4 id="home-title" style={{textAlign: 'center'}}>
-          {this.isLogedIn() ? 'Your Favorite\'s' : 'Top Trending Shows'}
+        <h4 id="home-title" style={{textAlign: 'center', paddingTop: 25}}>
+          {this.isLogedIn() ? 'Your Favorite\'s' : 'Trending Shows'}
         </h4>
         {sqr}
       </div>
