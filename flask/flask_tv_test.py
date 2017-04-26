@@ -65,7 +65,7 @@ def test_details_content(details_request):
 def test_details_keys(details_request):
     """Checks that details JSON has correct keys"""
     detailsKeys = ["cast", "id", "imdbRating", "network", "numSeasons",
-                   "poster", "summary", "title", "year"]
+                   "poster", "streaming", "summary", "title", "year"]
     data = details_request.json()
 
     for item in detailsKeys:
