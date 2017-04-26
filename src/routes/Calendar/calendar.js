@@ -42,6 +42,7 @@ export default class CalendarPage extends Component {
                     'id': newProps.showData.show.id,
                     'title': newProps.showData.show.title,
                     'network': newProps.showData.show.network,
+                    'streaming': newProps.showData.show.streaming,
                     'season': newProps.showData.show.numSeasons,
                 }
                 titleNetwork.push(temp)
@@ -59,6 +60,11 @@ export default class CalendarPage extends Component {
                                 var tempEpiNum = episode.number
                                 var tempEpiDesc = episode.summary
                                 var tempNetwork = titleNetwork[i].network
+                                var tempStreaming = titleNetwork[i].streaming
+
+                                if(tempNetwork == "N/A") {
+                                    tempNetwork = tempStreaming
+                                }
 
                                 var tempDate = new Date(episode.date)
                                 var tempTime = episode.time
@@ -71,7 +77,7 @@ export default class CalendarPage extends Component {
                                 else {  // if episode does not have a time
                                     tempDate.setHours(0)
                                     tempDate.setMinutes(0)
-                                    var tempDesc = "\"" + tempEpiTitle + "\"\n" + tempEpiDesc
+                                    var tempDesc = "\"" + tempEpiTitle + "\"\n" + tempEpiDesc + "\n\nAirs on " + tempNetwork
                                 }
 
                                 // create the event/episode to add to events
