@@ -65,6 +65,7 @@ export default class ShowInfoPage extends Component {
         rating: newStuff.show.imdbRating,
         summary: newStuff.show.summary,
         network: newStuff.show.network,
+        streaming: newStuff.show.streaming,
         year: newStuff.show.year,
         id: newStuff.show.id,
         numSeasons: newStuff.show.numSeasons,
@@ -152,6 +153,7 @@ export default class ShowInfoPage extends Component {
               <Paper id="show-synopsis" style={{height: '45%', padding: 10, overflowY: 'auto'}} zDepth={5} >
                 <h3 style={{textAlign: 'left', paddingLeft: 10}}>Summary</h3>
                 <p style={{padding:10}}>{this.state.summary ? this.state.summary : "..."}</p>
+                <p style={{padding:10}}> Airs on <strong>{this.state.network == "N/A" ? this.state.streaming : this.state.network}</strong></p>
                 <div>
                     <p style={{padding:10, paddingBottom: 35, paddingTop: 35, paddingRight: 25, float: 'left', borderRight: 'thin solid #000000'}}>
                         <strong>IMDb</strong> <br />
