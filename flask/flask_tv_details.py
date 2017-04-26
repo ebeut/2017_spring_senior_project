@@ -58,6 +58,11 @@ class FlaskTvDetails:
             network = "N/A"  # network unavailable
 
         try:
+            streaming = data["webChannel"]["name"]
+        except TypeError:
+            streaming = "N/A"
+
+        try:
             poster = data["image"]["medium"]
         except TypeError:
             poster = "N/A"  # poster unavailable
@@ -91,6 +96,7 @@ class FlaskTvDetails:
             "numSeasons": numSeasons,
             "imdbRating": imdbRating,
             "network": network,
+            "streaming": streaming,
             "poster": poster,
             "summary": summary,
             "cast": cast,
