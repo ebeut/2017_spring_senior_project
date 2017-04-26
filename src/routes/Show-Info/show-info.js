@@ -8,6 +8,7 @@ import Checkbox from 'material-ui/Checkbox';
 import Divider from 'material-ui/Divider';
 import Loading from '../../components/Loading';
 import {List, ListItem} from 'material-ui/List';
+import { blue500, pinkA200 } from 'material-ui/styles/colors';
 
 export default class ShowInfoPage extends Component {
 
@@ -180,12 +181,27 @@ export default class ShowInfoPage extends Component {
       </div>
     );
     const noInfo = (
-      <div id="show-info-no-info">
-        Please go back to search page to find the show you are looking for
-        <br />
-        <div style={{textAlign: 'center'}}>
-          <RaisedButton id="show-info-back-to-search" label="Go back to search" primary onTouchTap={this.backToSrch} />
-        </div>
+      <div id="show-info-no-info"
+          style = {{
+            width: '50%',
+            margin: '0 auto',
+            padding: 20
+          }}
+      >
+          <Paper zDepth={5} style={{height: '100%'}}>
+            <h3
+                style={{
+                    padding: 20,
+                    textAlign: 'center'
+                }}
+            >
+                Please go back to search page to find the show you are looking for.
+            </h3>
+            <br />
+            <div style={{textAlign: 'center', paddingBottom: 20}}>
+              <RaisedButton id="show-info-back-to-search" label="Back to Search" labelColor="white" backgroundColor={pinkA200} onTouchTap={this.backToSrch}/>
+            </div>
+        </Paper>
       </div>
     );
     return (
