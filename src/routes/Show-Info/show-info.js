@@ -9,6 +9,8 @@ import Divider from 'material-ui/Divider';
 import Loading from '../../components/Loading';
 import {List, ListItem} from 'material-ui/List';
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
+import Favorite from 'material-ui/svg-icons/action/favorite';
+import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border'
 
 export default class ShowInfoPage extends Component {
 
@@ -163,9 +165,15 @@ export default class ShowInfoPage extends Component {
         <div>
           <div style={{display: 'inline-flex', paddingTop: 15, width: '100%'}}>
             <div style={{paddingRight: 57, paddingLeft: 45}}>
-              <Paper id="show-seasons" zDepth={5} style={{}} >
+                <div style={{paddingTop: 20, paddingLeft: 1, paddingBottom: 5}}>
+                    <Checkbox
+                      checkedIcon={< Favorite />}
+                      uncheckedIcon={< FavoriteBorder />}
+                      label="FAVORITE"
+                      iconStyle={{fill: pinkA200}}
+                    />
+                </div>
                 {this.mkSeasonDropDown()}
-              </Paper>
             </div>
             <div style={{width: '90%'}}>
               <Paper id="show-episodes" zDepth={5} >
