@@ -145,10 +145,11 @@ export default class ShowInfoPage extends Component {
             <img style={{padding: 10}} src={this.state.poster && this.state.poster != 'N/A' ? this.state.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'}/>
           </Paper>
           <div style={{paddingLeft: 15, width: '100%'}}>
-            <div style={{}}>
+            <div>
               <Paper id="show-synopsis" style={{height: '45%', padding: 10, overflowY: 'auto'}} zDepth={5} >
                 <h3 style={{textAlign: 'left', paddingLeft: 10}}>Summary</h3>
                 <p style={{padding:10}}>{this.state.summary ? this.state.summary : "..."}</p>
+                <p>{`Show Rating: ${this.state.rating}/10`}</p>
                 {this.mkCast()}
               </Paper>
             </div>
