@@ -249,17 +249,16 @@ def api_watched(username, showID):
     return epiJSON
 
 
-@app.route("/db/usr/loggedin/<username>")
-def api_check_logged_in(username):
-    """Checks if user is logged in through flask backend
+@app.route("/db/usr/loggedin")
+def api_check_logged_in():
+    """Checks if anyone is logged in through flask backend
 
-    Arguments:
-        username:    username
+    Arguments: N/A
 
     Returns:
-        loggedJSON:    true or false
+        loggedJSON:    username or N/A
     """
-    loggedJSON = jsonify(db.getLoggedIn(username))
+    loggedJSON = jsonify(db.getUserLoggedIn())
     loggedJSON.status_code = 200
     return loggedJSON
 
