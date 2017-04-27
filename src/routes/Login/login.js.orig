@@ -5,8 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Loading from '../../components/Loading';
 import Dialog from 'material-ui/Dialog';
 import { browserHistory } from 'react-router';
+<<<<<<< Updated upstream
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
-import Header from '../../components/Header';
 
 const styles = {
     underlineStyle: {
@@ -19,6 +19,9 @@ const styles = {
         borderColor: pinkA200,
     },
 };
+=======
+import Header from '../../components/Header';
+>>>>>>> Stashed changes
 
 export default class LoginPage extends Component {
 

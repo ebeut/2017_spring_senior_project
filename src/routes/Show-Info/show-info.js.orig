@@ -9,10 +9,13 @@ import Divider from 'material-ui/Divider';
 import Loading from '../../components/Loading';
 import {List, ListItem} from 'material-ui/List';
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
+<<<<<<< Updated upstream
 import Favorite from 'material-ui/svg-icons/action/favorite';
 import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import moment from 'moment';
+=======
 import Header from '../../components/Header';
+>>>>>>> Stashed changes
 
 export default class ShowInfoPage extends Component {
 

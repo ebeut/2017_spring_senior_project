@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { ShowSquare } from '../../components/showSqr/showSqr';
 import Loading from '../../components/Loading';
-
+import Header from '../../components/Header';
 
 export default class HomePage extends Component {
 
@@ -55,6 +55,7 @@ export default class HomePage extends Component {
     }
     return (
       <div id="home-page">
+        <Header />
         <Loading id="home-page-loading" open={this.state.open} />
         <h4 id="home-title" style={{textAlign: 'center', paddingTop: 25}}>
           {this.isLogedIn() ? 'Your Favorite\'s' : 'Trending Shows'}

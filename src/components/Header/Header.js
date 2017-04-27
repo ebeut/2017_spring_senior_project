@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import LeftNav from 'material-ui/Drawer';
@@ -38,7 +38,16 @@ export class Header extends Component {
             open: false,
             logged: false,
         };
+    }
 
+  static propTypes = {
+    userInfo: PropTypes.object,
+    logout: PropTypes.func,
+  };
+
+    componentDidMount () {
+      const logged = !!this.props.userInfo;
+      this.setState({logged})
     }
 
     dispatchNewRoute(route) {
@@ -69,7 +78,7 @@ export class Header extends Component {
     };
 
     logOut = () => {
-      console.log("log out");
+      this.props.logout(this.props.userInfo.username);
     };
 
     handleChange = (event, logged) => {

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
+import Header from '../../../components/Header';
 
 export default class HomePage extends Component {
   componentWillMount () {
@@ -7,7 +8,9 @@ export default class HomePage extends Component {
   }
   render () {
     return (
-      <div id="home-page-push" />
+      <div id="home-page-push" >
+        <Header />
+      </div>
     )
   }
 }

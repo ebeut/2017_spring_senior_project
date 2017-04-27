@@ -3,6 +3,7 @@ import AutoComplete from 'material-ui/AutoComplete';
 import { ShowSquare } from '../../components/showSqr/showSqr';
 import Loading from '../../components/Loading';
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
+import Header from '../../components/Header';
 
 const styles = {
     underlineStyle: {
@@ -90,6 +91,7 @@ export default class SearchPage extends Component {
     }
     return (
       <div id="search-page" style={outerDiv}>
+        <Header />
         <div style={{textAlign: 'center'}}>
           <Loading id="search-loading" open={this.state.open} />
           <AutoComplete

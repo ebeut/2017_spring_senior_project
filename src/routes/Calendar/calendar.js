@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import BigCalendar from 'react-big-calendar';
 import Loading from '../../components/Loading';
 import moment from 'moment';
+import Header from '../../components/Header';
 
 import './calendar.css';
 
@@ -110,6 +111,8 @@ export default class CalendarPage extends Component {
 
     render () {
         return (
+          <div style={{width: '100%'}}>
+            <Header />
             <div
                 id="calendar-page"
                 style={{
@@ -130,6 +133,7 @@ export default class CalendarPage extends Component {
                     scrollToTime={new Date(1970, 1, 1, 12)}
                 />
             </div>
+          </div>
         );
     }
 }
