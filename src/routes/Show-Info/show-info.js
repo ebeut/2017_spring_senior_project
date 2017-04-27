@@ -194,27 +194,30 @@ export default class ShowInfoPage extends Component {
       </div>
     );
     const noInfo = (
-      <div id="show-info-no-info"
-          style = {{
-            width: '50%',
-            margin: '0 auto',
-            padding: 20
-          }}
-      >
-          <Paper zDepth={5} style={{height: '100%'}}>
-            <h3
-                style={{
-                    padding: 20,
-                    textAlign: 'center'
-                }}
-            >
-                If no show information shows up in a second, please go back to search page to find the show you are looking for.
-            </h3>
-            <br />
-            <div style={{textAlign: 'center', paddingBottom: 20}}>
-              <RaisedButton id="show-info-back-to-search" label="Back to Search" labelColor="#ffffff" backgroundColor={pinkA200} onTouchTap={this.backToSrch}/>
-            </div>
-        </Paper>
+      <div>
+        <Header />
+        <div id="show-info-no-info"
+            style = {{
+              width: '50%',
+              margin: '0 auto',
+              padding: 20
+            }}
+        >
+            <Paper zDepth={5} style={{height: '100%'}}>
+              <h3
+                  style={{
+                      padding: 20,
+                      textAlign: 'center'
+                  }}
+              >
+                  If no show information shows up in a second, please go back to search page to find the show you are looking for.
+              </h3>
+              <br />
+              <div style={{textAlign: 'center', paddingBottom: 20}}>
+                <RaisedButton id="show-info-back-to-search" label="Back to Search" labelColor="#ffffff" backgroundColor={pinkA200} onTouchTap={this.backToSrch}/>
+              </div>
+          </Paper>
+        </div>
       </div>
     );
     return (
