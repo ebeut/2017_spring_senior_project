@@ -88,7 +88,7 @@ export default class HomePage extends Component {
         <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout} />
         <Loading id="home-page-loading" open={this.state.open} />
         <h4 id="home-title" style={{textAlign: 'center', paddingTop: 25}}>
-          {this.isLogedIn() ? 'Your Favorite\'s' : 'Trending Shows'}
+          {this.isLogedIn() ? 'Favorites' : 'Trending Shows'}
         </h4>
         {sqr}
       </div>

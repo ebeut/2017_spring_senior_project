@@ -144,11 +144,12 @@ export class Header extends Component {
                                 style={{
                                     textAlign: 'center',
                                     padding: '20px',
+                                    paddingTop: '30px',
                                     backgroundColor: blue500
                                 }}
                             >
                                 <Avatar id="header-user-avatar" size={100} icon={< AccountCircle />} /><br /><br />
-                              <p style={{textColor: pinkA200, fontSize: 20}}>
+                              <p style={{color: "#ffffff", fontSize: 20}}>
                                 {this.props.userEmail ? this.props.userEmail : ''}
                               </p>
                             </div>
