@@ -14,10 +14,6 @@ export class ShowSquare extends Component {
     getShowInfo: PropTypes.func,
   };
 
-  addToFav  (index) {
-    console.log("add rest call to add show to index", this.props.content[index]);
-  };
-
   viewShow (index) {
     this.props.getShowInfo(this.props.content[index].id);
     browserHistory.push('/showInfo');

@@ -10,6 +10,8 @@ export default class HomePage extends Component {
     this.state = {
       sqrContent: [],
       open: false,
+      userName: '',
+      userFav: [],
     }
   }
 
@@ -17,24 +19,42 @@ export default class HomePage extends Component {
     homeData: PropTypes.object,
     calendarData: PropTypes.object,
     showInfo: PropTypes.object,
+    userData: PropTypes.object,
     getHomePageData: PropTypes.func,
     getTrending: PropTypes.func,
     getShowInfo: PropTypes.func,
+    isLogin: PropTypes.func,
+    logout: PropTypes.func,
   };
 
   isLogedIn () {
-    return false;
+    return !!this.state.userName;
   }
 
   componentWillMount () {
+    this.props.isLogin();
     this.setState({open: true});
-    this.isLogedIn() ? this.props.getHomePageData() : this.props.getTrending();
   }
 
   componentWillReceiveProps (newProps) {
-    if (this.props.homeData.homeData != newProps.homeData.homeData && newProps.homeData.homeData) {
-      this.setState({sqrContent: newProps.homeData.homeData});
-    } else if (this.props.calendarData.trendingData != newProps.calendarData.trendingData && newProps.calendarData.trendingData) {
+    if (this.props.showInfo.show !== newProps.showInfo.show && newProps.showInfo.show) {
+      const userFav = this.state.userFav;
+      userFav.push(newProps.showInfo.show);
+      this.setState({sqrContent: userFav, open: false, userFav});
+    }
+    if (this.props.userData !== newProps.userData && newProps.userData.loginData) {
+      if (newProps.userData.loginData === 'N/A') {
+        this.props.getTrending();
+      } else {
+        this.setState({userName: newProps.userData.loginData});
+        this.props.getHomePageData(newProps.userData.loginData)
+      }
+    }
+    if (this.props.homeData.homeData !== newProps.homeData.homeData && newProps.homeData.homeData && newProps.homeData.homeData.length > 0) {
+      newProps.homeData.homeData.map((id) => {
+        this.props.getShowInfo(id);
+      })
+    } else if (this.props.calendarData.trendingData !== newProps.calendarData.trendingData) {
       this.setState({sqrContent: newProps.calendarData.trendingData, open: false});
     }
   }
@@ -44,7 +64,7 @@ export default class HomePage extends Component {
       <div id="home-loading"/>
     );
 
-    if (this.state.sqrContent.length > 0) {
+    if (this.state.sqrContent && this.state.sqrContent.length > 0) {
       sqr = (
         <ShowSquare
           id="home-squares"
@@ -55,7 +75,7 @@ export default class HomePage extends Component {
     }
     return (
       <div id="home-page">
-        <Header />
+        <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout} />
         <Loading id="home-page-loading" open={this.state.open} />
         <h4 id="home-title" style={{textAlign: 'center', paddingTop: 25}}>
           {this.isLogedIn() ? 'Your Favorite\'s' : 'Trending Shows'}

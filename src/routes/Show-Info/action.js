@@ -1,5 +1,23 @@
 import request from 'superagent';
 
+export const GET_FAV = 'GET_FAV';
+export const GET_FAV_FAIL = `${GET_FAV}_FAIL`;
+export const GET_FAV_OK = `${GET_FAV}_OK`;
+
+export const getFav = (showId) => {
+  const url = `http://localhost:5000/db/fav/${showId}`;
+  return (dispatch) => {
+    dispatch({type: GET_FAV});
+    request.get(url).end((err, res) => {
+      if (err || !res.ok) {
+        dispatch({type: GET_FAV_FAIL, err});
+      } else {
+        dispatch({type: GET_FAV_OK, res});
+      }
+    });
+  };
+};
+
 export const SHOW_SEASON_INFO = 'SHOW_SEASON_INFO';
 export const SHOW_SEASON_INFO_FAIL = `${SHOW_SEASON_INFO}_FAIL`;
 export const SHOW_SEASON_INFO_OK = `${SHOW_SEASON_INFO}_OK`;
@@ -77,7 +95,7 @@ export const DEL_EPISODE_FAIL = `${DEL_EPISODE}_FAIL`;
 export const DEL_EPISODE_OK = `${DEL_EPISODE}_OK`;
 
 export const delEpisode = (username, showId, sepisode) => {
-  const url = `http://localhost:5000/db/epi/delete/${username}/${showId}/${sepisode}`;
+  const url = `http://localhost:5000/db/epi/remove/${username}/${showId}/${sepisode}`;
   return (dispatch) => {
     dispatch({type: DEL_EPISODE});
     request.get(url).end((err, res) => {
@@ -97,6 +115,7 @@ export const GET_EPISODE_OK = `${GET_EPISODE}_OK`;
 
 export const getEpisodes = (username, showId) => {
   const url = `http://localhost:5000/db/epi/watched/${username}/${showId}`;
+  console.log(url);
   return (dispatch) => {
     dispatch({type: GET_EPISODE});
     request.get(url).end((err, res) => {
@@ -110,12 +129,12 @@ export const getEpisodes = (username, showId) => {
 };
 
 
-export const DEL_FAV = 'ADD_FAV';
+export const DEL_FAV = 'DEL_FAV';
 export const DEL_FAV_FAIL = `${DEL_FAV}_FAIL`;
 export const DEL_FAV_OK = `${DEL_FAV}_OK`;
 
 export const delFavorite = (username, showId) => {
-  const url = `http://localhost:5000/db/delete/${username}/${showId}`;
+  const url = `http://localhost:5000/db/remove/${username}/${showId}`;
   return (dispatch) => {
     dispatch({type: DEL_FAV});
     request.get(url).end((err, res) => {
@@ -136,7 +155,8 @@ export const actions = {
   delEpisode,
   addEpisode,
   delFavorite,
-  getEpisodes
+  getEpisodes,
+  getFav
 };
 
 const initialState = { show: {}, gettingShowInfo: false, showInfoErr: null, showSeasonInfo: [], gettingShowSeasonInfo: false, showSeasonInfoErr: null};
@@ -213,6 +233,16 @@ export default function showSeasonInfoReducer (state = initialState, action) {
     case DEL_FAV_OK: {
       const delFavRes = action.res.body;
       return { ...initialState, gettingShowInfo: false, delFavRes}
+    }
+    case GET_FAV: {
+      return { ...initialState, gettingShowInfo: true, showInfoErr: null }
+    }
+    case GET_FAV_FAIL: {
+      return { ...initialState, gettingShowInfo: false, showInfoErr: action.err.response.statusText}
+    }
+    case GET_FAV_OK: {
+      const getFavRes = action.res.body;
+      return { ...initialState, gettingShowInfo: false, getFavRes}
     }
     default:
       return initialState;

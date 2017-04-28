@@ -30,32 +30,72 @@ export default class ShowInfoPage extends Component {
       network: '',
       numSeasons: 0,
       year: '',
-      episodeTitle: [],
-      episodeDescription: [],
+      episodeList: [],
+      clickAble: false,
+      fav: false,
+      userName: '',
+      watchedEpiList: [],
     }
   }
 
   static propTypes = {
     showInfo: PropTypes.object,
+    userData: PropTypes.object,
     getShowSeasonInfo: PropTypes.func,
     addFavorite: PropTypes.func,
     delEpisode: PropTypes.func,
     addEpisode: PropTypes.func,
     delFavorite: PropTypes.func,
     getEpisodes: PropTypes.func,
+    isLogin: PropTypes.func,
+    logout: PropTypes.func,
+    getFav: PropTypes.func,
   };
 
-  componentDidMount() {
+  componentWillMount() {
+    this.props.isLogin();
     this.setState({open: true});
   }
 
-  componentWillReceiveProps(newProps) {
+  findMatch (num, arr) {
+    let value = -1;
+    arr.map((val) => {
+      if (val === num) {
+        value = val;
+        return val;
+      }
+    });
+    return value !== -1
+  }
+
+  componentWillReceiveProps (newProps) {
     const newStuff = newProps.showInfo;
-    if (this.props.showSeasonInfo != newStuff.showSeasonInfo && this.props.showInfo.show && newStuff.gettingShowSeasonInfo){
+    if (this.props.userData !== newProps.userData && newProps.userData.loginData) {
+      if (newProps.userData.loginData === 'N/A') {
+        this.setState({clickAble: false});
+      } else {
+        const userName = newProps.userData.loginData;
+        this.setState({userName});
+        this.setState({clickAble: true});
+      }
+    }
+    if (this.props.showInfo.show !== newStuff.show && newStuff.gettingShowInfo){
       this.setState({open: true});
     }
-    if (this.props.showSeasonInfo != newStuff.showSeasonInfo && this.props.showInfo.show && !newStuff.gettingShowSeasonInfo){
-      this.setState({open: false});
+    if (this.props.showInfo.showSeasonInfo !== newStuff.showSeasonInfo && !newStuff.gettingShowSeasonInfo){
+      this.setState({open: false, episodeList: newStuff.showSeasonInfo});
+      }
+
+    if (this.props.showInfo !== newProps.showInfo && newProps.showInfo.watchedEpiList && newProps.showInfo.watchedEpiList.length > 0) {
+      this.setState({watchedEpiList: newProps.showInfo.watchedEpiList})
+    }
+
+    if (this.props.showInfo !== newProps.showInfo && newProps.showInfo.getFavRes && newProps.showInfo.getFavRes.length > 0) {
+      newProps.showInfo.getFavRes.map((res) => {
+        if (res === this.state.id) {
+          this.setState({fav: true});
+        }
+      });
     }
 
     if (this.props.showInfo !== newProps.showInfo && newStuff.show && newProps.showInfo.show.id) {
@@ -72,11 +112,10 @@ export default class ShowInfoPage extends Component {
         numSeasons: newStuff.show.numSeasons,
       });
       this.props.getShowSeasonInfo(newStuff.show.id, 1);
-    }
-    if (this.props.showInfo !== newProps.showInfo && newStuff.show && newStuff && newProps.showInfo.show.id && newStuff.showSeasonInfo.length > 0) {
-      this.setState({
-
-      })
+      if (this.state.userName) {
+        this.props.getFav(this.state.userName);
+        this.props.getEpisodes(this.state.userName, newProps.showInfo.show.id);
+      }
     }
   }
 
@@ -89,17 +128,53 @@ export default class ShowInfoPage extends Component {
     this.props.getShowSeasonInfo(this.state.id,season);
   };
 
+  checkEpisode = (epi,bool) => {
+    const sepisode = parseFloat(epi.season + (epi.number/100));
+    if (bool) {
+      let watchedEpiList = this.state.watchedEpiList;
+      watchedEpiList[epi.number-1] = sepisode;
+      this.setState({watchedEpiList});
+      this.props.addEpisode(this.state.userName,epi.id,sepisode)
+    } else {
+      let watchedEpiList = this.state.watchedEpiList;
+      delete watchedEpiList[epi.number-1];
+      this.setState({watchedEpiList});
+      this.props.delEpisode(this.state.userName,epi.id,sepisode)
+    }
+  }
+
+  mkCheckbx (episode) {
+    let checkBx = (
+      <div />
+    )
+    let checked = false;
+    if (this.state.watchedEpiList && this.state.watchedEpiList.length > 0) {
+      this.state.watchedEpiList.map((epi) => {
+        if (epi === (parseFloat(episode.season+(episode.number/100)))) {
+          checked = true;
+        }
+      })
+    }
+    if (this.state.fav) {
+      checkBx = (
+        <Checkbox checked={checked} onCheck={ (evt,bool) => {this.checkEpisode(episode,bool) }} iconStyle={{fill: pinkA200}}/>
+      )
+    }
+    return checkBx
+  }
+
   mkEpisodeList () {
-    if (this.props.showInfo.showSeasonInfo.length === 0) return (<div>loading .....</div>)
+    if (this.state.episodeList.length === 0) return (<div>N/A</div>)
+
     const episodes = (
       <List>
-        {this.props.showInfo.showSeasonInfo.map((episode) => (
-          <div key={episode.number} style={{height: '100%'}}>
+        {this.state.episodeList.map((episode) => (
+          <div key={episode.number} style={{height: '100%', cursor: 'pointer'}}>
             <ListItem
-              style={{height: '100%'}}
+              style={{height: '100%', cursor: 'pointer'}}
               primaryText={`${episode.number}: "${episode.name}" ${episode.date} ${moment(episode.time, "HH:mm").format("h:mm A") != "Invalid date" ? moment(episode.time, "HH:mm").format("h:mm A") : ""}`}
               secondaryText={<div style={{height: '100%', overflow: 'visible', whiteSpace: 'normal'}}>{`${episode.summary}`}</div>}
-              leftCheckbox={<Checkbox iconStyle={{fill: pinkA200}}/>}
+              leftCheckbox={this.mkCheckbx(episode)}
             />
             <Divider />
           </div>
@@ -136,27 +211,37 @@ export default class ShowInfoPage extends Component {
             </p>
             <img src={cast.image} style={{height: 98.33, width: 70, float: 'left'}} />
           </div>
-        )): <div> Loading.... </div>}
+        )): <div> N/A </div>}
       </div>
     )
+  }
+
+  favoriteCheck = (evt, bool) => {
+    if (bool) {
+      this.props.addFavorite(this.state.userName, this.state.id);
+    } else {
+      this.setState({watchedEpiList: []});
+      this.props.delFavorite(this.state.userName, this.state.id);
+    }
+    this.setState({fav: bool});
   }
 
   render () {
     const showInfo = (
       <div style={{width: '100%'}}>
-        <Header />
+        <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout} />
       <div style={{padding: 20}}>
         <Loading id="show-info-loading" open={this.state.open} />
         <div style={{display: 'inline-flex', width: '100%', height: '50%'}}>
           <Paper id="show-poster" style={{width: 230, height: 315}} zDepth={5} >
-            <img style={{padding: 10}} src={this.state.poster && this.state.poster != 'N/A' ? this.state.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'}/>
+            <img style={{padding: 10}} src={this.state.poster && this.state.poster !== 'N/A' ? this.state.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'}/>
           </Paper>
           <div style={{paddingLeft: 15, width: '100%'}}>
             <div>
               <Paper id="show-synopsis" style={{height: '45%', padding: 10, overflowY: 'auto'}} zDepth={5} >
                 <h3 style={{textAlign: 'left', paddingLeft: 10}}>Summary</h3>
                 <p style={{padding:10}}>{this.state.summary ? this.state.summary : "..."}</p>
-                <p style={{padding:10}}> Airs on <strong>{this.state.network == "N/A" ? this.state.streaming : this.state.network}</strong></p>
+                <p style={{padding:10}}> Airs on <strong>{this.state.network === "N/A" ? this.state.streaming : this.state.network}</strong></p>
                 <div>
                     <p style={{padding:10, paddingBottom: 35, paddingTop: 35, paddingRight: 25, float: 'left', borderRight: 'thin solid #000000'}}>
                         <strong>IMDb</strong> <br />
@@ -174,9 +259,12 @@ export default class ShowInfoPage extends Component {
                 <div style={{paddingTop: 20, paddingLeft: 1, paddingBottom: 5}}>
                     <Checkbox
                       checkedIcon={< Favorite />}
+                      disabled={!this.state.clickAble}
                       uncheckedIcon={< FavoriteBorder />}
                       label="FAVORITE"
                       iconStyle={{fill: pinkA200}}
+                      checked={this.state.fav}
+                      onCheck={this.favoriteCheck}
                     />
                 </div>
                 {this.mkSeasonDropDown()}
@@ -195,7 +283,7 @@ export default class ShowInfoPage extends Component {
     );
     const noInfo = (
       <div>
-        <Header />
+        <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout}  />
         <div id="show-info-no-info"
             style = {{
               width: '50%',

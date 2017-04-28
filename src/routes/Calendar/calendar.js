@@ -23,9 +23,12 @@ export default class CalendarPage extends Component {
     static propTypes = {
         calendarData: PropTypes.object,
         showData: PropTypes.object,
+        userData: PropTypes.object,
         getTrending: PropTypes.func,
         getShowSeasonInfo: PropTypes.func,
         getShowInfo: PropTypes.func,
+        logout: PropTypes.func,
+        isLogin: PropTypes.func,
     };
 
     componentWillMount () {
@@ -33,10 +36,18 @@ export default class CalendarPage extends Component {
             this.setState({open: true});
             this.props.getTrending()
         }
+        this.props.isLogin();
     }
 
     componentWillReceiveProps(newProps) {
-        if(this.props.showData != newProps.showData && newProps.showData) {
+      if (this.props.userData !== newProps.userData && newProps.userData.loginData) {
+        if (newProps.userData.loginData === 'N/A') {
+          console.log("not logged in, do something?");
+        } else {
+          this.setState({userName: newProps.userData.loginData});
+        }
+      }
+        if(this.props.showData !== newProps.showData && newProps.showData) {
             if(newProps.showData.show.id) {
                 // information to be saved from show details request
                 var temp = {
@@ -51,7 +62,7 @@ export default class CalendarPage extends Component {
             }
 
             if(newProps.showData.showSeasonInfo) {
-                if(newProps.showData.showSeasonInfo.length != 0) {
+                if(newProps.showData.showSeasonInfo.length !== 0) {
                     newProps.showData.showSeasonInfo.map((episode) => {
                         for (var i = 0; i < titleNetwork.length; i++) {
                             // check that IDs match to match info to episodes
@@ -112,7 +123,7 @@ export default class CalendarPage extends Component {
     render () {
         return (
           <div style={{width: '100%'}}>
-            <Header />
+            <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout} />
             <div
                 id="calendar-page"
                 style={{

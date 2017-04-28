@@ -5,8 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Loading from '../../components/Loading';
 import Dialog from 'material-ui/Dialog';
 import { browserHistory } from 'react-router';
-<<<<<<< Updated upstream
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
+import Header from '../../components/Header';
 
 const styles = {
     underlineStyle: {
@@ -19,9 +19,6 @@ const styles = {
         borderColor: pinkA200,
     },
 };
-=======
-import Header from '../../components/Header';
->>>>>>> Stashed changes
 
 export default class LoginPage extends Component {
 
@@ -44,10 +41,15 @@ export default class LoginPage extends Component {
     }
   }
 
+  componentWillMount () {
+    this.props.isLogin();
+  }
+
   static propTypes = {
     userData: PropTypes.object,
     login: PropTypes.func,
     register: PropTypes.func,
+    isLogin: PropTypes.func,
   };
 
   usernameChange = (evt, username, letter) => {
@@ -112,7 +114,10 @@ export default class LoginPage extends Component {
   };
 
   componentWillReceiveProps (newProps) {
-    if (this.props.userData.loginData !== newProps.userData.loginData) {
+    if (this.props.userData.loginData !== newProps.userData.loginData && newProps.userData.loginData) {
+      if (newProps.userData.loginData !== 'N/A') {
+        browserHistory.push('/home');
+      }
       if (newProps.loginData && newProps.loginData.gettingLogin) {
         this.setState({ waitDlg: true });
       } else {

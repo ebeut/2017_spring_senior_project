@@ -41,14 +41,20 @@ export class Header extends Component {
     }
 
   static propTypes = {
-    userInfo: PropTypes.object,
+    userEmail: PropTypes.string,
     logout: PropTypes.func,
   };
 
-    componentDidMount () {
-      const logged = !!this.props.userInfo;
+    componentWillMount () {
+      const logged = !!this.props.userEmail;
       this.setState({logged})
     }
+
+  componentWillReceiveProps (newProps) {
+      if (this.props.userEmail !== newProps.userEmail) {
+        this.setState({logged: !!newProps.userEmail});
+      }
+  }
 
     dispatchNewRoute(route) {
         // Used in LeftNav onClick to route to different pages
@@ -78,7 +84,7 @@ export class Header extends Component {
     };
 
     logOut = () => {
-      this.props.logout(this.props.userInfo.username);
+      this.props.logout(this.props.userEmail);
     };
 
     handleChange = (event, logged) => {
@@ -142,18 +148,7 @@ export class Header extends Component {
                                 }}
                             >
                                 <Avatar id="header-user-avatar" size={100} icon={< AccountCircle />} />
-                                <Toggle // toggle for testing
-                                    label="Logged"
-                                    defaultToggled={false}
-                                    onToggle={this.handleChange}
-                                    labelPosition="right"
-                                    thumbSwitchedStyle={styles.thumbSwitched}
-                                    trackSwitchedStyle={styles.trackSwitched}
-                                    labelStyle={styles.labelStyle}
-                                    style={{
-                                        margin: 20
-                                    }}
-                                />
+                                {this.props.userEmail ? this.props.userEmail : ''}
                             </div>
                             <MenuItem
                                 id="header-home-btn"

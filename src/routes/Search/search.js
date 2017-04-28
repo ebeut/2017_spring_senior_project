@@ -32,12 +32,16 @@ export default class SearchPage extends Component {
   static propTypes = {
     searchRes: PropTypes.object,
     calendarData: PropTypes.object,
+    userData: PropTypes.object,
     getTrending: PropTypes.func,
     searchTVAPI: PropTypes.func,
     getShowInfo: PropTypes.func,
+    isLogin: PropTypes.func,
+    logout: PropTypes.func,
   };
 
   componentWillMount () {
+    this.props.isLogin();
     this.props.getTrending();
     this.setState({open: true});
   }
@@ -48,6 +52,13 @@ export default class SearchPage extends Component {
   };
 
   componentWillReceiveProps (newProps) {
+    if (this.props.userData !== newProps.userData && newProps.userData.loginData) {
+      if (newProps.userData.loginData === 'N/A') {
+        this.props.getTrending();
+      } else {
+        this.setState({userName: newProps.userData.loginData});
+      }
+    }
     if (this.props.calendarData.trendingData != newProps.calendarData.trendingData && newProps.calendarData.trendingData) {
       let results = [];
       this.setState({open: false});
@@ -91,7 +102,7 @@ export default class SearchPage extends Component {
     }
     return (
       <div id="search-page" style={outerDiv}>
-        <Header />
+        <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout} />
         <div style={{textAlign: 'center'}}>
           <Loading id="search-loading" open={this.state.open} />
           <AutoComplete
