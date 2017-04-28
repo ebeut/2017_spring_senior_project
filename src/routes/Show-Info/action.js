@@ -115,7 +115,6 @@ export const GET_EPISODE_OK = `${GET_EPISODE}_OK`;
 
 export const getEpisodes = (username, showId) => {
   const url = `http://localhost:5000/db/epi/watched/${username}/${showId}`;
-  console.log(url);
   return (dispatch) => {
     dispatch({type: GET_EPISODE});
     request.get(url).end((err, res) => {

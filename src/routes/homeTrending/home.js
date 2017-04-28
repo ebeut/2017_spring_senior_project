@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { ShowSquare } from '../../components/showSqr/showSqr';
 import Loading from '../../components/Loading';
 import Header from '../../components/Header';
+import LogoutDlg from '../../components/LogoutDlg';
+import { pinkA200 } from 'material-ui/styles/colors';
 
 export default class HomePage extends Component {
 
@@ -12,6 +14,7 @@ export default class HomePage extends Component {
       open: false,
       userName: '',
       userFav: [],
+      logout: false,
     }
   }
 
@@ -37,7 +40,10 @@ export default class HomePage extends Component {
   }
 
   componentWillReceiveProps (newProps) {
-    if (this.props.showInfo.show !== newProps.showInfo.show && newProps.showInfo.show) {
+    if (this.props.userData !== newProps.userData && newProps.userData.logoutData) {
+      this.setState({logout: true});
+    }
+    if (this.props.showInfo.show !== newProps.showInfo.show && newProps.showInfo.show && newProps.showInfo.show.title) {
       const userFav = this.state.userFav;
       userFav.push(newProps.showInfo.show);
       this.setState({sqrContent: userFav, open: false, userFav});
@@ -50,10 +56,11 @@ export default class HomePage extends Component {
         this.props.getHomePageData(newProps.userData.loginData)
       }
     }
-    if (this.props.homeData.homeData !== newProps.homeData.homeData && newProps.homeData.homeData && newProps.homeData.homeData.length > 0) {
+    if (this.props.homeData.homeData !== newProps.homeData.homeData && newProps.homeData.homeData) {
       newProps.homeData.homeData.map((id) => {
         this.props.getShowInfo(id);
       })
+      this.setState({open: false});
     } else if (this.props.calendarData.trendingData !== newProps.calendarData.trendingData) {
       this.setState({sqrContent: newProps.calendarData.trendingData, open: false});
     }
@@ -61,7 +68,9 @@ export default class HomePage extends Component {
 
   render () {
     let sqr = (
-      <div id="home-loading"/>
+      <div id="home-loading" style={{textAlign: 'center', fontSize: 35, color: pinkA200}}>
+        You don't have any favorite's, go to the search page and find some shows you like.
+      </div>
     );
 
     if (this.state.sqrContent && this.state.sqrContent.length > 0) {
@@ -75,6 +84,7 @@ export default class HomePage extends Component {
     }
     return (
       <div id="home-page">
+        <LogoutDlg open={this.state.logout} email={this.state.userName} />
         <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout} />
         <Loading id="home-page-loading" open={this.state.open} />
         <h4 id="home-title" style={{textAlign: 'center', paddingTop: 25}}>

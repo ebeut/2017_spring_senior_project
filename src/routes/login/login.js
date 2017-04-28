@@ -172,6 +172,7 @@ export default class LoginPage extends Component {
       <RaisedButton
         id="login-error-close-btn"
         label="Close"
+        secondary
         onTouchTap={this.state.loginDlgCallBack}
       />
     )
@@ -215,6 +216,7 @@ export default class LoginPage extends Component {
                 id="login-btn"
                 label="Login"
                 onTouchTap={this.login}
+                secondary
                 disabled={validLog}
                 backgroundColor={pinkA200}
                 labelColor="#ffffff"
@@ -264,6 +266,7 @@ export default class LoginPage extends Component {
                 label="Register"
                 onTouchTap={this.register}
                 disabled={validReg}
+                secondary
                 backgroundColor={pinkA200}
                 labelColor="#ffffff"
               />

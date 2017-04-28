@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import CircularProgress from 'material-ui/CircularProgress';
-import { blue500, pinkA200 } from 'material-ui/styles/colors';
+import { pinkA200 } from 'material-ui/styles/colors';
 
 export default class Loading extends Component {
 

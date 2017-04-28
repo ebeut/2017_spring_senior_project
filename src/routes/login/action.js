@@ -100,7 +100,6 @@ export default function userData (state = initialState, action) {
     }
     case LOGOUT_OK: {
       const logoutData = action.res.body;
-      console.log(logoutData);
       return { ...initialState, gettingLogin: false, logoutData }
     }
     case REGISTER: {

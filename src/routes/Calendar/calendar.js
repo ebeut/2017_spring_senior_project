@@ -3,6 +3,7 @@ import BigCalendar from 'react-big-calendar';
 import Loading from '../../components/Loading';
 import moment from 'moment';
 import Header from '../../components/Header';
+import LogoutDlg from '../../components/LogoutDlg';
 
 import './calendar.css';
 
@@ -40,6 +41,9 @@ export default class CalendarPage extends Component {
     }
 
     componentWillReceiveProps(newProps) {
+      if (this.props.userData !== newProps.userData && newProps.userData.logoutData) {
+        this.setState({logout: true});
+      }
       if (this.props.userData !== newProps.userData && newProps.userData.loginData) {
         if (newProps.userData.loginData === 'N/A') {
           console.log("not logged in, do something?");
@@ -123,6 +127,7 @@ export default class CalendarPage extends Component {
     render () {
         return (
           <div style={{width: '100%'}}>
+            <LogoutDlg open={this.state.logout} email={this.state.userName} />
             <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout} />
             <div
                 id="calendar-page"

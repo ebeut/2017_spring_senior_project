@@ -4,6 +4,7 @@ import { ShowSquare } from '../../components/showSqr/showSqr';
 import Loading from '../../components/Loading';
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
 import Header from '../../components/Header';
+import LogoutDlg from '../../components/LogoutDlg';
 
 const styles = {
     underlineStyle: {
@@ -52,6 +53,9 @@ export default class SearchPage extends Component {
   };
 
   componentWillReceiveProps (newProps) {
+    if (this.props.userData !== newProps.userData && newProps.userData.logoutData) {
+      this.setState({logout: true});
+    }
     if (this.props.userData !== newProps.userData && newProps.userData.loginData) {
       if (newProps.userData.loginData === 'N/A') {
         this.props.getTrending();
@@ -102,6 +106,7 @@ export default class SearchPage extends Component {
     }
     return (
       <div id="search-page" style={outerDiv}>
+        <LogoutDlg open={this.state.logout} email={this.state.userName} />
         <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout} />
         <div style={{textAlign: 'center'}}>
           <Loading id="search-loading" open={this.state.open} />

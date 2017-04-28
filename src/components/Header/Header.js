@@ -5,7 +5,7 @@ import LeftNav from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import Avatar from 'material-ui/Avatar';
 import Toggle from 'material-ui/Toggle';
-import { blue500 } from 'material-ui/styles/colors';
+import { blue500, pinkA200 } from 'material-ui/styles/colors';
 import Search from 'material-ui/svg-icons/action/search';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import Home from 'material-ui/svg-icons/action/Home';
@@ -147,8 +147,10 @@ export class Header extends Component {
                                     backgroundColor: blue500
                                 }}
                             >
-                                <Avatar id="header-user-avatar" size={100} icon={< AccountCircle />} />
+                                <Avatar id="header-user-avatar" size={100} icon={< AccountCircle />} /><br /><br />
+                              <p style={{textColor: pinkA200, fontSize: 20}}>
                                 {this.props.userEmail ? this.props.userEmail : ''}
+                              </p>
                             </div>
                             <MenuItem
                                 id="header-home-btn"

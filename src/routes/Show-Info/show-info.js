@@ -8,11 +8,12 @@ import Checkbox from 'material-ui/Checkbox';
 import Divider from 'material-ui/Divider';
 import Loading from '../../components/Loading';
 import {List, ListItem} from 'material-ui/List';
-import { blue500, pinkA200 } from 'material-ui/styles/colors';
+import { pinkA200 } from 'material-ui/styles/colors';
 import Favorite from 'material-ui/svg-icons/action/favorite';
 import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import moment from 'moment';
 import Header from '../../components/Header';
+import LogoutDlg from '../../components/LogoutDlg';
 
 export default class ShowInfoPage extends Component {
 
@@ -57,19 +58,11 @@ export default class ShowInfoPage extends Component {
     this.setState({open: true});
   }
 
-  findMatch (num, arr) {
-    let value = -1;
-    arr.map((val) => {
-      if (val === num) {
-        value = val;
-        return val;
-      }
-    });
-    return value !== -1
-  }
-
   componentWillReceiveProps (newProps) {
     const newStuff = newProps.showInfo;
+    if (this.props.userData !== newProps.userData && newProps.userData.logoutData) {
+      this.setState({logout: true});
+    }
     if (this.props.userData !== newProps.userData && newProps.userData.loginData) {
       if (newProps.userData.loginData === 'N/A') {
         this.setState({clickAble: false});
@@ -83,8 +76,12 @@ export default class ShowInfoPage extends Component {
       this.setState({open: true});
     }
     if (this.props.showInfo.showSeasonInfo !== newStuff.showSeasonInfo && !newStuff.gettingShowSeasonInfo){
-      this.setState({open: false, episodeList: newStuff.showSeasonInfo});
+      if (this.state.numSeasons && this.state.numSeasons == this.state.season && newStuff.showSeasonInfo.length === 0) {
+        this.setState({open: false, episodeList: newStuff.showSeasonInfo});
+      } else if (newStuff.showSeasonInfo.length !== 0) {
+        this.setState({open: false, episodeList: newStuff.showSeasonInfo});
       }
+    }
 
     if (this.props.showInfo !== newProps.showInfo && newProps.showInfo.watchedEpiList && newProps.showInfo.watchedEpiList.length > 0) {
       this.setState({watchedEpiList: newProps.showInfo.watchedEpiList})
@@ -229,6 +226,7 @@ export default class ShowInfoPage extends Component {
   render () {
     const showInfo = (
       <div style={{width: '100%'}}>
+        <LogoutDlg open={this.state.logout} email={this.state.userName} />
         <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout} />
       <div style={{padding: 20}}>
         <Loading id="show-info-loading" open={this.state.open} />
