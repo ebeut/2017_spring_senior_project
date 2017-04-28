@@ -38,7 +38,6 @@ export default class CalendarPage extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        console.log(newProps)
       if (this.props.userData !== newProps.userData && newProps.userData.logoutData) {
         this.setState({logout: true});
       }
@@ -49,7 +48,6 @@ export default class CalendarPage extends Component {
         } else {
           this.setState({userName: newProps.userData.loginData});
           this.setState({open: true});
-          console.log("Yeee")
           this.props.getFav(newProps.userData.loginData)
         }
       }
@@ -125,9 +123,7 @@ export default class CalendarPage extends Component {
             }
         }
         if(newProps.showData && this.props.showData.getFavRes != newProps.showData.getFavRes) {
-            console.log("first")
             if(newProps.showData.getFavRes) {
-                console.log("second")
                 for(var i = 0; i < newProps.showData.getFavRes.length; i++) {
                     var show = newProps.showData.getFavRes[i]
                     console.log(show)
