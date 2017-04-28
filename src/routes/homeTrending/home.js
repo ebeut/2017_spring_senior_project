@@ -11,6 +11,7 @@ export default class HomePage extends Component {
     super(props);
     this.state = {
       sqrContent: [],
+      userContent: [],
       open: false,
       userName: '',
       userFav: [],
@@ -45,38 +46,62 @@ export default class HomePage extends Component {
     }
     if (this.props.showInfo.show !== newProps.showInfo.show && newProps.showInfo.show && newProps.showInfo.show.title) {
       const userFav = this.state.userFav;
+      if (userFav.length > 4) {
+        delete userFav[0];
+      }
       userFav.push(newProps.showInfo.show);
-      this.setState({sqrContent: userFav, open: false, userFav});
+      this.setState({userContent: userFav, userFav});
     }
     if (this.props.userData !== newProps.userData && newProps.userData.loginData) {
       if (newProps.userData.loginData === 'N/A') {
         this.props.getTrending();
       } else {
         this.setState({userName: newProps.userData.loginData});
-        this.props.getHomePageData(newProps.userData.loginData)
+        this.props.getHomePageData(newProps.userData.loginData);
+        this.props.getTrending();
       }
     }
-    if (this.props.homeData.homeData !== newProps.homeData.homeData && newProps.homeData.homeData) {
+    if (this.props.homeData.homeData !== newProps.homeData.homeData && newProps.homeData.homeData && newProps.homeData.homeData.length > 0) {
       newProps.homeData.homeData.map((id) => {
         this.props.getShowInfo(id);
       })
-      this.setState({open: false});
-    } else if (this.props.calendarData.trendingData !== newProps.calendarData.trendingData) {
-      this.setState({sqrContent: newProps.calendarData.trendingData, open: false});
+    }
+    if (this.props.calendarData.trendingData !== newProps.calendarData.trendingData && newProps.calendarData.trendingData && newProps.calendarData.trendingData.length > 0) {
+      let sqrContent = []
+      if (newProps.calendarData.trendingData.length > 4) {
+        for (let i=0;i < newProps.calendarData.trendingData.length;i++) {
+          if (i<5) {
+            sqrContent.push(newProps.calendarData.trendingData[i])
+          }
+        }
+      }
+      this.setState({sqrContent, open: false});
     }
   }
 
   render () {
+    let userSqr = (
+      <div />
+    )
+
+    if (this.state.userContent && this.state.userContent.length > 0) {
+      userSqr = (
+        <ShowSquare
+          id="home-squares"
+          content={this.state.userContent}
+          getShowInfo={this.props.getShowInfo}
+        />
+      )
+    }
+
     let sqr = (
-      <div id="home-loading" style={{textAlign: 'center', fontSize: 35, color: pinkA200}}>
-        You don't have any favorite's, go to the search page and find some shows you like.
-      </div>
+      <div />
     );
 
     if (this.state.sqrContent && this.state.sqrContent.length > 0) {
       sqr = (
         <ShowSquare
-          id="home-squares"
+          id="trending-squares"
           content={this.state.sqrContent}
           getShowInfo={this.props.getShowInfo}
         />
@@ -87,8 +112,10 @@ export default class HomePage extends Component {
         <LogoutDlg open={this.state.logout} email={this.state.userName} />
         <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout} />
         <Loading id="home-page-loading" open={this.state.open} />
+        {this.state.userContent && this.state.userContent.length > 0 ? <h4 style={{textAlign: 'center', paddingTop: 25}}>Favorites</h4> : null}
+        {userSqr}
         <h4 id="home-title" style={{textAlign: 'center', paddingTop: 25}}>
-          {this.isLogedIn() ? 'Favorites' : 'Trending Shows'}
+          Trending
         </h4>
         {sqr}
       </div>
