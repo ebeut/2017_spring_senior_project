@@ -28,27 +28,29 @@ export default class CalendarPage extends Component {
         getTrending: PropTypes.func,
         getShowSeasonInfo: PropTypes.func,
         getShowInfo: PropTypes.func,
+        getFav: PropTypes.func,
         logout: PropTypes.func,
         isLogin: PropTypes.func,
     };
 
     componentWillMount () {
-        if(events.length <= 0) {
-            this.setState({open: true});
-            this.props.getTrending()
-        }
         this.props.isLogin();
     }
 
     componentWillReceiveProps(newProps) {
+        console.log(newProps)
       if (this.props.userData !== newProps.userData && newProps.userData.logoutData) {
         this.setState({logout: true});
       }
       if (this.props.userData !== newProps.userData && newProps.userData.loginData) {
         if (newProps.userData.loginData === 'N/A') {
-          console.log("not logged in, do something?");
+            this.setState({open: true});
+            this.props.getTrending()
         } else {
           this.setState({userName: newProps.userData.loginData});
+          this.setState({open: true});
+          console.log("Yeee")
+          this.props.getFav(newProps.userData.loginData)
         }
       }
         if(this.props.showData !== newProps.showData && newProps.showData) {
@@ -122,6 +124,21 @@ export default class CalendarPage extends Component {
                 }
             }
         }
+        if(newProps.showData && this.props.showData.getFavRes != newProps.showData.getFavRes) {
+            console.log("first")
+            if(newProps.showData.getFavRes) {
+                console.log("second")
+                for(var i = 0; i < newProps.showData.getFavRes.length; i++) {
+                    var show = newProps.showData.getFavRes[i]
+                    console.log(show)
+                    this.props.getShowInfo(show)
+                }
+            }
+        }
+    }
+
+    componentWillUnmount() {
+        events = []
     }
 
     render () {
