@@ -18,7 +18,6 @@ export default class LogoutDlg extends Component {
     const actions = (
       <RaisedButton
         label='Close'
-        secondary
         onTouchTap={this.onClose}
       />
     )
