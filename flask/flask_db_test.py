@@ -2,7 +2,6 @@
 
 import pytest
 import sqlite3
-import requests
 import os
 
 

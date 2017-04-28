@@ -266,7 +266,7 @@ class FlaskDatabase:
         Arguments:
             username:    username
 
-        Returns: N/A
+        Returns: True
         """
         conn = self.getConnection()
         cur = conn.cursor()
@@ -276,6 +276,8 @@ class FlaskDatabase:
         conn.commit()
         flash("User logged out")
         conn.close()
+
+        return True
 
     def getIdNum(self, username, showID):
         """Gets user's unique ID number for user show relationship

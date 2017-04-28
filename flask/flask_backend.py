@@ -201,8 +201,9 @@ def api_log_out(username):
 
     Returns: redirects to /db/usr
     """
-    db.logOutUser(username)
-    return redirect(url_for("api_show_users"))
+    logoutJSON = jsonify(db.logOutUser(username))
+    logoutJSON.status_code = 200
+    return logoutJSON
 
 
 @app.route("/db/fav/<username>")
