@@ -101,7 +101,7 @@ export class Header extends Component {
                 <MenuItem
                     id="header-settings-btn"
                     leftIcon={< Favorite />}
-                    //onClick={() => this.dispatchNewRoute('/counter')}
+                    onClick={() => this.dispatchNewRoute('/favorites')}
                     style={{
                         textAlign: 'left',
                     }}
