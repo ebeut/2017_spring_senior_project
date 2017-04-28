@@ -199,7 +199,8 @@ def api_log_out(username):
     Arguments:
         username:    username
 
-    Returns: redirects to /db/usr
+    Returns:
+        logoutJSON:    True
     """
     logoutJSON = jsonify(db.logOutUser(username))
     logoutJSON.status_code = 200
