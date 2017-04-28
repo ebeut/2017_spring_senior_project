@@ -75,8 +75,8 @@ export default class ShowInfoPage extends Component {
     if (this.props.showInfo.show !== newStuff.show && newStuff.gettingShowInfo){
       this.setState({open: true});
     }
-    if (this.props.showInfo.showSeasonInfo !== newStuff.showSeasonInfo && !newStuff.gettingShowSeasonInfo){
-      if (this.state.numSeasons && this.state.numSeasons == this.state.season && newStuff.showSeasonInfo.length === 0) {
+    if (this.props.showInfo.showSeasonInfo !== newStuff.showSeasonInfo && newStuff.gettingShowSeasonInfo === false) {
+      if (this.state.numSeasons && this.state.numSeasons === this.state.season && newStuff.showSeasonInfo.length === 0) {
         this.setState({open: false, episodeList: newStuff.showSeasonInfo});
       } else if (newStuff.showSeasonInfo.length !== 0) {
         this.setState({open: false, episodeList: newStuff.showSeasonInfo});

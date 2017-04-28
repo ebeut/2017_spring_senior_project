@@ -158,7 +158,7 @@ export const actions = {
   getFav
 };
 
-const initialState = { show: {}, gettingShowInfo: false, showInfoErr: null, showSeasonInfo: [], gettingShowSeasonInfo: false, showSeasonInfoErr: null};
+const initialState = { show: {}, gettingShowInfo: false, showInfoErr: null, showSeasonInfo: [], showSeasonInfoErr: null};
 
 export default function showSeasonInfoReducer (state = initialState, action) {
   switch (action.type) {
