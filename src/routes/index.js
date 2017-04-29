@@ -6,6 +6,7 @@ import ShowInfoPage from './Show-Info';
 import CalendarPage from './Calendar';
 import HomePage from './homeTrending';
 import LoginPage from './login';
+import Favorite from './Favorites';
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -19,7 +20,8 @@ export const createRoutes = (store) => ({
     SearchRoute(store),
     ShowInfoPage(store),
     CalendarPage(store),
-    LoginPage(store)
+    LoginPage(store),
+    Favorite(store)
   ]
 });
 
