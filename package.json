@@ -1,5 +1,5 @@
 {
-  "name": "The Watch List",
+  "name": "The_Watch_List",
   "version": "1.0.0",
   "description": "Keep track of all the shows you watch",
   "main": "index.js",
@@ -71,10 +71,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davezuko/react-redux-starter-kit.git"
+    "url": "git+https://github.com/ebeut/2017_spring_senior_project.git"
   },
-  "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
-  "license": "MIT",
+  "author": "The Watch list",
   "dependencies": {
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
