@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-starter-kit",
-  "version": "3.0.0-alpha.2",
-  "description": "Get started with React, Redux, and React-Router!",
+  "name": "The Watch List",
+  "version": "1.0.0",
+  "description": "Keep track of all the shows you watch",
   "main": "index.js",
   "engines": {
     "node": ">=4.5.0",
