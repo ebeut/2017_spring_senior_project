@@ -83,6 +83,7 @@ export default class LoginPage extends Component {
     if (username.length < 5 || username.length > 15){
       return false;
     }
+    if (username && username.length > 0 && username[0] === '_' || username[0] === '.') return false;
     for (let i = 0; i<username.length; i++){
       const temp = username.charAt(i);
       if (isNaN(temp) && !this.isLetter(temp) && temp !== '_' && temp !== '.') {
@@ -99,7 +100,7 @@ export default class LoginPage extends Component {
   isLetter(char) {
     const letter = 'qwertyuiopasdfghjklzxcvbnm';
     for (let i =0; i<26; i++){
-      if (char === letter.charAt(i)) {
+      if (char.toLowerCase() === letter.charAt(i)) {
         return true;
       }
     }
