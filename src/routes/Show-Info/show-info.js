@@ -14,6 +14,7 @@ import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import moment from 'moment';
 import Header from '../../components/Header';
 import LogoutDlg from '../../components/LogoutDlg';
+import ImageNA from '../../images/ImageNA.png';
 
 export default class ShowInfoPage extends Component {
 
@@ -232,7 +233,7 @@ export default class ShowInfoPage extends Component {
         <Loading id="show-info-loading" open={this.state.open} />
         <div style={{display: 'inline-flex', width: '100%', height: '50%'}}>
           <Paper id="show-poster" style={{width: 230, height: 315}} zDepth={5} >
-            <img style={{padding: 10}} src={this.state.poster && this.state.poster !== 'N/A' ? this.state.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'}/>
+            <img style={{padding: 10}} src={this.state.poster && this.state.poster !== 'N/A' ? this.state.poster : ImageNA}/>
           </Paper>
           <div style={{paddingLeft: 15, width: '100%'}}>
             <div>
