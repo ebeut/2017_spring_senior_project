@@ -4,6 +4,7 @@ import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import FlatButton from 'material-ui/FlatButton';
 import Logo from '../../../logo.png';
+import ImageNA from '../../images/ImageNA.png';
 import { browserHistory } from 'react-router';
 
 export class ShowSquare extends Component {
@@ -40,7 +41,7 @@ export class ShowSquare extends Component {
               }
               style={{textAlign: 'left'}}
             >
-              <img src={content.poster && content.poster != 'N/A' ? content.poster : 'https://www.alpinehomeair.com/css/images/image-not-available.png'} />
+              <img src={content.poster && content.poster != 'N/A' ? content.poster : ImageNA} />
             </GridTile>
           ))}
         </GridList>
