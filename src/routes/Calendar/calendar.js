@@ -4,6 +4,7 @@ import Loading from '../../components/Loading';
 import moment from 'moment';
 import Header from '../../components/Header';
 import LogoutDlg from '../../components/LogoutDlg';
+import CalendarDlg from '../../components/CalendarDlg';
 
 import './calendar.css';
 
@@ -19,6 +20,10 @@ export default class CalendarPage extends Component {
     super(props);
     this.state = {
       open: false,
+      calOpen: false,
+      logout: false,
+      title: "",
+      desc: ""
     }
   }
     static propTypes = {
@@ -75,6 +80,11 @@ export default class CalendarPage extends Component {
                                 var tempEpiTitle = episode.name
                                 var tempEpiNum = episode.number
                                 var tempEpiDesc = episode.summary
+
+                                if(tempEpiDesc == "None") {
+                                    tempEpiDesc = "N/A."
+                                }
+
                                 var tempNetwork = titleNetwork[i].network
                                 var tempStreaming = titleNetwork[i].streaming
 
@@ -90,18 +100,18 @@ export default class CalendarPage extends Component {
                                 if(tempTime) {
                                     var tempTwelveHour = moment(tempTime, "HH:mm").format("h:mm A")
 
-                                    var tempDesc = "\"" + tempEpiTitle + "\"\n" + tempEpiDesc + "\n\nAirs on " + tempNetwork + " at " + tempTwelveHour
+                                    var tempDesc = tempEpiDesc + "\n\nAirs on " + tempNetwork + " at " + tempTwelveHour + "."
                                 }
                                 else {  // if episode does not have a time
                                     tempDate.setHours(0)
                                     tempDate.setMinutes(0)
-                                    var tempDesc = "\"" + tempEpiTitle + "\"\n" + tempEpiDesc + "\n\nAirs on " + tempNetwork
+                                    var tempDesc = tempEpiDesc + "\n\nAirs on " + tempNetwork + "."
                                 }
 
                                 // create the event/episode to add to events
                                 if(twentyFourHour.length == 2) {
                                     var tempEvent = {
-                                        'title': "s" + titleNetwork[i].season + "e" + tempEpiNum + " " + tempTitle,
+                                        'title': "s" + titleNetwork[i].season + "e" + tempEpiNum + " " + tempTitle + " - " + "\"" + tempEpiTitle + "\"\n",
                                         'start': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate(), parseInt(twentyFourHour[0]), parseInt(twentyFourHour[1])),
                                         'end': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate(), parseInt(twentyFourHour[0])+1, parseInt(twentyFourHour[1])),
                                         'desc': tempDesc
@@ -109,7 +119,7 @@ export default class CalendarPage extends Component {
                                 }
                                 else {
                                     var tempEvent = {
-                                        'title': "s" + titleNetwork[i].season + "e" + tempEpiNum + " " + tempTitle,
+                                        'title': "s" + titleNetwork[i].season + "e" + tempEpiNum + " " + tempTitle + "\"" + tempEpiTitle + "\"\n",
                                         'start': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate()),
                                         'end': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate()),
                                         'desc': tempDesc
@@ -138,7 +148,6 @@ export default class CalendarPage extends Component {
             if(newProps.showData.getFavRes) {
                 for(var i = 0; i < newProps.showData.getFavRes.length; i++) {
                     var show = newProps.showData.getFavRes[i]
-                    console.log(show)
                     this.props.getShowInfo(show)
                 }
             }
@@ -149,10 +158,19 @@ export default class CalendarPage extends Component {
         events = []
     }
 
+    mkCalDlg(event) {
+        this.setState({calOpen: true, title: event.title, desc: event.desc})
+    }
+
+    onClose = () => {
+        this.setState({calOpen: false})
+    }
+
     render () {
         return (
           <div style={{width: '100%'}}>
             <LogoutDlg open={this.state.logout} email={this.state.userName} />
+            {this.state.calOpen ? <CalendarDlg open={this.state.calOpen} title={this.state.title} desc={this.state.desc} onClose={this.onClose} /> : null }
             <Header userEmail={this.state.userName ? this.state.userName : ''} logout={this.props.logout} />
             <div
                 id="calendar-page"
@@ -170,7 +188,7 @@ export default class CalendarPage extends Component {
                     popup
                     selectable
                     events={events}
-                    onSelectEvent={event => alert(event.desc)}
+                    onSelectEvent={event => this.mkCalDlg(event)}
                     scrollToTime={new Date(1970, 1, 1, 12)}
                 />
             </div>
