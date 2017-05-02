@@ -9,8 +9,6 @@ import Header from '../../components/Header';
 import LogoutDlg from '../../components/LogoutDlg';
 import Loading from '../../components/Loading';
 
-// dictionary for favorites checklist
-var favTitles = []
 
 export default class Favorite extends Component {
 
@@ -20,6 +18,7 @@ export default class Favorite extends Component {
       open: false,
       logout: false,
       userName: '',
+      favTitles: [],
     }
   }
 
@@ -29,11 +28,13 @@ export default class Favorite extends Component {
     getFav: PropTypes.func,
     isLogin: PropTypes.func,
     logout: PropTypes.func,
+    delFavorite: PropTypes.func,
+    addFavorite: PropTypes.func,
   };
 
   componentWillMount() {
     this.props.isLogin();
-   // this.setState({open: true});
+    this.setState({open: true});
   }
 
   componentWillReceiveProps (newProps) {
@@ -41,25 +42,24 @@ export default class Favorite extends Component {
       this.setState({logout: true});
     }
     if (this.props.userData !== newProps.userData && newProps.userData.loginData) {
-      if (newProps.userData.loginData === 'N/A') {
-        console.log("something.....")
-      } else {
+      if (newProps.userData.loginData !== 'N/A') {
         const userName = newProps.userData.loginData;
         this.setState({userName});
         this.props.getFav(newProps.userData.loginData)
       }
     }
 
-    if(this.props.showData !== newProps.showData && newProps.showData) {
+    if(this.props.showData !== newProps.showData && newProps.showData.show) {
         if(newProps.showData.show.id) {
             // information to be saved from show details request
+            let favTitles = this.state.favTitles;
             var temp = {
                 'id': newProps.showData.show.id,
                 'title': newProps.showData.show.title,
                 'summary': newProps.showData.show.summary,
             }
-            console.log(temp)
-            favTitles.push(temp)
+            favTitles.push(temp);
+            this.setState({open: false, favTitles});
         }
     }
 
@@ -73,10 +73,18 @@ export default class Favorite extends Component {
     }
   }
 
+checkFav = (fav, bool) => {
+    if (bool)
+      this.props.addFavorite(this.state.userName, fav.id);
+    else
+      this.props.delFavorite(this.state.userName, fav.id);
+  }
+
 mkFavList() {
+    if (!this.state.favTitles || this.state.favTitles.length < 1) return (<div />);
     const favs = (
         <List>
-            { favTitles.map((fav) => (
+            { this.state.favTitles.map((fav) => (
                 <div key={fav.id} style={{height: '100%', cursor: 'pointer'}}>
                     <ListItem
                         style={{height: '100%', cursor: 'pointer'}}
@@ -88,6 +96,7 @@ mkFavList() {
                               uncheckedIcon={< FavoriteBorder />}
                               iconStyle={{fill: pinkA200}}
                               defaultChecked={true}
+                              onCheck={ (evt,bool) => {this.checkFav(fav,bool) }}
                             />
                         }
                     />
