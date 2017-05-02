@@ -47,7 +47,7 @@ export default class HomePage extends Component {
     if (this.props.showInfo.show !== newProps.showInfo.show && newProps.showInfo.show && newProps.showInfo.show.title) {
       const userFav = this.state.userFav;
       if (userFav.length > 4) {
-        delete userFav[0];
+        userFav.splice(0, 1);
       }
       userFav.push(newProps.showInfo.show);
       this.setState({userContent: userFav, userFav});
@@ -85,6 +85,7 @@ export default class HomePage extends Component {
     )
 
     if (this.state.userContent && this.state.userContent.length > 0) {
+      console.log(this.state.userContent);
       userSqr = (
         <ShowSquare
           id="home-squares"
