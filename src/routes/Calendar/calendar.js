@@ -85,6 +85,8 @@ export default class CalendarPage extends Component {
                                 var tempDate = new Date(episode.date)
                                 var tempTime = episode.time
 
+                                var twentyFourHour = episode.time.split(":")
+
                                 if(tempTime) {
                                     var tempTwelveHour = moment(tempTime, "HH:mm").format("h:mm A")
 
@@ -97,11 +99,21 @@ export default class CalendarPage extends Component {
                                 }
 
                                 // create the event/episode to add to events
-                                var tempEvent = {
-                                    'title': "s" + titleNetwork[i].season + "e" + tempEpiNum + " " + tempTitle,
-                                    'start': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours(), tempDate.getMinutes()),
-                                    'end': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate(), tempDate.getHours()+1, tempDate.getMinutes()),
-                                    'desc': tempDesc
+                                if(twentyFourHour.length == 2) {
+                                    var tempEvent = {
+                                        'title': "s" + titleNetwork[i].season + "e" + tempEpiNum + " " + tempTitle,
+                                        'start': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate(), parseInt(twentyFourHour[0]), parseInt(twentyFourHour[1])),
+                                        'end': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate(), parseInt(twentyFourHour[0])+1, parseInt(twentyFourHour[1])),
+                                        'desc': tempDesc
+                                    }
+                                }
+                                else {
+                                    var tempEvent = {
+                                        'title': "s" + titleNetwork[i].season + "e" + tempEpiNum + " " + tempTitle,
+                                        'start': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate()),
+                                        'end': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate()),
+                                        'desc': tempDesc
+                                    }
                                 }
 
                                 events.push(tempEvent)
