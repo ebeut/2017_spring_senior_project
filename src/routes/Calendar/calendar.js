@@ -96,6 +96,7 @@ export default class CalendarPage extends Component {
                                 var tempTime = episode.time
 
                                 var twentyFourHour = episode.time.split(":")
+                                var tempRuntime = episode.runtime
 
                                 if(tempTime) {
                                     var tempTwelveHour = moment(tempTime, "HH:mm").format("h:mm A")
@@ -113,13 +114,13 @@ export default class CalendarPage extends Component {
                                     var tempEvent = {
                                         'title': "s" + titleNetwork[i].season + "e" + tempEpiNum + " " + tempTitle + " - " + "\"" + tempEpiTitle + "\"\n",
                                         'start': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate(), parseInt(twentyFourHour[0]), parseInt(twentyFourHour[1])),
-                                        'end': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate(), parseInt(twentyFourHour[0])+1, parseInt(twentyFourHour[1])),
+                                        'end': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate(), parseInt(twentyFourHour[0]), parseInt(twentyFourHour[1])+tempRuntime),
                                         'desc': tempDesc
                                     }
                                 }
                                 else {
                                     var tempEvent = {
-                                        'title': "s" + titleNetwork[i].season + "e" + tempEpiNum + " " + tempTitle + "\"" + tempEpiTitle + "\"\n",
+                                        'title': "s" + titleNetwork[i].season + "e" + tempEpiNum + " " + tempTitle + " - " + "\"" + tempEpiTitle + "\"\n",
                                         'start': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate()),
                                         'end': new Date(tempDate.getUTCFullYear(), tempDate.getMonth(), tempDate.getDate()),
                                         'desc': tempDesc
