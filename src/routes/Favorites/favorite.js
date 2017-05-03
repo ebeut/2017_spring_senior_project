@@ -117,7 +117,7 @@ mkFavList() {
         <Loading id="favorite-loading" open={this.state.open} />
 
         <h4 style={{textAlign: 'center', paddingTop: 25}}>
-            Favorites
+            Manage Favorites
         </h4>
 
         <div style={{ width: '75%', margin: '0 auto' }}>
