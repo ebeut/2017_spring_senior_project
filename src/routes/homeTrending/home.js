@@ -46,9 +46,6 @@ export default class HomePage extends Component {
     }
     if (this.props.showInfo.show !== newProps.showInfo.show && newProps.showInfo.show && newProps.showInfo.show.title) {
       const userFav = this.state.userFav;
-      if (userFav.length > 4) {
-        userFav.splice(0, 1);
-      }
       userFav.push(newProps.showInfo.show);
       this.setState({userContent: userFav, userFav});
     }
