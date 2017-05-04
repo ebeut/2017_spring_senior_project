@@ -100,15 +100,15 @@ describe('Home component', () => {
     expect(wrap.state().open).to.be.true;
     expect(wrap.find('#home-page')).to.exist;
     expect(wrap.find('#home-title')).to.exist;
-    expect(wrap.find('#home-loading')).to.exist;
+    expect(wrap.find('#home-page-loading')).to.exist;
   });
   it('Should be able to handle new shows coming in', () => {
-    wrap.instance().componentWillReceiveProps({calendarData: {trendingData: trending}, homeData: {}});
-    expect(wrap.find('#home-loading')).to.not.exist;
-    expect(wrap.find('#home-squares')).to.exist;
-    wrap.instance().componentWillReceiveProps({calendarData: {}, homeData: {}});
-    wrap.instance().componentWillReceiveProps({calendarData: {}, homeData: {homeData: trending}});
-    expect(wrap.find('#home-loading')).to.not.exist;
-    expect(wrap.find('#home-squares')).to.exist;
+    wrap.instance().componentWillReceiveProps({calendarData: {trendingData: trending}, homeData: {}, showInfo: {}});
+    expect(wrap.state().open).to.be.false;
+    expect(wrap.state().sqrContent.length).to.equal(5);
+    wrap.instance().componentWillReceiveProps({calendarData: {}, homeData: {}, showInfo: {}});
+    wrap.instance().componentWillReceiveProps({calendarData: {}, homeData: {homeData: trending}, showInfo: {}});
+    expect(wrap.state().open).to.be.false;
+    expect(wrap.state().sqrContent.length).to.equal(5);
   });
 });

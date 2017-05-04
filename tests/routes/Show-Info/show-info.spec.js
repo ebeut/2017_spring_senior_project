@@ -234,15 +234,16 @@ describe('Show Info component', () => {
   });
   it('Should render the component', () => {
     expect(wrap.find('div')).to.exist;
+    spies.isLogin.should.have.been.called;
   });
   it('Should render go back to search if no content and renders data when three is content', () => {
-    wrap.instance().componentWillReceiveProps({showInfo: {showSeasonInfo: []}, userData: {}});
+    wrap.instance().componentWillReceiveProps({showInfo: {show: {}, showSeasonInfo: []}, userData: {}});
     expect(wrap.find('#show-info-back-to-search')).to.exist;
     let cast = wrap.instance().mkCast();
     expect(cast.props.children.length).to.equal(0);
 
     wrap.instance().componentWillReceiveProps({showInfo: {show: showInfoData, showSeasonInfo: showInfoSeasonData}, userData: {}});
-    console.log("HEELOW");
+    wrap.update();
     expect(wrap.find('#show-poster')).to.exist;
     expect(wrap.find('#show-synopsis')).to.exist;
     expect(wrap.find('#show-cast')).to.exist;
@@ -270,18 +271,18 @@ describe('Show Info component', () => {
     });
     wrap.update();
     let epiList = wrap.instance().mkEpisodeList();
-    expect(epiList.props.children).to.equal('loading .....');
+    expect(epiList.props.children).to.equal('N/A');
   });
   it('Should make async call when page is rendering with data', () => {
-    spies.dispatch.should.have.not.been.called;
+    spies.getShowSeasonInfo.should.have.not.been.called;
     wrap.instance().componentWillReceiveProps({showInfo: {show: showInfoData, showSeasonInfo: []}, userData: {}});;
-    spies.dispatch.should.have.been.called;
+    spies.getShowSeasonInfo.should.have.been.called;
   });
   it('Should show loading dialog when there is no data', () => {
     wrap.instance().componentWillMount();
     wrap.instance().componentWillReceiveProps({showInfo: {showSeasonInfo: {}, gettingShowSeasonInfo: true}, userData: {}});
     expect(wrap.state().open).to.be.true;
-    wrap.instance().componentWillReceiveProps({showInfo: {showSeasonInfo: {}, gettingShowSeasonInfo: false}, userData: {}});
+    wrap.instance().componentWillReceiveProps({showInfo: {showSeasonInfo: showInfoSeasonData, gettingShowSeasonInfo: false}, userData: {}});
     expect(wrap.state().open).to.be.false;
   });
   it('Should make async calls at the right time', () => {
