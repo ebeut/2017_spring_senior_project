@@ -84,6 +84,7 @@ describe('Search component', () => {
     props = {
       searchRes : {},
       calendarData: {},
+      userData: {},
       ...bindActionCreators({
         searchTVAPI: (spies.searchTVAPI = sinon.spy()),
         getShowInfo: (spies.getShowInfo = sinon.spy()),

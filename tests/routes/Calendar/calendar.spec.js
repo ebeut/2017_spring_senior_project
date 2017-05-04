@@ -120,6 +120,7 @@ describe('Calendar component', () => {
     props = {
       showData: {},
       calendarData: {},
+      userData: {},
       ...bindActionCreators({
         getShowSeasonInfo: (spies.getShowSeasonInfo = sinon.spy()),
         getShowInfo: (spies.getShowInfo = sinon.spy()),

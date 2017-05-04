@@ -85,6 +85,7 @@ describe('Home component', () => {
       showInfo: {},
       calendarData: {},
       homeData: {},
+      userData: {},
       ...bindActionCreators({
         getHomePageData: (spies.searchTVAPI = sinon.spy()),
         getShowInfo: (spies.getShowInfo = sinon.spy()),
