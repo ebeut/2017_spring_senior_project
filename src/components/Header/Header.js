@@ -123,7 +123,7 @@ export class Header extends Component {
               <FlatButton
                 id="header-logout-btn"
                 onTouchTap={this.login}
-                label="Login"
+                label="Login / Register"
                 icon={< ExitToApp />}
               />
             ));
