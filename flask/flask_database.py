@@ -91,13 +91,35 @@ class FlaskDatabase:
 
         Returns: N/A
         """
+        self.removeAllEpisodes(username, showID)
+
         conn = self.getConnection()
         cur = conn.cursor()
 
         cur.execute("DELETE FROM WATCHLIST WHERE username=? AND showID=?",
                     (username, showID))
         conn.commit()
+        conn.close()
+
         flash("Entry removed")
+
+    def removeAllEpisodes(self, username, showID):
+        """When a favorite is removed, remove all the episodes
+
+        Arguments:
+            username:    username
+            showID:      show's ID number
+
+        Returns: N/A
+        """
+        conn = self.getConnection()
+        cur = conn.cursor()
+
+        userID = self.getIdNum(username, showID)
+
+        cur.execute("DELETE FROM EPISODES WHERE idnum=?",
+                    (userID,))
+        conn.commit()
         conn.close()
 
     def insertEpisode(self, username, showID, seasonEpNum):
