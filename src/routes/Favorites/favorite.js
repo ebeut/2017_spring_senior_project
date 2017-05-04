@@ -64,12 +64,14 @@ export default class Favorite extends Component {
         }
     }
 
-    if(this.props.favInfo.favorites != newProps.favInfo.favorites) {
+    if(this.props.favInfo !== newProps.favInfo) {
         if(newProps.favInfo.favorites) {
             for(var i = 0; i < newProps.favInfo.favorites.length; i++) {
                 var show = newProps.favInfo.favorites[i]
                 this.props.getShowInfo(show)
             }
+        } else {
+          this.setState({open: false})
         }
     }
   }

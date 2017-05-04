@@ -28,14 +28,14 @@ const initialState = {};
 export default function favoriteReducer (state = initialState, action) {
   switch (action.type) {
     case GET_FAVORITE: {
-      return { ...initialState, gettingShowInfo: true, showInfoErr: null }
+      return { ...initialState, gettingFav: true, favErr: null }
     }
     case GET_FAVORITE_FAIL: {
-      return { ...initialState, gettingShowInfo: false, showInfoErr: action.err.response.statusText}
+      return { ...initialState, gettingFav: false, favErr: action.err}
     }
     case GET_FAVORITE_OK: {
       const favorites = action.res.body;
-      return { ...initialState, gettingShowInfo: false, favorites}
+      return { ...initialState, gettingFav: false, favorites}
     }
     default:
       return initialState;

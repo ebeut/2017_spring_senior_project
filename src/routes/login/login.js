@@ -87,6 +87,7 @@ export default class LoginPage extends Component {
     if (username && username.length > 0 && username[0] === '_' || username[0] === '.') return false;
     for (let i = 0; i<username.length; i++){
       const temp = username.charAt(i);
+      if (temp === ' ') return false;
       if (isNaN(temp) && !this.isLetter(temp) && temp !== '_' && temp !== '.') {
         return false;
       }
@@ -231,7 +232,7 @@ export default class LoginPage extends Component {
               <TextField
                 id="login-new-username"
                 floatingLabelText="Username"
-                hintText="Must be between 8-20 characters"
+                hintText="Must be between 5-15 characters"
                 value={this.state.newUser}
                 errorText={this.state.userError}
                 onChange={this.newUsernameChange}
@@ -242,7 +243,7 @@ export default class LoginPage extends Component {
               <TextField
                 id="login-new-password"
                 floatingLabelText="Password"
-                hintText="Must be between 5-15 characters"
+                hintText="Must be between 8-20 characters"
                 type="password"
                 value={this.state.newPass}
                 errorText={this.state.passError}
