@@ -127,19 +127,30 @@ export default class ShowInfoPage extends Component {
     this.props.getShowSeasonInfo(this.state.id,season);
   };
 
-  checkEpisode = (epi,bool) => {
-    const sepisode = parseFloat(epi.season + (epi.number/100));
+  isInList (list, num) {
+    if (list.length < 1) return -1;
+    let inList = -1;
+    list.map((number, index) => {
+      if (number === num) {
+        inList = index;
+      }
+    });
+    return inList;
+  }
+
+  checkEpisode = (epi,bool,sepisode) => {
+    let watchedEpiList = this.state.watchedEpiList;
+    const index = this.isInList(watchedEpiList, sepisode);
     if (bool) {
-      let watchedEpiList = this.state.watchedEpiList;
-      watchedEpiList[epi.number-1] = sepisode;
-      this.setState({watchedEpiList});
+      if (index === -1) {
+        watchedEpiList.push(sepisode)
+      }
       this.props.addEpisode(this.state.userName,epi.id,sepisode)
     } else {
-      let watchedEpiList = this.state.watchedEpiList;
-      delete watchedEpiList[epi.number-1];
-      this.setState({watchedEpiList});
+      watchedEpiList.splice(index,1);
       this.props.delEpisode(this.state.userName,epi.id,sepisode)
     }
+    this.setState({watchedEpiList});
   }
 
   mkCheckbx (episode) {
@@ -147,16 +158,17 @@ export default class ShowInfoPage extends Component {
       <div />
     )
     let checked = false;
+    const sepisode = parseFloat(episode.season+(episode.number/100));
     if (this.state.watchedEpiList && this.state.watchedEpiList.length > 0) {
       this.state.watchedEpiList.map((epi) => {
-        if (epi === (parseFloat(episode.season+(episode.number/100)))) {
+        if (epi === sepisode) {
           checked = true;
         }
       })
     }
     if (this.state.fav) {
       checkBx = (
-        <Checkbox checked={checked} onCheck={ (evt,bool) => {this.checkEpisode(episode,bool) }} iconStyle={{fill: pinkA200}}/>
+        <Checkbox checked={checked} onCheck={ (evt,bool) => {this.checkEpisode(episode,bool, sepisode) }} iconStyle={{fill: pinkA200}}/>
       )
     }
     return checkBx

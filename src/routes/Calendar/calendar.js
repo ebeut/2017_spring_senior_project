@@ -68,7 +68,18 @@ export default class CalendarPage extends Component {
                     'season': newProps.showData.show.numSeasons,
                 }
                 titleNetwork.push(temp)
-                this.props.getShowSeasonInfo(newProps.showData.show.id, newProps.showData.show.numSeasons)
+              if (newProps.showData.show.numSeasons > 1) {
+                var temp1 = {
+                  'id': newProps.showData.show.id,
+                  'title': newProps.showData.show.title,
+                  'network': newProps.showData.show.network,
+                  'streaming': newProps.showData.show.streaming,
+                  'season': newProps.showData.show.numSeasons-1,
+                }
+                titleNetwork.push(temp1)
+                this.props.getShowSeasonInfo(newProps.showData.show.id, newProps.showData.show.numSeasons-1)
+              }
+              this.props.getShowSeasonInfo(newProps.showData.show.id, newProps.showData.show.numSeasons)
             }
 
             if(newProps.showData.showSeasonInfo) {
@@ -76,7 +87,7 @@ export default class CalendarPage extends Component {
                     newProps.showData.showSeasonInfo.map((episode) => {
                         for (var i = 0; i < titleNetwork.length; i++) {
                             // check that IDs match to match info to episodes
-                            if(titleNetwork[i].id == episode.id) {
+                            if(titleNetwork[i].id == episode.id && titleNetwork[i].season == episode.season) {
                                 var tempTitle = titleNetwork[i].title
                                 var tempEpiTitle = episode.name
                                 var tempEpiNum = episode.number
@@ -158,6 +169,7 @@ export default class CalendarPage extends Component {
 
     componentWillUnmount() {
         events = []
+      titleNetwork = []
     }
 
     mkCalDlg(event) {
