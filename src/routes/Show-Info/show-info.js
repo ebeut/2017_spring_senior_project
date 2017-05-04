@@ -166,7 +166,7 @@ export default class ShowInfoPage extends Component {
     if (this.state.episodeList.length === 0) return (<div>N/A</div>)
 
     const episodes = (
-      <List>
+      <List id="show-episodes">
         {this.state.episodeList.map((episode) => (
           <div key={episode.number} style={{height: '100%', cursor: 'pointer'}}>
             <ListItem
@@ -190,7 +190,7 @@ export default class ShowInfoPage extends Component {
       seasons.push(i+1);
     }
     return (
-    <DropDownMenu value={this.state.season} onChange={this.seasonChange}>
+    <DropDownMenu id="show-seasons" value={this.state.season} onChange={this.seasonChange}>
       {seasons.map((season) => (
         <MenuItem key={season} value={season} primaryText={`Season ${season}`} />
       ))}
@@ -201,14 +201,14 @@ export default class ShowInfoPage extends Component {
   mkCast () {
     if (!this.state.cast) return (<div>Cast not available</div>);
     return (
-      <div style={{display: 'inline-flex', padding: 10, paddingLeft: 25}}>
+      <div id="show-cast" style={{display: 'inline-flex', padding: 10, paddingLeft: 25}}>
         {this.props.showInfo ? this.state.cast.map((cast) => (
           <div key={cast.character} style={{}}>
             <p style={{float: 'right', textAlign: 'left', paddingLeft: 10, paddingTop: 10, paddingRight: 10}}>
               <strong>{`${cast.name}`}</strong> <br />
               {`${cast.character}`}
             </p>
-            <img src={cast.image} style={{height: 98.33, width: 70, float: 'left'}} />
+            <img id={`${cast.name}-img`} src={cast.image} style={{height: 98.33, width: 70, float: 'left'}} />
           </div>
         )): <div> N/A </div>}
       </div>

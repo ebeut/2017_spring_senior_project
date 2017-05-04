@@ -98,7 +98,7 @@ export class Header extends Component {
         if(this.state.logged) {
             settingsMenuItem = ((
                 <MenuItem
-                    id="header-settings-btn"
+                    id="header-favorite-btn"
                     leftIcon={< Favorite />}
                     onClick={() => this.dispatchNewRoute('/favorites')}
                     style={{
@@ -109,24 +109,24 @@ export class Header extends Component {
                 </MenuItem>
             ));
 
-            loginButton = ((
+            loginButton = (
                 <FlatButton
                   id="header-login-btn"
                   onTouchTap={this.logOut}
                   label="Logout"
                   icon={< PowerSettingsNew />}
                 />
-            ));
+            );
         }
         else {
-            loginButton = ((
+            loginButton = (
               <FlatButton
                 id="header-logout-btn"
                 onTouchTap={this.login}
                 label="Login"
                 icon={< ExitToApp />}
               />
-            ));
+            );
         }
 
         return (

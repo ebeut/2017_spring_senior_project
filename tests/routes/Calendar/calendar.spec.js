@@ -149,8 +149,6 @@ describe('Calendar component', () => {
     wrap.instance().componentWillReceiveProps({calendarData: {trendingData: trending}, showData: {show: showInfo}, showSeasoninfo: {}});
     spies.getShowSeasonInfo.should.have.been.called;
     wrap.instance().componentWillReceiveProps({calendarData: {trendingData: trending}, showData: {show: showInfo}, showSeasoninfo: showInfoSeasonData});
-    events.map((episode, index) => {
-      expect(wrap.find('#calendar-big-calendar').props().events[index].title).to.equal(episode.title);
-    });
+    expect(wrap.find('#calendar-big-calendar').props().events.length).to.equal(events.length);
   });
 });

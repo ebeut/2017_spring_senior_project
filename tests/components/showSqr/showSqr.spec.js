@@ -99,7 +99,6 @@ describe('Show Square component', () => {
   });
   it('Should make the async call to get the data', () => {
     spies.getShowInfo.should.have.not.been.called;
-    wrap.instance().addToFav(0);
     wrap.instance().viewShow(0);
     spies.getShowInfo.should.have.been.called;
   })
