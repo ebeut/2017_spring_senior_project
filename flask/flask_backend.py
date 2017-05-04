@@ -352,10 +352,13 @@ def api_episodes(showID, seasonNum):
         [
             {
                 "date": "date aired",
+                "id": ID number,
                 "name": "name of episode",
                 "number": episode number,
+                "runtime": length of episode,
                 "season": season number,
-                "summary": "summary of episode"
+                "summary": "summary of episode",
+                "time": "24 hour format time aired"
             }
         ]
     """
