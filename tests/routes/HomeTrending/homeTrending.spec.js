@@ -85,11 +85,12 @@ describe('Home component', () => {
       showInfo: {},
       calendarData: {},
       homeData: {},
-      userData: {},
       ...bindActionCreators({
         getHomePageData: (spies.searchTVAPI = sinon.spy()),
         getShowInfo: (spies.getShowInfo = sinon.spy()),
-        getTrending: (spies.getTrending = sinon.spy())
+        getTrending: (spies.getTrending = sinon.spy()),
+        isLogin: (spies.isLogin = sinon.spy()),
+        logout: (spies.logout = sinon.spy())
       }, spies.dispatch = sinon.spy()),
       contextTypes: {router: '/search'}
     };

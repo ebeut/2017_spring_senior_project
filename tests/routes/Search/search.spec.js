@@ -84,11 +84,12 @@ describe('Search component', () => {
     props = {
       searchRes : {},
       calendarData: {},
-      userData: {},
       ...bindActionCreators({
         searchTVAPI: (spies.searchTVAPI = sinon.spy()),
         getShowInfo: (spies.getShowInfo = sinon.spy()),
-        getTrending: (spies.getTrending = sinon.spy())
+        getTrending: (spies.getTrending = sinon.spy()),
+        isLogin: (spies.isLogin = sinon.spy()),
+        logout: (spies.logout = sinon.spy())
       }, spies.dispatch = sinon.spy()),
       contextTypes: {router: '/search'}
     };

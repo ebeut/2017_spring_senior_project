@@ -120,11 +120,13 @@ describe('Calendar component', () => {
     props = {
       showData: {},
       calendarData: {},
-      userData: {},
       ...bindActionCreators({
         getShowSeasonInfo: (spies.getShowSeasonInfo = sinon.spy()),
         getShowInfo: (spies.getShowInfo = sinon.spy()),
-        getTrending: (spies.getTrending = sinon.spy())
+        getTrending: (spies.getTrending = sinon.spy()),
+        getFav: (spies.getFav = sinon.spy()),
+        logout: (spies.logout = sinon.spy()),
+        isLogin: (spies.isLogin = sinon.spy())
       }, spies.dispatch = sinon.spy()),
       contextTypes: {router: '/search'}
     };

@@ -9,9 +9,9 @@ describe('Header component', () => {
     wrap = shallow(<Header />)
   });
   it('Should render', () => {
-//    expect(wrap.find('div')).to.exist;
+    expect(wrap.find('div')).to.exist;
   });
-/*  it('Should show correct components when logged in or out', () => {
+  it('Should show correct components when logged in or out', () => {
     expect(wrap.find('#header-home-btn')).to.exist;
     expect(wrap.find('#header-search-btn')).to.exist;
     expect(wrap.find('#header-calender-btn')).to.not.exist;
@@ -35,5 +35,5 @@ describe('Header component', () => {
     expect(wrap.state().open).to.be.false;
     wrap.instance().openNav();
     expect(wrap.state().open).to.be.true;
-  });*/
+  });
 });
