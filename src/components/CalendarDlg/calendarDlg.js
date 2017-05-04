@@ -1,14 +1,15 @@
-import React, { Component, PropTypes } from 'react';
-import Dialog from 'material-ui/Dialog';
-import RaisedButton from 'material-ui/RaisedButton';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import Dialog from 'material-ui/Dialog'
+import RaisedButton from 'material-ui/RaisedButton'
 
 export default class CalendarDlg extends Component {
-    constructor(props){
-      super(props);
-      this.state = {
-        open: true,
-      }
+  constructor (props) {
+    super(props);
+    this.state = {
+      open: true,
     }
+  }
 
   static PropTypes = {
     open: PropTypes.bool,

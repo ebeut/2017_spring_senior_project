@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import BigCalendar from 'react-big-calendar';
 import Loading from '../../components/Loading';
 import moment from 'moment';

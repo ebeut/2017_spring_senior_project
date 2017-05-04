@@ -1,9 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import {GridList, GridTile} from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import FlatButton from 'material-ui/FlatButton';
-import Logo from '../../../logo.png';
 import ImageNA from '../../images/ImageNA.png';
 import { browserHistory } from 'react-router';
 

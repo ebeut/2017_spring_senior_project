@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import { ShowSquare } from '../../components/showSqr/showSqr';
 import Loading from '../../components/Loading';
 import Header from '../../components/Header';
 import LogoutDlg from '../../components/LogoutDlg';
-import { pinkA200 } from 'material-ui/styles/colors';
 
 export default class HomePage extends Component {
 

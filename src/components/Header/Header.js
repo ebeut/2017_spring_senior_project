@@ -1,17 +1,16 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import LeftNav from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import Avatar from 'material-ui/Avatar';
-import Toggle from 'material-ui/Toggle';
-import { blue500, pinkA200 } from 'material-ui/styles/colors';
+import { blue500 } from 'material-ui/styles/colors';
 import Search from 'material-ui/svg-icons/action/search';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import Home from 'material-ui/svg-icons/action/Home';
 import Event from 'material-ui/svg-icons/action/event';
 import FlatButton from 'material-ui/FlatButton';
-import Settings from 'material-ui/svg-icons/action/settings';
 import ExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import PowerSettingsNew from 'material-ui/svg-icons/action/power-settings-new';
 import Favorite from 'material-ui/svg-icons/action/favorite';
