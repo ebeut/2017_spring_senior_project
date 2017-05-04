@@ -19,6 +19,7 @@ A todo list of shows to watch, better known as, **The Watch List**!
 Bases of framework pulled from [React Redux Starter Kit](https://github.com/davezuko/react-redux-starter-kit)
 
 ## Packages
+- [superagent](https://www.npmjs.com/package/superagent)
 - [Material-UI](http://www.material-ui.com/#/)
 - [React-Big-Calendar](https://github.com/intljusticemission/react-big-calendar)
 
@@ -193,6 +194,9 @@ janeDoe | 0
     }
 ]
 ```
+
+## npm Unit Testing
+- From test directory run: `npm run test`
 
 ## pytest
 - Unit testing for Flask backend
