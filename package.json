@@ -29,7 +29,7 @@
       }
     },
     "dev": {
-      "command": "nodemon bin/dev-server --ignore dist --ignore coverage --ignore tests --ignore src",
+      "command": "nodemon bin/dev-server --ignore dist --ignore coverage --ignore tests",
       "env": {
         "NODE_ENV": "development",
         "DEBUG": "app:*"
@@ -99,6 +99,7 @@
     "node-sass": "^4.0.0",
     "normalize.css": "^5.0.0",
     "postcss-loader": "^1.1.0",
+    "prop-types": "^15.5.6",
     "react": "^15.0.0",
     "react-big-calendar": "^0.13.0",
     "react-dom": "^15.0.0",
@@ -123,7 +124,7 @@
     "chai-enzyme": "^0.6.1",
     "cheerio": "^0.22.0",
     "codecov": "^1.0.1",
-    "enzyme": "^2.0.0",
+    "enzyme": "2.0.0",
     "eslint": "^3.0.1",
     "eslint-config-standard": "^6.0.0",
     "eslint-config-standard-react": "^4.0.0",
