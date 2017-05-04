@@ -82,7 +82,7 @@ checkFav = (fav, bool) => {
   }
 
 mkFavList() {
-    if (!this.state.favTitles || this.state.favTitles.length < 1) return (<div />);
+    if (!this.state.favTitles || this.state.favTitles.length < 1) return (<div id="fav-no-tiles" />);
     const favs = (
         <List>
             { this.state.favTitles.map((fav) => (

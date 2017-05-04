@@ -5,36 +5,38 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 export default class CalendarDlg extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
-      open: true,
+      open: this.props.open ? this.props.open : true
     }
   }
 
-  static PropTypes = {
-    open: PropTypes.bool,
-    title: PropTypes.string,
-    desc: PropTypes.string,
-    onClose: PropTypes.func
-  };
+  static get propTypes () {
+    return {
+      open: PropTypes.bool.isRequired,
+      title: PropTypes.string.isRequired,
+      desc: PropTypes.string.isRequired,
+      onClose: PropTypes.func.isRequired
+    }
+  }
 
   render () {
     const actions = (
       <RaisedButton
         label='Close'
-        onTouchTap={this.props.onClose}
+        onTouchTap={this.props.onClose ? this.props.onClose : null}
       />
     )
     return (
       <Dialog
         open={this.state.open}
-        style={{textAlign: 'left'}}
+        style={{ textAlign: 'left' }}
         title={this.props.title}
         actions={actions}
       >
-          {this.props.desc}
+        {this.props.desc}
       </Dialog>
-    );
+    )
   }
 
 }

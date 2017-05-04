@@ -1,53 +1,38 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { browserHistory } from 'react-router';
-import AppBar from 'material-ui/AppBar';
-import LeftNav from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import Avatar from 'material-ui/Avatar';
-import { blue500 } from 'material-ui/styles/colors';
-import Search from 'material-ui/svg-icons/action/search';
-import AccountCircle from 'material-ui/svg-icons/action/account-circle';
-import Home from 'material-ui/svg-icons/action/Home';
-import Event from 'material-ui/svg-icons/action/event';
-import FlatButton from 'material-ui/FlatButton';
-import ExitToApp from 'material-ui/svg-icons/action/exit-to-app';
-import PowerSettingsNew from 'material-ui/svg-icons/action/power-settings-new';
-import Favorite from 'material-ui/svg-icons/action/favorite';
-
-
-
-// just for toggle for testing
-const styles = {
-  thumbSwitched: {
-    backgroundColor: '#ec407a',
-  },
-  trackSwitched: {
-    backgroundColor: '#f8bbd0',
-  },
-  labelStyle: {
-    color: 'white',
-  },
-};
+import { browserHistory } from 'react-router'
+import AppBar from 'material-ui/AppBar'
+import LeftNav from 'material-ui/Drawer'
+import MenuItem from 'material-ui/MenuItem'
+import Avatar from 'material-ui/Avatar'
+import { blue500 } from 'material-ui/styles/colors'
+import Search from 'material-ui/svg-icons/action/search'
+import AccountCircle from 'material-ui/svg-icons/action/account-circle'
+import Home from 'material-ui/svg-icons/action/Home'
+import Event from 'material-ui/svg-icons/action/event'
+import FlatButton from 'material-ui/FlatButton'
+import ExitToApp from 'material-ui/svg-icons/action/exit-to-app'
+import PowerSettingsNew from 'material-ui/svg-icons/action/power-settings-new'
+import Favorite from 'material-ui/svg-icons/action/favorite'
 
 export class Header extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false,
-            logged: false,
-        };
-    }
+  constructor(props) {
+      super(props);
+      this.state = {
+          open: false,
+          logged: false,
+      };
+  }
 
   static propTypes = {
     userEmail: PropTypes.string,
     logout: PropTypes.func,
   };
 
-    componentWillMount () {
-      const logged = !!this.props.userEmail;
-      this.setState({logged})
-    }
+  componentWillMount () {
+    const logged = !!this.props.userEmail;
+    this.setState({logged})
+  }
 
   componentWillReceiveProps (newProps) {
       if (this.props.userEmail !== newProps.userEmail) {
