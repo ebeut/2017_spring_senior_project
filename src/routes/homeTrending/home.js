@@ -16,6 +16,7 @@ export default class HomePage extends Component {
       userName: '',
       userFav: [],
       logout: false,
+      idOrder: []
     }
   }
 
@@ -59,6 +60,7 @@ export default class HomePage extends Component {
       }
     }
     if (this.props.homeData.homeData !== newProps.homeData.homeData && newProps.homeData.homeData && newProps.homeData.homeData.length > 0) {
+      this.setState({idOrder: newProps.homeData.homeData})
       newProps.homeData.homeData.map((id) => {
         this.props.getShowInfo(id);
       })
@@ -82,11 +84,23 @@ export default class HomePage extends Component {
     )
 
     if (this.state.userContent && this.state.userContent.length > 0) {
-      console.log(this.state.userContent);
+      let orderedList = [];
+      this.state.userContent.map(() => {
+        orderedList.push({});
+      });
+
+      this.state.userContent.map((show) => {
+        for (let i =0 ; i < this.state.userContent.length; i++ ) {
+          if (show.id === this.state.idOrder[i]) {
+            orderedList[i] = show;
+          }
+        }
+      });
+
       userSqr = (
         <ShowSquare
           id="home-squares"
-          content={this.state.userContent}
+          content={orderedList}
           getShowInfo={this.props.getShowInfo}
         />
       )
