@@ -38,7 +38,15 @@ class FlaskTvTrending:
                                                 "id": "tv-list-2"}):
             for item in div.findAll("td", attrs={"class": "middle_col"}):
                 for title in item.findAll("a"):
-                    rtTrending.append(title.text)
+                    # Rotten Tomato updated their format
+                    temp = title.text.split(':')
+                    showTitle = temp[0]
+
+                    # if multiple seasons trending only add one
+                    if showTitle in rtTrending:
+                        continue
+
+                    rtTrending.append(showTitle)
 
         return rtTrending
 
